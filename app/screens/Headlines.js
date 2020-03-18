@@ -16,17 +16,15 @@ function Headlines(props) {
   }, []);
 
   return (
-    <MainLayout Top={Header} Bottom={NavBar}>
-      <View style={style.content}>
-        {articles.loading ? (
-          <Text>Loading</Text>
-        ) : articles.error ? (
-          <Text>Error</Text>
-        ) : (
-          articles.articles.map((a, i) => <Text key={i}>{a.title}</Text>)
-        )}
-      </View>
-    </MainLayout>
+    <View style={style.content}>
+      {articles.loading ? (
+        <Text>Loading</Text>
+      ) : articles.error ? (
+        <Text>Error</Text>
+      ) : (
+        articles.articles.map((a, i) => <Text key={i}>{a.title}</Text>)
+      )}
+    </View>
   );
 }
 
