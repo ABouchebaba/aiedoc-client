@@ -1,11 +1,8 @@
 import React from "react";
-import { Text, Button } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Main from "./Main";
 import Search from "../screens/Search";
-import { HeaderLeft, HeaderRight, HeaderTitle } from "../components/Header";
-
-const MainHeader = props => <Text>Header</Text>;
+import { HeaderLeft, HeaderRight } from "../components/MainHeader";
 
 const Stack = createStackNavigator();
 

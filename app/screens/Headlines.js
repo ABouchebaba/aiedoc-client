@@ -1,28 +1,45 @@
 import React, { useEffect } from "react";
-import { Text, Button, View } from "react-native";
-import MainLayout from "../Layouts/MainLayout";
-import Header from "../components/Header";
-import NavBar from "../components/NavBar";
+import { Text, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getArticles } from "../actions/articles";
+import ListArticles from "../components/ListArticles";
+
+const groupArticles = articles => {
+  let topics = {};
+  articles.map(article => {
+    if (topics[article.group_nb]) {
+      topics[article.group_nb] = [...topics[article.group_nb], article];
+    } else {
+      topics[article.group_nb] = [article];
+    }
+  });
+
+  return Object.values(topics)
+    .filter(a => a.length > 1)
+    .sort((a, b) => a.length < b.length);
+};
 
 function Headlines(props) {
   const dispatch = useDispatch();
   const articles = useSelector(state => state.articles);
+  const topics = groupArticles(articles.articles);
+  // console.log(topics);
 
   useEffect(() => {
-    // console.log(props);
     dispatch(getArticles());
   }, []);
 
   return (
     <View style={style.content}>
-      {articles.loading ? (
-        <Text>Loading</Text>
-      ) : articles.error ? (
+      {articles.error ? (
         <Text>Error</Text>
       ) : (
-        articles.articles.map((a, i) => <Text key={i}>{a.title}</Text>)
+        <ListArticles
+          data={topics}
+          isLoading={articles.loading}
+          onRefresh={() => dispatch(getArticles())}
+          grouped
+        />
       )}
     </View>
   );

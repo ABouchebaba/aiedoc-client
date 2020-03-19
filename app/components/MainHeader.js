@@ -1,17 +1,7 @@
-import React, { useEffect } from "react";
-import {
-  Text,
-  View,
-  Button,
-  Image,
-  TouchableOpacity,
-  ViewPagerAndroidComponent
-} from "react-native";
-import { useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, TouchableOpacity } from "react-native";
 
 export function HeaderLeft(props) {
-  // const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={style.left}
@@ -25,7 +15,6 @@ export function HeaderLeft(props) {
 }
 
 export function HeaderRight(props) {
-  // const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={style.right}
