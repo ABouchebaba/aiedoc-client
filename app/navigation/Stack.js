@@ -17,9 +17,7 @@ function StackScreen() {
           headerLeft: () => <HeaderLeft {...props} />,
           headerTitle: "Open News",
           headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontWeight: "bold"
-          }
+          headerTitleStyle: { fontWeight: "bold" }
         })}
       />
       <Stack.Screen name="Search" component={Search} />

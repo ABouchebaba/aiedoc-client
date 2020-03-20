@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, FlatList } from "react-native";
 import ArticleCard from "./ArticleCard";
-import ArticleGroupCard from "./ArticleGroupCard";
+import ArticleGroup from "./ArticleGroup";
 import useDimensions from "../hooks/useDimensions";
 
+const { width } = useDimensions();
+
 function ListArticles(props) {
-  const Element = props.grouped || false ? ArticleGroupCard : ArticleCard;
-  const { width } = useDimensions();
+  const Element = props.grouped || false ? ArticleGroup : ArticleCard;
 
   return (
-    <View style={{ width: 0.8 * width, alignSelf: "center" }}>
+    <View style={styles.container}>
       <FlatList
         style={{ marginBottom: 25 }}
         data={props.data}
@@ -24,5 +25,7 @@ function ListArticles(props) {
     </View>
   );
 }
-
+const styles = {
+  container: { width: width, alignSelf: "center" }
+};
 export default ListArticles;

@@ -46,7 +46,9 @@ function Headlines(props) {
 }
 
 const style = {
-  content: {}
+  content: {
+    backgroundColor: "white"
+  }
 };
 
 export default Headlines;

@@ -3,13 +3,11 @@ import { Text, Button, View } from "react-native";
 
 function SettingsScreen(props) {
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>SettingsScreen</Text>
       <Button
-        title="Go to Main"
-        onPress={() =>
-          props.navigation.navigate("Main", { screen: "Settings" })
-        }
+        title="Go to Home"
+        onPress={() => props.navigation.navigate("Home", { screen: "Home" })}
       />
     </View>
   );
