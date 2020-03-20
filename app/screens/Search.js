@@ -1,11 +1,19 @@
 import React from "react";
-import { Text, Button, View } from "react-native";
+import { Text, View } from "react-native";
+import { useSelector } from "react-redux";
 
 function SearchScreen(props) {
+  const search = useSelector(state => state.search);
+
+  console.log(search);
+
   return (
     <View>
-      <Text>SearchScreen</Text>
-      <Button title="Go Back" onPress={() => props.navigation.goBack()} />
+      {search.loading ? (
+        <Text>Loading</Text>
+      ) : (
+        search.results.map(a => <Text key={a.id}> {a.title}</Text>)
+      )}
     </View>
   );
 }

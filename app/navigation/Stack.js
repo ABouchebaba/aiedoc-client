@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Main from "./Main";
 import Search from "../screens/Search";
 import { HeaderLeft, HeaderRight } from "../components/MainHeader";
+import SearchHeader from "../components/SearchHeader";
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,13 @@ function StackScreen() {
           headerTitleStyle: { fontWeight: "bold" }
         })}
       />
-      <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen
+        name="Search"
+        component={Search}
+        options={props => ({
+          headerTitle: () => <SearchHeader {...props} />
+        })}
+      />
     </Stack.Navigator>
   );
 }
