@@ -1,32 +1,38 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import Carousel from "react-native-snap-carousel";
+import Carousel, { Pagination } from "react-native-snap-carousel";
 import useDimensions from "../hooks/useDimensions";
-import Item from "./ArticleGroupItem";
-import Pagination from "./ArticleGroupPagination";
+import Item from "./Item";
 
 const { width } = useDimensions();
 
-function ArticleGroupCard(props) {
+function ArticleGroup(props) {
   const [ref, setRef] = useState(null);
   const [index, setIndex] = useState(0);
+
+  const renderItem = ({ item }) => <Item item={item} />;
+
   return (
     <View style={{ position: "relative" }}>
       <Carousel
-        ref={ref => setRef(ref)}
+        ref={setRef}
         data={props.data}
-        renderItem={Item}
+        renderItem={renderItem}
         sliderWidth={width}
         itemWidth={0.7 * width}
         firstItem={0}
         containerCustomStyle={styles.sliderContainer}
-        onSnapToItem={index => setIndex(index)}
+        inactiveSlideOpacity={0}
+        onSnapToItem={setIndex}
       />
       <Pagination
         carouselRef={ref}
-        tappableDots={ref ? true : false}
-        nbDots={props.data.length}
-        activeDot={index}
+        tappableDots={Boolean(ref)}
+        dotsLength={props.data.length}
+        activeDotIndex={index}
+        animatedDuration={50}
+        dotStyle={styles.dotStyle}
+        containerStyle={styles.containerStyle}
       />
     </View>
   );
@@ -35,18 +41,21 @@ function ArticleGroupCard(props) {
 const styles = {
   sliderContainer: {
     backgroundColor: "white",
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
     alignSelf: "center",
     width: "100%"
   },
-
-  dotElement: {
-    width: 50,
-    height: 10,
-    borderRadius: "50%",
-    color: "black"
+  dotStyle: {
+    width: 30,
+    height: 5,
+    borderRadius: 50
+  },
+  containerStyle: {
+    width: 0.7 * width,
+    position: "absolute",
+    bottom: -25,
+    left: "15%"
   }
 };
 
-export default ArticleGroupCard;
+export default ArticleGroup;

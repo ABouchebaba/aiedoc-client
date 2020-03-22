@@ -5,7 +5,6 @@ const search = (articles, query) => dispatch => {
 
   const results = articles.filter(a => a.title.includes(query));
 
-  //   console.log(results);
   return dispatch({
     type: "SET_RESULTS",
     data: results,

@@ -1,19 +1,21 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, FlatList } from "react-native";
 import { useSelector } from "react-redux";
+import ArticleCard from "../components/ArticleCard";
 
 function SearchScreen(props) {
   const search = useSelector(state => state.search);
 
-  console.log(search);
-
+  // use list articles instead of flatlist
   return (
     <View>
-      {search.loading ? (
-        <Text>Loading</Text>
-      ) : (
-        search.results.map(a => <Text key={a.id}> {a.title}</Text>)
-      )}
+      <FlatList
+        style={{ marginBottom: 25 }}
+        data={search.results}
+        keyExtractor={(item, index) => `${index}`}
+        renderItem={({ item }) => <ArticleCard key={item.id} data={item} />}
+        refreshing={search.loading}
+      />
     </View>
   );
 }

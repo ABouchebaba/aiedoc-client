@@ -11,7 +11,7 @@ export const getArticles = () => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err);
+      // console.log(err);
       return dispatch({
         type: "ERROR_ARTICLES",
         data: err

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
+    "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "0.1.5",
     "@react-navigation/bottom-tabs": "^5.2.1",
     "@react-navigation/drawer": "^5.3.1",
@@ -32,7 +33,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "babel-preset-expo": "~8.0.0"
+    "babel-preset-expo": "~8.0.0",
+    "eslint-config-rallycoding": "^3.2.0",
+    "eslint-plugin-react-hooks": "^2.5.1"
   },
   "private": true
 }

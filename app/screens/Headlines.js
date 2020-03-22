@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, Button, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getArticles } from "../actions/articles";
-import ListArticles from "../components/ListArticles";
+import ArticleGroup from "../components/ArticleGroup";
+
+const { width } = useDimensions();
 
 const groupArticles = articles => {
-  let topics = {};
+  let topics = [];
   articles.map(article => {
     if (topics[article.group_nb]) {
       topics[article.group_nb] = [...topics[article.group_nb], article];
@@ -14,41 +16,46 @@ const groupArticles = articles => {
     }
   });
 
-  return Object.values(topics)
-    .filter(a => a.length > 1)
-    .sort((a, b) => a.length < b.length);
+  let count = 0;
+  return topics.filter(a => a.length > 1 && count++ < 20);
 };
 
 function Headlines(props) {
   const dispatch = useDispatch();
   const articles = useSelector(state => state.articles);
   const topics = groupArticles(articles.articles);
-  // console.log(topics);
 
-  useEffect(() => {
-    dispatch(getArticles());
-  }, []);
+  const onRefresh = () => dispatch(getArticles());
+  const renderItem = ({ item }) => <ArticleGroup data={item} />;
+  const keyExtractor = item => item[0].id;
 
   return (
-    <View style={style.content}>
-      {articles.error ? (
-        <Text>Error</Text>
-      ) : (
-        <ListArticles
-          data={topics}
-          isLoading={articles.loading}
-          onRefresh={() => dispatch(getArticles())}
-          grouped
-        />
+    <View style={style.container}>
+      {articles.error && (
+        <View>
+          <Text>Error</Text>
+          <Button title="Retry" onPress={onRefresh} />
+        </View>
       )}
+
+      <FlatList
+        style={{ marginBottom: 25 }}
+        data={topics}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        refreshing={articles.loading}
+        onRefresh={onRefresh}
+        initialNumToRender={2}
+
+        // ListHeaderComponent={() => <Text>Header</Text>}
+        // ListFooterComponent={() => <Text>Footer</Text>}
+      />
     </View>
   );
 }
 
 const style = {
-  content: {
-    backgroundColor: "white"
-  }
+  container: { width: width, alignSelf: "center", backgroundColor: "white" }
 };
 
 export default Headlines;

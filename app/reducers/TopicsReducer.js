@@ -1,27 +1,27 @@
 const initialState = {
-  articles: [],
+  topics: [],
   error: false,
   loading: false
 };
 
-const ArticleReducer = (state = initialState, action) => {
+const TopicsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOADING_ARTICLES": {
+    case "LOADING_TOPICS": {
       return {
         ...state,
         loading: true
       };
     }
-    case "SET_ARTICLES": {
-      console.log("setting data");
+    case "SET_TOPICS": {
+      console.log("setting TOPICS");
       return {
         ...state,
         loading: false,
         error: false,
-        articles: action.data
+        topics: action.data
       };
     }
-    case "ERROR_ARTICLES": {
+    case "ERROR_TOPICS": {
       return {
         ...state,
         loading: false,
@@ -34,4 +34,4 @@ const ArticleReducer = (state = initialState, action) => {
   }
 };
 
-export default ArticleReducer;
+export default TopicsReducer;
