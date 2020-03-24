@@ -1,4 +1,8 @@
-import { LOADING_RESULTS } from "../constatnts/ActionTypes";
+import {
+  LOADING_RESULTS,
+  SET_RESULTS,
+  ERROR_SEARCH
+} from "../constatnts/ActionTypes";
 
 const initialState = {
   query: "",

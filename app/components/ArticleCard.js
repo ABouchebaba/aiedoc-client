@@ -36,19 +36,19 @@ function ArticleCard(props) {
 const styles = {
   container: {
     width: "90%",
-    height: 0.11 * height,
+    height: 0.15 * height,
     backgroundColor: "white",
     margin: 5,
     alignSelf: "center"
   },
   image: {
     height: "100%",
-    width: "30%"
+    width: "35%"
   },
   title: {
     width: "65%",
     padding: 10,
-    fontSize: 14,
+    fontSize: 13,
     textAlign: "center",
     alignSelf: "center"
   },

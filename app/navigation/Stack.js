@@ -1,5 +1,8 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  HeaderHeightContext
+} from "@react-navigation/stack";
 import Main from "./Main";
 import Search from "../screens/Search";
 import { HeaderLeft, HeaderRight } from "../components/MainHeader";
@@ -25,7 +28,8 @@ function StackScreen() {
         name="Search"
         component={Search}
         options={props => ({
-          headerTitle: () => <SearchHeader {...props} />
+          headerTitle: () => <SearchHeader {...props} />,
+          headerTitleAlign: "center"
         })}
       />
     </Stack.Navigator>
