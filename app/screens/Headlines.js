@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getArticles } from "../actions/articles";
 import ArticleGroup from "../components/ArticleGroup";
 
-const { width } = useDimensions();
+const { width, height } = useDimensions();
 
 const groupArticles = articles => {
   let topics = [];
@@ -39,14 +39,14 @@ function Headlines(props) {
       )}
 
       <FlatList
-        style={{ marginBottom: 25 }}
+        // minHeight is necessary for refresh loop to show properly
+        style={{ marginBottom: 25, minHeight: 100 }}
         data={topics}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         refreshing={articles.loading}
         onRefresh={onRefresh}
-        initialNumToRender={2}
-
+        initialNumToRender={3}
         // ListHeaderComponent={() => <Text>Header</Text>}
         // ListFooterComponent={() => <Text>Footer</Text>}
       />

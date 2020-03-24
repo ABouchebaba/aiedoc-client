@@ -6,7 +6,6 @@ import ArticleCard from "../components/ArticleCard";
 function SearchScreen(props) {
   const search = useSelector(state => state.search);
 
-  // use list articles instead of flatlist
   return (
     <View>
       <FlatList
