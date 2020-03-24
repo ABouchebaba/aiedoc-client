@@ -1,3 +1,5 @@
+import { LOADING_RESULTS } from "../constatnts/ActionTypes";
+
 const initialState = {
   query: "",
   results: [],
@@ -7,13 +9,13 @@ const initialState = {
 
 const SearchReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOADING_RESULTS": {
+    case LOADING_RESULTS: {
       return {
         ...state,
         loading: true
       };
     }
-    case "SET_RESULTS": {
+    case SET_RESULTS: {
       return {
         ...state,
         loading: false,
@@ -21,7 +23,7 @@ const SearchReducer = (state = initialState, action) => {
         query: action.query
       };
     }
-    case "ERROR_SEARCH": {
+    case ERROR_SEARCH: {
       return {
         ...state,
         loading: false,

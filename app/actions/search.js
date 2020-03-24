@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
+import { LOADING_RESULTS, SET_RESULTS } from "../constatnts/ActionTypes";
 
 const search = (articles, query) => dispatch => {
-  dispatch({ type: "LOADING_RESULTS" });
+  dispatch({ type: LOADING_RESULTS });
 
   const results = articles.filter(a => a.title.includes(query));
 
   return dispatch({
-    type: "SET_RESULTS",
+    type: SET_RESULTS,
     data: results,
     query
   });

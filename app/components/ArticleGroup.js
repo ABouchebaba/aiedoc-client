@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
-import useDimensions from "../hooks/useDimensions";
+import getDimensions from "../herlpers/getDimensions";
 import Item from "./Item";
 
-const { width } = useDimensions();
+const { width } = getDimensions();
 
 function ArticleGroup(props) {
   const [ref, setRef] = useState(null);

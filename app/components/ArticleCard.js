@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Text, TouchableWithoutFeedback, Image, View } from "react-native";
-import useImage from "../hooks/useImage";
-import useDimensions from "../hooks/useDimensions";
+import getImageSource from "../herlpers/getImageSource";
+import getDimensions from "../herlpers/getDimensions";
 import { Ionicons } from "@expo/vector-icons";
 
-const { width, height } = useDimensions();
+const { height } = getDimensions();
 
 function ArticleCard(props) {
-  const image = useImage(props.data.images);
+  const image = getImageSource(props.data.images);
   const direction = props.data.lang === "Arabic" ? "row-reverse" : "row";
 
   const pressed = () => {

@@ -1,3 +1,9 @@
+import {
+  SET_ARTICLES,
+  LOADING_ARTICLES,
+  ERROR_ARTICLES
+} from "../constatnts/ActionTypes";
+
 const initialState = {
   articles: [],
   error: false,
@@ -6,13 +12,13 @@ const initialState = {
 
 const ArticleReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOADING_ARTICLES": {
+    case LOADING_ARTICLES: {
       return {
         ...state,
         loading: true
       };
     }
-    case "SET_ARTICLES": {
+    case SET_ARTICLES: {
       return {
         ...state,
         loading: false,
@@ -20,7 +26,7 @@ const ArticleReducer = (state = initialState, action) => {
         articles: action.data
       };
     }
-    case "ERROR_ARTICLES": {
+    case ERROR_ARTICLES: {
       return {
         ...state,
         loading: false,

@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Text, TouchableWithoutFeedback, View, Image } from "react-native";
-import useDimensions from "../hooks/useDimensions";
-import useImage from "../hooks/useImage";
-import { addItemTo, removeItemFrom, getItem } from "../hooks/handleStorage";
+import getDimensions from "../herlpers/getDimensions";
+import getImageSource from "../herlpers/getImageSource";
+import { addItemTo, removeItemFrom, getItem } from "../herlpers/handleStorage";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
+import { BOOKMARKED } from "../constatnts/StorageKeys";
 
-const { height } = useDimensions();
+const { height } = getDimensions();
 
 function Item(props) {
-  const image = useImage(props.item.images);
+  const image = getImageSource(props.item.images);
   const [bookmarked, setbookmarked] = useState(false);
   const color = bookmarked ? "#28a745" : "#007bff";
 
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
-      getItem("bookmarked")
+      getItem(BOOKMARKED)
         .then(data => setbookmarked(Boolean(data[props.item.id])))
         .catch(e => console.log("Error item:getBookmarks ::: " + e));
     }, [])
@@ -27,8 +28,8 @@ function Item(props) {
   };
   const bookmark = async () => {
     setbookmarked(!bookmarked);
-    if (!bookmarked) await addItemTo(props.item, "bookmarked");
-    else await removeItemFrom("bookmarked", props.item.id);
+    if (!bookmarked) await addItemTo(props.item, BOOKMARKED);
+    else await removeItemFrom(BOOKMARKED, props.item.id);
   };
   return (
     <View style={{ position: "relative" }}>

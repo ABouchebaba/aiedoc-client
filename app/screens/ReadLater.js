@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Text, Button, View, FlatList } from "react-native";
-import { getItem, removeItemFrom } from "../hooks/handleStorage";
+import React, { useState } from "react";
+import { View, FlatList } from "react-native";
+import { getItem, removeItemFrom } from "../herlpers/handleStorage";
 import ArticleCard from "../components/ArticleCard";
 import { useFocusEffect } from "@react-navigation/native";
+import { BOOKMARKED } from "../constatnts/StorageKeys";
 
 const ReadLater = props => {
   const [articles, setarticles] = useState([]);
@@ -11,7 +12,7 @@ const ReadLater = props => {
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
-      getItem("bookmarked")
+      getItem(BOOKMARKED)
         .then(data => {
           setarticles(Object.values(data));
           setloading(false);
@@ -27,8 +28,7 @@ const ReadLater = props => {
     <ArticleCard key={item.id} data={item} unbookmark={unbookmark} deletebtn />
   );
   const unbookmark = id => {
-    console.log("unbookmark" + id);
-    removeItemFrom("bookmarked", id)
+    removeItemFrom(BOOKMARKED, id)
       .then(data => setarticles(Object.values(data)))
       .catch(e => console.log("Error {unbookmark}::: " + e));
   };

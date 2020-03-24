@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Text, View, Button, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getArticles } from "../actions/articles";
 import ArticleGroup from "../components/ArticleGroup";
+import getDimensions from "../herlpers/getDimensions";
 
-const { width, height } = useDimensions();
+const { width } = getDimensions();
 
 const groupArticles = articles => {
   let topics = [];

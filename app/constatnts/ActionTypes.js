@@ -1,0 +1,7 @@
+export const LOADING_ARTICLES = "LOADING_ARTICLES";
+export const SET_ARTICLES = "SET_ARTICLES";
+export const ERROR_ARTICLES = "ERROR_ARTICLES";
+
+export const LOADING_RESULTS = "LOADING_RESULTS";
+export const SET_RESULTS = "SET_RESULTS";
+export const ERROR_SEARCH = "ERROR_SEARCH";
