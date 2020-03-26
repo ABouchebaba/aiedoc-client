@@ -1,4 +1,4 @@
-import { LOADING_RESULTS, SET_RESULTS } from "../constatnts/ActionTypes";
+import { LOADING_RESULTS, SET_RESULTS } from "../constants/ActionTypes";
 
 const search = (articles, query) => dispatch => {
   dispatch({ type: LOADING_RESULTS });

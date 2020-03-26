@@ -17,7 +17,7 @@ function CategoryHeader(props) {
   };
 
   const renderItem = ({ item }) => {
-    const style = item === props.selected ? styles.selectedItem : styles.item;
+    const style = item === props.selected ? styles.selectedItem() : styles.item;
     const onPress = () => onItemPress(item);
     return (
       <View style={style}>
@@ -58,10 +58,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5
   },
-  selectedItem: {
-    ...styles.item,
-    borderBottomWidth: 2,
-    borderBottomColor: "#007bff"
+  selectedItem: function() {
+    return {
+      ...this.item,
+      borderBottomWidth: 2,
+      borderBottomColor: "#007bff"
+    };
   }
 });
 

@@ -6,36 +6,44 @@ import { addItemTo, removeItemFrom, getItem } from "../helpers/handleStorage";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
 import { BOOKMARKED } from "../constants/StorageKeys";
+import { useSelector, useDispatch } from "react-redux";
+import { addBookmark, removeBookmark } from "../actions/bookmark";
 
 const { height } = getDimensions();
 
 function Item(props) {
+  const dispatch = useDispatch();
   const image = getImageSource(props.item.images);
-  const [bookmarked, setbookmarked] = useState(false);
-  const bookmarkStyle = bookmarked ? styles.bookmarked : styles.notBookmarked;
+  // const [bookmarked, setbookmarked] = useState(false);
+  const bookmarked = useSelector(state => state.bookmarks[props.item.id]);
+  const bookmarkStyle = bookmarked
+    ? styles.bookmarked()
+    : styles.notBookmarked();
 
-  useEffect(() => {
-    getItem(BOOKMARKED)
-      .then(data => setbookmarked(Boolean(data[props.item.id])))
-      .catch(e => console.log("Error item:getBookmarks ::: " + e));
-  }, []);
+  // useEffect(() => {
+  //   getItem(BOOKMARKED)
+  //     .then(data => setbookmarked(Boolean(data[props.item.id])))
+  //     .catch(e => console.log("Error item:getBookmarks ::: " + e));
+  // }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // Do something when the screen is focused
-      getItem(BOOKMARKED)
-        .then(data => setbookmarked(Boolean(data[props.item.id])))
-        .catch(e => console.log("Error item:getBookmarks ::: " + e));
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     // Do something when the screen is focused
+  //     getItem(BOOKMARKED)
+  //       .then(data => setbookmarked(Boolean(data[props.item.id])))
+  //       .catch(e => console.log("Error item:getBookmarks ::: " + e));
+  //   }, [])
+  // );
 
   const pressed = () => {
     alert(props.item.title);
   };
-  const bookmark = async () => {
-    setbookmarked(!bookmarked);
-    if (!bookmarked) await addItemTo(props.item, BOOKMARKED);
-    else await removeItemFrom(BOOKMARKED, props.item.id);
+  const bookmark = /*async*/ () => {
+    // setbookmarked(!bookmarked);
+    // if (!bookmarked) await addItemTo(props.item, BOOKMARKED);
+    // else await removeItemFrom(BOOKMARKED, props.item.id);
+    if (bookmarked) return dispatch(removeBookmark(props.item.id));
+    dispatch(addBookmark(props.item));
   };
   return (
     <View style={styles.container}>
@@ -86,13 +94,17 @@ const styles = {
     justifyContent: "center",
     paddingRight: 10
   },
-  bookmarked: {
-    ...styles.bookmark,
-    backgroundColor: "#28a745"
+  bookmarked: function() {
+    return {
+      ...this.bookmark,
+      backgroundColor: "#28a745"
+    };
   },
-  notBookmarked: {
-    ...styles.bookmark,
-    backgroundColor: "#007bff"
+  notBookmarked: function() {
+    return {
+      ...this.bookmark,
+      backgroundColor: "#007bff"
+    };
   }
 };
 

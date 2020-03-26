@@ -1,9 +1,11 @@
 import React from "react";
-import store from "./app/store";
+import { store, persistor } from "./app/store";
 import { Provider } from "react-redux";
 import Navigator from "./app/navigation";
 import { getArticles } from "./app/actions/articles";
 import { AppLoading } from "expo";
+import { PersistGate } from "redux-persist/integration/react";
+
 import { enableScreens } from "react-native-screens";
 enableScreens(); // for performance optimization
 
@@ -43,7 +45,9 @@ export default class App extends React.Component {
     }
     return (
       <Provider store={store}>
-        <Navigator />
+        <PersistGate persistor={persistor} loading={null}>
+          <Navigator />
+        </PersistGate>
       </Provider>
     );
   };

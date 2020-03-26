@@ -3,12 +3,14 @@ import ArticleReducer from "./ArticleReducer";
 import SearchReducer from "./SearchReducer";
 import CategoryReducer from "./CategoryReducer";
 import TopicReducer from "./TopicReducer";
+import BookmarkReducer from "./BookmarkReducer";
 
 rootReducer = combineReducers({
   articles: ArticleReducer,
   search: SearchReducer,
   topics: TopicReducer,
-  categories: CategoryReducer
+  categories: CategoryReducer,
+  bookmarks: BookmarkReducer
 });
 
 export default rootReducer;

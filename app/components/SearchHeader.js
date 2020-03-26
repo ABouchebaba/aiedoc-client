@@ -3,7 +3,7 @@ import { TextInput, View } from "react-native";
 import search from "../actions/search";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import getDimensions from "../herlpers/getDimensions";
+import getDimensions from "../helpers/getDimensions";
 
 const { width } = getDimensions();
 

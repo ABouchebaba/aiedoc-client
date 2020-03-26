@@ -1,4 +1,4 @@
-import { SET_CATEGORIES, LOADING_CATEGORIES } from "../constatnts/ActionTypes";
+import { SET_CATEGORIES, LOADING_CATEGORIES } from "../constants/ActionTypes";
 
 const initialState = {
   categories: {},

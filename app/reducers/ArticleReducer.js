@@ -2,7 +2,7 @@ import {
   SET_ARTICLES,
   LOADING_ARTICLES,
   ERROR_ARTICLES
-} from "../constatnts/ActionTypes";
+} from "../constants/ActionTypes";
 
 const initialState = {
   articles: [],

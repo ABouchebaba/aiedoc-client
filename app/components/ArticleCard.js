@@ -9,7 +9,7 @@ const { height } = getDimensions();
 function ArticleCard(props) {
   const image = getImageSource(props.data.images);
   const cardStyle =
-    props.data.lang === "Arabic" ? styles.cardRTL : styles.cardLTR;
+    props.data.lang === "Arabic" ? styles.cardRTL() : styles.cardLTR();
 
   const pressed = () => {
     alert(props.data.title);
@@ -44,13 +44,17 @@ const styles = {
     margin: 5,
     alignSelf: "center"
   },
-  cardRTL: {
-    ...styles.card,
-    flexDirection: "row-reverse"
+  cardRTL: function() {
+    return {
+      ...this.card,
+      flexDirection: "row-reverse"
+    };
   },
-  cardLTR: {
-    ...styles.card,
-    flexDirection: "row"
+  cardLTR: function() {
+    return {
+      ...this.card,
+      flexDirection: "row"
+    };
   },
   image: {
     height: "100%",

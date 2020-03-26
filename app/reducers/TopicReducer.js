@@ -1,4 +1,4 @@
-import { SET_TOPICS, LOADING_TOPICS } from "../constatnts/ActionTypes";
+import { SET_TOPICS, LOADING_TOPICS } from "../constants/ActionTypes";
 
 const initialState = {
   topics: [],
