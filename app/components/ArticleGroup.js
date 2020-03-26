@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
-import getDimensions from "../herlpers/getDimensions";
+import getDimensions from "../helpers/getDimensions";
 import Item from "./Item";
 
 const { width } = getDimensions();
@@ -13,7 +13,7 @@ function ArticleGroup(props) {
   const renderItem = ({ item }) => <Item item={item} />;
 
   return (
-    <View style={{ position: "relative" }}>
+    <View style={styles.container}>
       <Carousel
         ref={setRef}
         data={props.data}
@@ -32,13 +32,14 @@ function ArticleGroup(props) {
         activeDotIndex={index}
         animatedDuration={50}
         dotStyle={styles.dotStyle}
-        containerStyle={styles.containerStyle}
+        containerStyle={styles.paginationContainerStyle}
       />
     </View>
   );
 }
 
 const styles = {
+  container: { position: "relative" },
   sliderContainer: {
     backgroundColor: "white",
     marginVertical: 10,
@@ -50,7 +51,7 @@ const styles = {
     height: 5,
     borderRadius: 50
   },
-  containerStyle: {
+  paginationContainerStyle: {
     width: 0.7 * width,
     position: "absolute",
     bottom: -25,
@@ -58,4 +59,4 @@ const styles = {
   }
 };
 
-export default ArticleGroup;
+export default React.memo(ArticleGroup);

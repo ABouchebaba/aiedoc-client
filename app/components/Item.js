@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, TouchableWithoutFeedback, View, Image } from "react-native";
-import getDimensions from "../herlpers/getDimensions";
-import getImageSource from "../herlpers/getImageSource";
-import { addItemTo, removeItemFrom, getItem } from "../herlpers/handleStorage";
+import getDimensions from "../helpers/getDimensions";
+import getImageSource from "../helpers/getImageSource";
+import { addItemTo, removeItemFrom, getItem } from "../helpers/handleStorage";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import { BOOKMARKED } from "../constatnts/StorageKeys";
+import { BOOKMARKED } from "../constants/StorageKeys";
 
 const { height } = getDimensions();
 
 function Item(props) {
   const image = getImageSource(props.item.images);
   const [bookmarked, setbookmarked] = useState(false);
-  const color = bookmarked ? "#28a745" : "#007bff";
+  const bookmarkStyle = bookmarked ? styles.bookmarked : styles.notBookmarked;
+
+  useEffect(() => {
+    getItem(BOOKMARKED)
+      .then(data => setbookmarked(Boolean(data[props.item.id])))
+      .catch(e => console.log("Error item:getBookmarks ::: " + e));
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -32,14 +38,14 @@ function Item(props) {
     else await removeItemFrom(BOOKMARKED, props.item.id);
   };
   return (
-    <View style={{ position: "relative" }}>
+    <View style={styles.container}>
       <TouchableWithoutFeedback onPress={pressed}>
         <View style={styles.itemContainer}>
           <Image source={image} style={styles.itemImage} />
           <Text style={styles.itemTitleText}>{props.item.title}</Text>
         </View>
       </TouchableWithoutFeedback>
-      <View style={{ ...styles.bookmark, backgroundColor: color }}>
+      <View style={bookmarkStyle}>
         <TouchableWithoutFeedback onPress={bookmark}>
           <Ionicons name="md-bookmark" size={30} color="white" />
         </TouchableWithoutFeedback>
@@ -49,6 +55,7 @@ function Item(props) {
 }
 
 const styles = {
+  container: { position: "relative" },
   itemContainer: {
     alignItems: "center",
     position: "relative"
@@ -78,6 +85,14 @@ const styles = {
     alignItems: "flex-end",
     justifyContent: "center",
     paddingRight: 10
+  },
+  bookmarked: {
+    ...styles.bookmark,
+    backgroundColor: "#28a745"
+  },
+  notBookmarked: {
+    ...styles.bookmark,
+    backgroundColor: "#007bff"
   }
 };
 

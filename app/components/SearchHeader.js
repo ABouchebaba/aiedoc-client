@@ -9,23 +9,15 @@ const { width } = getDimensions();
 
 function SearchHeader(props) {
   const dispatch = useDispatch();
-  const articles = useSelector(state => state.articles);
+  const articles = useSelector(state => state.articles.articles);
   const oldQuery = useSelector(state => state.search.query);
   const [initialQuery, setInitialQuery] = useState(oldQuery);
 
   const textChange = e => {
-    // const query = e.nativeEvent.text;
+    dispatch(search(articles, e));
     setInitialQuery(e);
-    dispatch(search(articles.articles, e));
   };
 
-  const submit = e => {
-    const query = e.nativeEvent.text;
-    setInitialQuery(query);
-    dispatch(search(articles.articles, query));
-  };
-
-  console.log(width);
   return (
     <View style={styles.container}>
       <Ionicons style={styles.icon} name="md-search" size={25} color="black" />

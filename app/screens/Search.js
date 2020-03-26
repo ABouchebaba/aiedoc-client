@@ -11,7 +11,7 @@ function SearchScreen(props) {
   return (
     <View>
       <FlatList
-        style={{ marginBottom: 25 }}
+        style={styles.list}
         data={search.results}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
@@ -20,5 +20,9 @@ function SearchScreen(props) {
     </View>
   );
 }
+
+const styles = {
+  list: { marginBottom: 25 }
+};
 
 export default SearchScreen;

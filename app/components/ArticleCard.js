@@ -1,31 +1,33 @@
 import React from "react";
 import { Text, TouchableWithoutFeedback, Image, View } from "react-native";
-import getImageSource from "../herlpers/getImageSource";
-import getDimensions from "../herlpers/getDimensions";
+import getImageSource from "../helpers/getImageSource";
+import getDimensions from "../helpers/getDimensions";
 import { Ionicons } from "@expo/vector-icons";
 
 const { height } = getDimensions();
 
 function ArticleCard(props) {
   const image = getImageSource(props.data.images);
-  const direction = props.data.lang === "Arabic" ? "row-reverse" : "row";
+  const cardStyle =
+    props.data.lang === "Arabic" ? styles.cardRTL : styles.cardLTR;
 
   const pressed = () => {
     alert(props.data.title);
   };
+
+  const unbookmark = () => props.unbookmark(props.data.id);
+
   return (
-    <View style={{ position: "relative" }}>
+    <View style={styles.container}>
       <TouchableWithoutFeedback onPress={pressed}>
-        <View style={{ ...styles.container, flexDirection: direction }}>
+        <View style={cardStyle}>
           <Image source={image} style={styles.image} />
           <Text style={styles.title}>{props.data.title}</Text>
         </View>
       </TouchableWithoutFeedback>
       {props.deletebtn && (
         <View style={styles.deletebtn}>
-          <TouchableWithoutFeedback
-            onPress={() => props.unbookmark(props.data.id)}
-          >
+          <TouchableWithoutFeedback onPress={unbookmark}>
             <Ionicons name="md-trash" size={20} color="white" />
           </TouchableWithoutFeedback>
         </View>
@@ -34,12 +36,21 @@ function ArticleCard(props) {
   );
 }
 const styles = {
-  container: {
+  container: { position: "relative" },
+  card: {
     width: "90%",
     height: 0.15 * height,
     backgroundColor: "white",
     margin: 5,
     alignSelf: "center"
+  },
+  cardRTL: {
+    ...styles.card,
+    flexDirection: "row-reverse"
+  },
+  cardLTR: {
+    ...styles.card,
+    flexDirection: "row"
   },
   image: {
     height: "100%",

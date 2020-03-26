@@ -1,13 +1,19 @@
-import React from "react";
-import { Text, View, Button, FlatList } from "react-native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { getArticles } from "../actions/articles";
 import ArticleGroup from "../components/ArticleGroup";
-import getDimensions from "../herlpers/getDimensions";
+import ArticleCard from "../components/ArticleCard";
+import Presenter from "../components/Presenter";
+import getDimensions from "../helpers/getDimensions";
+import { getArticles } from "../actions/articles";
+import CategoryHeader from "../components/CategoryHeader";
 
 const { width } = getDimensions();
 
-const groupArticles = articles => {
+const filter = (category, articles) => {
+  return articles.filter(a => a.category === category);
+};
+const group = articles => {
   let topics = [];
   articles.map(article => {
     if (topics[article.group_nb]) {
@@ -21,35 +27,63 @@ const groupArticles = articles => {
   return topics.filter(a => a.length > 1 && count++ < 20);
 };
 
-function Headlines(props) {
-  const dispatch = useDispatch();
-  const articles = useSelector(state => state.articles);
-  const topics = groupArticles(articles.articles);
+const renderCard = ({ item }) => <ArticleCard data={item} />;
+const renderGroup = ({ item }) => <ArticleGroup data={item} />;
 
+const cardKeyExtractor = item => item.id;
+const groupKeyExtractor = item => item[0].id;
+
+const extractCategories = articles => {
+  let categories = {};
+
+  articles.map(a => {
+    categories[a.category] = true;
+  });
+
+  return Object.keys(categories);
+};
+
+function Headlines(props) {
+  const [category, setCategory] = useState("All");
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.articles);
+
+  let treatment = () => filter(category, data.articles);
+  let renderItem = renderCard;
+  let keyExtractor = cardKeyExtractor;
+
+  if (category === "All") {
+    treatment = () => group(data.articles);
+    renderItem = renderGroup;
+    keyExtractor = groupKeyExtractor;
+  }
+
+  // POTENTIAL RE-RENDER PROBLEM HERE WITH categories & toDisplay
+  //  ==> THINK IT OVER
+  const categories = ["All", ...extractCategories(data.articles)];
+  const toDisplay = treatment();
+  //////////////////////////////////////////////////////
   const onRefresh = () => dispatch(getArticles());
-  const renderItem = ({ item }) => <ArticleGroup data={item} />;
-  const keyExtractor = item => item[0].id;
 
   return (
     <View style={style.container}>
-      {articles.error && (
+      {data.error && (
         <View>
           <Text>Error</Text>
           <Button title="Retry" onPress={onRefresh} />
         </View>
       )}
-
-      <FlatList
-        // minHeight is necessary for refresh loop to show properly
-        style={{ marginBottom: 25, minHeight: 100 }}
-        data={topics}
-        keyExtractor={keyExtractor}
+      <CategoryHeader
+        categories={categories}
+        setCategory={setCategory}
+        selected={category}
+      />
+      <Presenter
+        data={toDisplay}
         renderItem={renderItem}
-        refreshing={articles.loading}
+        keyExtractor={keyExtractor}
+        loading={data.loading}
         onRefresh={onRefresh}
-        initialNumToRender={3}
-        // ListHeaderComponent={() => <Text>Header</Text>}
-        // ListFooterComponent={() => <Text>Footer</Text>}
       />
     </View>
   );

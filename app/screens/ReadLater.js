@@ -35,7 +35,7 @@ const ReadLater = props => {
   return (
     <View>
       <FlatList
-        style={{ marginBottom: 25 }}
+        style={styles.list}
         data={articles}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
@@ -43,6 +43,10 @@ const ReadLater = props => {
       />
     </View>
   );
+};
+
+const styles = {
+  list: { marginBottom: 25 }
 };
 
 export default ReadLater;
