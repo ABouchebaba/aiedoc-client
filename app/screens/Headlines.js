@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ArticleGroup from "../components/ArticleGroup";
 import ArticleCard from "../components/ArticleCard";
@@ -64,11 +64,11 @@ function Headlines(props) {
   const toDisplay = treatment();
   //////////////////////////////////////////////////////
   const onRefresh = () => dispatch(getArticles());
-
+  console.log(data.error);
   return (
-    <View style={style.container}>
+    <View style={styles.container}>
       {data.error && (
-        <View>
+        <View style={styles.errorContainer}>
           <Text>Error</Text>
           <Button title="Retry" onPress={onRefresh} />
         </View>
@@ -89,8 +89,9 @@ function Headlines(props) {
   );
 }
 
-const style = {
-  container: { width: width, alignSelf: "center", backgroundColor: "white" }
+const styles = {
+  container: { width: width, alignSelf: "center", backgroundColor: "white" },
+  errorContainer: { backgroundColor: "#a94442" }
 };
 
 export default Headlines;

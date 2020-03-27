@@ -22,6 +22,7 @@ export const getArticles = () => dispatch => {
       });
     })
     .catch(err => {
+      console.log("errored");
       return dispatch({
         type: ERROR_ARTICLES,
         data: err

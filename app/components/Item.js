@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Text, TouchableWithoutFeedback, View, Image } from "react-native";
 import getDimensions from "../helpers/getDimensions";
 import getImageSource from "../helpers/getImageSource";
-import { addItemTo, removeItemFrom, getItem } from "../helpers/handleStorage";
 import { Ionicons } from "@expo/vector-icons";
-import { useFocusEffect } from "@react-navigation/native";
-import { BOOKMARKED } from "../constants/StorageKeys";
 import { useSelector, useDispatch } from "react-redux";
 import { addBookmark, removeBookmark } from "../actions/bookmark";
 
@@ -14,34 +11,15 @@ const { height } = getDimensions();
 function Item(props) {
   const dispatch = useDispatch();
   const image = getImageSource(props.item.images);
-  // const [bookmarked, setbookmarked] = useState(false);
   const bookmarked = useSelector(state => state.bookmarks[props.item.id]);
   const bookmarkStyle = bookmarked
     ? styles.bookmarked()
     : styles.notBookmarked();
 
-  // useEffect(() => {
-  //   getItem(BOOKMARKED)
-  //     .then(data => setbookmarked(Boolean(data[props.item.id])))
-  //     .catch(e => console.log("Error item:getBookmarks ::: " + e));
-  // }, []);
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     // Do something when the screen is focused
-  //     getItem(BOOKMARKED)
-  //       .then(data => setbookmarked(Boolean(data[props.item.id])))
-  //       .catch(e => console.log("Error item:getBookmarks ::: " + e));
-  //   }, [])
-  // );
-
   const pressed = () => {
     alert(props.item.title);
   };
-  const bookmark = /*async*/ () => {
-    // setbookmarked(!bookmarked);
-    // if (!bookmarked) await addItemTo(props.item, BOOKMARKED);
-    // else await removeItemFrom(BOOKMARKED, props.item.id);
+  const bookmark = () => {
     if (bookmarked) return dispatch(removeBookmark(props.item.id));
     dispatch(addBookmark(props.item));
   };
@@ -89,10 +67,9 @@ const styles = {
     borderRadius: 10,
     position: "absolute",
     top: 20,
-    left: -10,
-    alignItems: "flex-end",
+    right: -10,
     justifyContent: "center",
-    paddingRight: 10
+    paddingLeft: 10
   },
   bookmarked: function() {
     return {

@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, FlatList } from "react-native";
-import { getItem, removeItemFrom } from "../helpers/handleStorage";
 import ArticleCard from "../components/ArticleCard";
-import { useFocusEffect } from "@react-navigation/native";
-import { BOOKMARKED } from "../constants/StorageKeys";
 import { removeBookmark } from "../actions/bookmark";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -24,7 +21,6 @@ const ReadLater = props => {
         data={articles}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
-        // refreshing={loading}
       />
     </View>
   );

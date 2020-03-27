@@ -1,10 +1,16 @@
 import React from "react";
-import { Text, TouchableWithoutFeedback, Image, View } from "react-native";
+import {
+  Text,
+  TouchableWithoutFeedback,
+  Image,
+  View,
+  TouchableOpacity
+} from "react-native";
 import getImageSource from "../helpers/getImageSource";
 import getDimensions from "../helpers/getDimensions";
 import { Ionicons } from "@expo/vector-icons";
 
-const { height } = getDimensions();
+const { height, width } = getDimensions();
 
 function ArticleCard(props) {
   const image = getImageSource(props.data.images);
@@ -26,11 +32,9 @@ function ArticleCard(props) {
         </View>
       </TouchableWithoutFeedback>
       {props.deletebtn && (
-        <View style={styles.deletebtn}>
-          <TouchableWithoutFeedback onPress={unbookmark}>
-            <Ionicons name="md-trash" size={20} color="white" />
-          </TouchableWithoutFeedback>
-        </View>
+        <TouchableOpacity style={styles.deletebtn} onPress={unbookmark}>
+          <Ionicons name="md-trash" size={20} color="white" />
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -74,9 +78,9 @@ const styles = {
     justifyContent: "center",
     bottom: 0,
     right: 10,
-    width: 30,
-    height: 30,
-    borderRadius: 20
+    width: 0.1 * width,
+    height: 0.05 * height,
+    borderRadius: 0.05 * width
   }
 };
 export default ArticleCard;

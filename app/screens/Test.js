@@ -53,6 +53,7 @@ function Test(props) {
         data={toDisplay}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        toLoad={10}
         loading={!ready}
         onRefresh={onRefresh}
       />
