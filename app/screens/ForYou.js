@@ -19,7 +19,7 @@ function ForYou(props) {
         onRefresh={() => {
           setIsRefreshing(true);
           setTimeout(() => setIsRefreshing(false), 2000);
-          console.log("refreshing");
+          // console.log("refreshing");
         }}
         ListHeaderComponent={() => <Text>Header</Text>}
         ListFooterComponent={() => <Text>Footer</Text>}

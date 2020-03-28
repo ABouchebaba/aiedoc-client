@@ -65,7 +65,7 @@ function Headlines(props) {
   const toDisplay = treatment();
   //////////////////////////////////////////////////////
   const onRefresh = () => dispatch(getArticles());
-  console.log(data.error);
+
   return (
     <View style={styles.container}>
       {data.error && (
@@ -81,6 +81,7 @@ function Headlines(props) {
       />
       <Presenter
         data={toDisplay}
+        category={category}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         loading={data.loading}

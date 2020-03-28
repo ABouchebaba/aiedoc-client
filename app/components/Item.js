@@ -31,11 +31,11 @@ function Item(props) {
           <Text style={styles.itemTitleText}>{props.item.title}</Text>
         </View>
       </TouchableWithoutFeedback>
-      <View style={bookmarkStyle}>
+      {/* <View style={bookmarkStyle}>
         <TouchableWithoutFeedback onPress={bookmark}>
           <Ionicons name="md-bookmark" size={30} color="white" />
         </TouchableWithoutFeedback>
-      </View>
+      </View> */}
     </View>
   );
 }

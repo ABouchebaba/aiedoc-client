@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { View, FlatList, TouchableOpacity, Text } from "react-native";
 import getDimensions from "../helpers/getDimensions";
-import { useFocusEffect } from "@react-navigation/native";
+import { useSelector, useDispatch } from "react-redux";
+import { setToLoad } from "../actions/toLoad";
 
 const { width } = getDimensions();
 
 function Presenter(props) {
-  const [toload, setToload] = useState(props.toLoad);
+  const dispatch = useDispatch();
+  const toLoad = useSelector(state => state.toload);
+  if (!toLoad[props.category]) {
+    dispatch(setToLoad(props.category, 5));
+  }
 
-  useEffect(() => {
-    setToload(props.toLoad);
-  }, [props.data]);
-
-  const loadMore = () => setToload(Math.min(toload + 5, props.data.length));
+  const loadMore = () =>
+    dispatch(
+      setToLoad(
+        props.category,
+        Math.min(toLoad[props.category] + 5, props.data.length)
+      )
+    );
   const footer = () => {
     if (props.data.length > 0)
       return (
@@ -25,21 +32,21 @@ function Presenter(props) {
     return null;
   };
 
-  console.log(toload);
-
   return (
     <View style={styles.container}>
       <FlatList
         // minHeight is necessary for refresh loop to show properly
         style={styles.list}
-        data={props.data.slice(0, toload)} // KHEMEM CHWIYA F HEDI => RE-RENDER PROBLEM
+        data={props.data.slice(0, toLoad[props.category])} // KHEMEM CHWIYA F HEDI => RE-RENDER PROBLEM
         keyExtractor={props.keyExtractor}
         renderItem={props.renderItem}
         refreshing={props.loading}
         onRefresh={props.onRefresh}
         initialNumToRender={5}
         // ListHeaderComponent={}
-        // ListFooterComponent={footer}
+        ListFooterComponent={
+          props.data.length > toLoad[props.category] && footer
+        }
       />
     </View>
   );

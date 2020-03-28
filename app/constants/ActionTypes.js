@@ -14,3 +14,5 @@ export const SET_CATEGORIES = "SET_CATEGORIES";
 
 export const ADD_BOOKMARK = "ADD_BOOKMARK";
 export const REMOVE_BOOKMARK = "REMOVE_BOOKMARK";
+
+export const SET_TOLOAD = "SET_TOLOAD";
