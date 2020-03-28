@@ -5,20 +5,20 @@ import getImageSource from "../helpers/getImageSource";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { addBookmark, removeBookmark } from "../actions/bookmark";
+import { useNavigation } from "@react-navigation/native";
 
 const { height } = getDimensions();
 
 function Item(props) {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const image = getImageSource(props.item.images);
   const bookmarked = useSelector(state => state.bookmarks[props.item.id]);
   const bookmarkStyle = bookmarked
     ? styles.bookmarked()
     : styles.notBookmarked();
 
-  const pressed = () => {
-    alert(props.item.title);
-  };
+  const pressed = () => navigation.navigate("Article", props.item);
   const bookmark = () => {
     if (bookmarked) return dispatch(removeBookmark(props.item.id));
     dispatch(addBookmark(props.item));

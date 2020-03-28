@@ -4,8 +4,8 @@ import {
   SET_ARTICLES,
   ERROR_ARTICLES
 } from "../constants/ActionTypes";
-import { getTopics } from "./topics";
-import { getCategories } from "./categories";
+// import { getTopics } from "./topics";
+// import { getCategories } from "./categories";
 
 export const getArticles = () => dispatch => {
   dispatch({ type: LOADING_ARTICLES });
@@ -13,12 +13,12 @@ export const getArticles = () => dispatch => {
   loadArticles()
     .then(res => {
       // triggers articles grouping to topics
-      dispatch(getTopics(res.data));
-      dispatch(getCategories(res.data));
+      // dispatch(getTopics(res.data));
+      // dispatch(getCategories(res.data));
 
       return dispatch({
         type: SET_ARTICLES,
-        data: res.data
+        data: res
       });
     })
     .catch(err => {

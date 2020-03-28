@@ -19,6 +19,16 @@ export function HeaderRight(props) {
   );
 }
 
+export function renderMainHeader(props) {
+  return {
+    headerRight: () => <HeaderRight {...props} />,
+    headerLeft: () => <HeaderLeft {...props} />,
+    headerTitle: "Open News",
+    headerTitleAlign: "center",
+    headerTitleStyle: { fontWeight: "bold" }
+  };
+}
+
 const style = {
   left: {
     paddingLeft: 20

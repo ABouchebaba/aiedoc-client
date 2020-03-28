@@ -4,6 +4,8 @@ import ForYou from "../screens/ForYou";
 import Headlines from "../screens/Headlines";
 import ReadLater from "../screens/ReadLater";
 import Test from "../screens/Test";
+import HeadlinesNav from "./HeadlinesNav";
+import ReadLaterNav from "./ReadLaterNav";
 import { Ionicons } from "@expo/vector-icons";
 
 const icons = {
@@ -17,17 +19,17 @@ const Main = createBottomTabNavigator();
 
 const MainScreen = () => (
   <Main.Navigator
-    initialRouteName="Test"
+    initialRouteName="Headlines"
     screenOptions={({ route }) => ({
       tabBarIcon: ({ size, color }) => (
         <Ionicons name={icons[route.name]} size={size} color={color} />
       )
     })}
   >
-    <Main.Screen name="Test" component={Test} />
-    <Main.Screen name="For You" component={ForYou} />
-    <Main.Screen name="Headlines" component={Headlines} />
-    <Main.Screen name="Read Later" component={ReadLater} />
+    {/* <Main.Screen name="Test" component={Test} /> */}
+    {/* <Main.Screen name="For You" component={ForYou} /> */}
+    <Main.Screen name="Headlines" component={HeadlinesNav} />
+    <Main.Screen name="Read Later" component={ReadLaterNav} />
   </Main.Navigator>
 );
 

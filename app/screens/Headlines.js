@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ArticleGroup from "../components/ArticleGroup";
 import ArticleCard from "../components/ArticleCard";
@@ -46,6 +46,7 @@ const extractCategories = articles => {
 function Headlines(props) {
   const [category, setCategory] = useState("All");
   const dispatch = useDispatch();
+
   const data = useSelector(state => state.articles);
 
   let treatment = () => filter(category, data.articles);

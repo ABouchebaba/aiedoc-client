@@ -9,18 +9,17 @@ import {
 import getImageSource from "../helpers/getImageSource";
 import getDimensions from "../helpers/getDimensions";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = getDimensions();
 
 function ArticleCard(props) {
+  const navigation = useNavigation();
   const image = getImageSource(props.data.images);
   const cardStyle =
     props.data.lang === "Arabic" ? styles.cardRTL() : styles.cardLTR();
 
-  const pressed = () => {
-    alert(props.data.title);
-  };
-
+  const pressed = () => navigation.navigate("Article", props.data);
   const unbookmark = () => props.unbookmark(props.data.id);
 
   return (

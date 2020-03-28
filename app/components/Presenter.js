@@ -37,9 +37,9 @@ function Presenter(props) {
         renderItem={props.renderItem}
         refreshing={props.loading}
         onRefresh={props.onRefresh}
-        // initialNumToRender={3}
+        initialNumToRender={5}
         // ListHeaderComponent={}
-        ListFooterComponent={footer}
+        // ListFooterComponent={footer}
       />
     </View>
   );

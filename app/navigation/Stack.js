@@ -1,11 +1,7 @@
 import React from "react";
-import {
-  createStackNavigator,
-  HeaderHeightContext
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import Main from "./Main";
 import Search from "../screens/Search";
-import { HeaderLeft, HeaderRight } from "../components/MainHeader";
 import SearchHeader from "../components/SearchHeader";
 
 const Stack = createStackNavigator();
@@ -16,13 +12,7 @@ function StackScreen() {
       <Stack.Screen
         name="Home"
         component={Main}
-        options={props => ({
-          headerRight: () => <HeaderRight {...props} />,
-          headerLeft: () => <HeaderLeft {...props} />,
-          headerTitle: "Open News",
-          headerTitleAlign: "center",
-          headerTitleStyle: { fontWeight: "bold" }
-        })}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Search"
