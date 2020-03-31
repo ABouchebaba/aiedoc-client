@@ -1,31 +1,31 @@
 import {
-  SET_CATEGORIES,
-  LOADING_CATEGORIES,
-  ERROR_CATEGORIES
+  SET_SOURCES,
+  LOADING_SOURCES,
+  ERROR_SOURCES
 } from "../constants/ActionTypes";
 
 const initialState = {
-  categories: [],
+  sources: [],
   loading: false,
   error: false
 };
 
-const CategoryReducer = (state = initialState, action) => {
+const SourcesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOADING_CATEGORIES: {
+    case LOADING_SOURCES: {
       return {
         ...state,
         loading: true
       };
     }
-    case SET_CATEGORIES: {
+    case SET_SOURCES: {
       return {
         ...state,
         loading: false,
-        categories: action.data
+        sources: action.data
       };
     }
-    case ERROR_CATEGORIES: {
+    case ERROR_SOURCES: {
       return {
         ...state,
         loading: false,
@@ -37,4 +37,4 @@ const CategoryReducer = (state = initialState, action) => {
   }
 };
 
-export default CategoryReducer;
+export default SourcesReducer;

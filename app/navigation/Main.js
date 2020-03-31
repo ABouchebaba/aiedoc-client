@@ -6,6 +6,7 @@ import ReadLater from "../screens/ReadLater";
 import Test from "../screens/Test";
 import HeadlinesNav from "./HeadlinesNav";
 import ReadLaterNav from "./ReadLaterNav";
+import ForYouNav from "./ForYouNav";
 import { Ionicons } from "@expo/vector-icons";
 
 const icons = {
@@ -27,7 +28,7 @@ const MainScreen = () => (
     })}
   >
     {/* <Main.Screen name="Test" component={Test} /> */}
-    {/* <Main.Screen name="For You" component={ForYou} /> */}
+    <Main.Screen name="For You" component={ForYouNav} />
     <Main.Screen name="Headlines" component={HeadlinesNav} />
     <Main.Screen name="Read Later" component={ReadLaterNav} />
   </Main.Navigator>

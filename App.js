@@ -4,6 +4,8 @@ import { store, persistor } from "./app/store";
 import { Provider } from "react-redux";
 import Navigator from "./app/navigation";
 import { getArticles } from "./app/actions/articles";
+import { getCategories } from "./app/actions/categories";
+import { getSources } from "./app/actions/sources";
 import { AppLoading } from "expo";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -27,7 +29,10 @@ export default class App extends React.Component {
 
   async load() {
     // console.log("loading...");
-    return store.dispatch(getArticles());
+    store.dispatch(getSources());
+    store.dispatch(getCategories());
+    store.dispatch(getArticles());
+    return;
   }
 
   render = () => {

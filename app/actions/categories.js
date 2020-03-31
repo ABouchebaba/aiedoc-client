@@ -1,19 +1,27 @@
-import { SET_CATEGORIES, LOADING_CATEGORIES } from "../constants/ActionTypes";
+import {
+  SET_CATEGORIES,
+  LOADING_CATEGORIES,
+  ERROR_CATEGORIES
+} from "../constants/ActionTypes";
+import { loadCategories } from "../api/categories";
 
-export const getCategories = articles => dispatch => {
+export const getCategories = () => dispatch => {
   dispatch({ type: LOADING_CATEGORIES });
 
-  let categories = {};
-  articles.map(article => {
-    if (categories[article.category]) {
-      categories[article.category] = [...categories[article.category], article];
-    } else {
-      categories[article.category] = [article];
-    }
-  });
+  loadCategories()
+    .then(res => {
+      console.log(res);
 
-  return dispatch({
-    type: SET_CATEGORIES,
-    data: categories
-  });
+      return dispatch({
+        type: SET_CATEGORIES,
+        data: res
+      });
+    })
+    .catch(err => {
+      console.log("errored get categories");
+      return dispatch({
+        type: ERROR_CATEGORIES,
+        data: err
+      });
+    });
 };

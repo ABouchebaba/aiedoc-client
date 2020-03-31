@@ -7,6 +7,7 @@ import Presenter from "../components/Presenter";
 import getDimensions from "../helpers/getDimensions";
 import { getArticles } from "../actions/articles";
 import CategoryHeader from "../components/CategoryHeader";
+import { setToLoad } from "../actions/toLoad";
 
 const { width } = getDimensions();
 
@@ -27,7 +28,7 @@ const group = articles => {
   return topics.filter(a => a.length > 1 && count++ < 20);
 };
 
-const renderCard = ({ item }) => <ArticleCard data={item} />;
+const renderCard = ({ item }) => <ArticleCard data={item} bookmarkBtn />;
 const renderGroup = ({ item }) => <ArticleGroup data={item} />;
 
 const cardKeyExtractor = item => item.id;
@@ -48,6 +49,10 @@ function Headlines(props) {
   const dispatch = useDispatch();
 
   const data = useSelector(state => state.articles);
+  const toLoad = useSelector(state => state.toload);
+  if (!toLoad[category]) {
+    dispatch(setToLoad(category, 10));
+  }
 
   let treatment = () => filter(category, data.articles);
   let renderItem = renderCard;
@@ -63,6 +68,8 @@ function Headlines(props) {
   //  ==> THINK IT OVER
   const categories = ["All", ...extractCategories(data.articles)];
   const toDisplay = treatment();
+  const loadMore = length =>
+    dispatch(setToLoad(category, Math.min(toLoad[category] + 5, length)));
   //////////////////////////////////////////////////////
   const onRefresh = () => dispatch(getArticles());
 
@@ -81,9 +88,10 @@ function Headlines(props) {
       />
       <Presenter
         data={toDisplay}
-        category={category}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        toLoad={toLoad[category]}
+        loadMore={loadMore}
         loading={data.loading}
         onRefresh={onRefresh}
       />

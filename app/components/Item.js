@@ -2,21 +2,18 @@ import React from "react";
 import { Text, TouchableWithoutFeedback, View, Image } from "react-native";
 import getDimensions from "../helpers/getDimensions";
 import getImageSource from "../helpers/getImageSource";
-import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { addBookmark, removeBookmark } from "../actions/bookmark";
 import { useNavigation } from "@react-navigation/native";
+import Bookmark from "./Bookmark";
 
-const { height } = getDimensions();
+const { height, width } = getDimensions();
 
 function Item(props) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const image = getImageSource(props.item.images);
   const bookmarked = useSelector(state => state.bookmarks[props.item.id]);
-  const bookmarkStyle = bookmarked
-    ? styles.bookmarked()
-    : styles.notBookmarked();
 
   const pressed = () => navigation.navigate("Article", props.item);
   const bookmark = () => {
@@ -29,13 +26,10 @@ function Item(props) {
         <View style={styles.itemContainer}>
           <Image source={image} style={styles.itemImage} />
           <Text style={styles.itemTitleText}>{props.item.title}</Text>
+          <Text style={styles.source}>{props.item.source}</Text>
         </View>
       </TouchableWithoutFeedback>
-      {/* <View style={bookmarkStyle}>
-        <TouchableWithoutFeedback onPress={bookmark}>
-          <Ionicons name="md-bookmark" size={30} color="white" />
-        </TouchableWithoutFeedback>
-      </View> */}
+      <Bookmark onBookmark={bookmark} bookmarked={bookmarked} />
     </View>
   );
 }
@@ -44,44 +38,36 @@ const styles = {
   container: { position: "relative" },
   itemContainer: {
     alignItems: "center",
-    position: "relative"
+    position: "relative",
+    height: 0.3 * height,
+    width: 0.7 * width
   },
   itemImage: {
     width: "100%",
-    height: 0.3 * height,
-    borderRadius: 10,
-    margin: 10
+    height: "100%",
+    resizeMode: "stretch", ///
+    borderRadius: 10
   },
   itemTitleText: {
+    backgroundColor: "rgba(150,150,150,0.7);",
+    color: "white",
+    alignSelf: "center",
+    textAlign: "center",
     position: "absolute",
     bottom: 20,
-    alignSelf: "center",
-    color: "white",
-    backgroundColor: "rgba(150,150,150,0.5);",
+    left: 0,
+    right: 0,
     fontSize: 16,
-    textAlign: "center"
+    zIndex: 5
   },
-  bookmark: {
-    width: 50,
-    height: 40,
-    borderRadius: 10,
+  source: {
     position: "absolute",
-    top: 20,
-    right: -10,
-    justifyContent: "center",
-    paddingLeft: 10
-  },
-  bookmarked: function() {
-    return {
-      ...this.bookmark,
-      backgroundColor: "#28a745"
-    };
-  },
-  notBookmarked: function() {
-    return {
-      ...this.bookmark,
-      backgroundColor: "#007bff"
-    };
+    top: 5,
+    left: 10,
+    color: "grey",
+    backgroundColor: "#efefef",
+    padding: 3,
+    borderRadius: 5
   }
 };
 

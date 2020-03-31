@@ -19,7 +19,8 @@ const ArticleReducer = (state = initialState, action) => {
       };
     }
     case SET_ARTICLES: {
-      // console.log("setting data");
+      console.log("setting data");
+      console.log(action.data[action.data.length - 1].date);
       return {
         ...state,
         loading: false,
