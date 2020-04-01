@@ -18,6 +18,7 @@ export const SET_SOURCES = "SET_SOURCES";
 export const ERROR_SOURCES = "ERROR_SOURCES";
 
 export const SET_PREFERENCE = "SET_PREFERENCE";
+export const SET_SETTING = "SET_SETTING";
 
 export const ADD_BOOKMARK = "ADD_BOOKMARK";
 export const REMOVE_BOOKMARK = "REMOVE_BOOKMARK";

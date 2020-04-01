@@ -7,7 +7,15 @@ import rootReducer from "./reducers";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["articles", "search", "bookmarks", "sources", "categories"]
+  whitelist: [
+    "articles",
+    "sources",
+    "categories",
+    "search",
+    "bookmarks",
+    "settings",
+    "preferences"
+  ]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

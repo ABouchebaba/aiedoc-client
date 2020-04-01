@@ -7,6 +7,7 @@ import BookmarkReducer from "./BookmarkReducer";
 import ToLoadReducer from "./ToLoadReducer";
 import SourceReducer from "./SourceReducer";
 import PreferenceReducer from "./PreferenceReducer";
+import SettingReducer from "./SettingReducer";
 
 rootReducer = combineReducers({
   articles: ArticleReducer,
@@ -16,7 +17,8 @@ rootReducer = combineReducers({
   bookmarks: BookmarkReducer,
   toload: ToLoadReducer,
   sources: SourceReducer,
-  preferences: PreferenceReducer
+  preferences: PreferenceReducer,
+  settings: SettingReducer
 });
 
 export default rootReducer;

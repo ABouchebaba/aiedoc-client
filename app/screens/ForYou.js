@@ -6,6 +6,7 @@ import { getArticles } from "../actions/articles";
 import { setToLoad } from "../actions/toLoad";
 import { useDispatch, useSelector } from "react-redux";
 
+// REFACTORING THIS MIGHT BE A GOOD IDEA
 const filter = (articles, preferences) => {
   return articles.filter(a => {
     if (Object.keys(preferences["languages"]).length > 0)
