@@ -4,16 +4,18 @@ import { useSelector, useDispatch } from "react-redux";
 import getImageSource from "../helpers/getImageSource";
 import getDimensions from "../helpers/getDimensions";
 import dateDifference from "../helpers/dateDifference";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, ThemeProvider } from "@react-navigation/native";
 import { addBookmark, removeBookmark } from "../actions/bookmark";
 import Bookmark from "./Bookmark";
 import DeleteBtn from "./DeleteBtn";
+import { useTheme } from "@react-navigation/native";
 
 const { height } = getDimensions();
 
 function ArticleCard(props) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const theme = useTheme();
   const bookmarked = useSelector(state => state.bookmarks[props.data.id]);
   const image = getImageSource(props.data.images);
   const cardStyle = styles.card;
@@ -34,7 +36,11 @@ function ArticleCard(props) {
           <Image source={image} style={styles.image} />
           <View style={styles.text}>
             <Text style={styles.sourceAndDate}>{props.data.source}</Text>
-            <Text style={styles.title}>{props.data.title}</Text>
+            <Text
+              style={[styles.title, { color: theme.colors.text, fontSize: 16 }]}
+            >
+              {props.data.title}
+            </Text>
             <Text style={styles.sourceAndDate}>{props.data.date}</Text>
           </View>
         </View>

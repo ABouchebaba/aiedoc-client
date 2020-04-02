@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   FlatList
 } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 function CategoryHeader(props) {
   const [ref, setref] = useState(null);
+  const theme = useTheme();
 
   const onItemPress = item => {
     const index = props.categories.indexOf(item);
@@ -18,20 +20,25 @@ function CategoryHeader(props) {
 
   const renderItem = ({ item }) => {
     const style = item === props.selected ? styles.selectedItem() : styles.item;
+    const textStyle = {
+      fontSize: 16,
+      color: theme.colors.text
+    };
     const onPress = () => onItemPress(item);
     return (
       <View style={style}>
         <TouchableOpacity onPress={onPress}>
-          <Text style={styles.text}>{item}</Text>
+          <Text style={textStyle}>{item}</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
   const keyExtractor = (item, index) => `${index}`;
-
+  let containerStyle = { ...styles.container };
+  containerStyle["backgroundColor"] = theme.colors.background;
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <FlatList
         ref={setref}
         horizontal

@@ -100,7 +100,7 @@ function Headlines(props) {
 }
 
 const styles = {
-  container: { width: width, alignSelf: "center", backgroundColor: "white" },
+  container: { width: width, alignSelf: "center" },
   errorContainer: { backgroundColor: "#a94442" }
 };
 

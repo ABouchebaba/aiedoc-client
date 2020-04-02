@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { View, FlatList, Dimensions } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 
 function HorizontalList(props) {
   const [index, setindex] = useState(0);
+  const theme = useTheme();
 
   const onScrollFinished = e => {
     let contentOffset = e.nativeEvent.contentOffset;
@@ -17,8 +19,11 @@ function HorizontalList(props) {
     return (
       <View style={styles.paginationContainer}>
         {props.data.map((e, i) => {
-          let style = styles.notSelected;
-          if (i === index) style = styles.selected;
+          let style = { ...styles.notSelected };
+          if (i === index) {
+            style = { ...styles.selected };
+            style["backgroundColor"] = theme.colors.text;
+          }
           return <View style={style} key={i} />;
         })}
       </View>

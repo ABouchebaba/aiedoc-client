@@ -23,7 +23,7 @@ const styles = {
     height: 50,
     justifyContent: "center",
     backgroundColor: "white",
-    borderColor: "#efefef",
+    // borderColor: "#efefef",
     borderWidth: 1,
     borderRadius: 10,
     margin: 5

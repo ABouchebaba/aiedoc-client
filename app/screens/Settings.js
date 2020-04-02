@@ -4,10 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSetting } from "../actions/settings";
 import { Slider } from "react-native";
 import Checkbox from "../components/Checkbox";
+import { useTheme } from "@react-navigation/native";
 
 function SettingsScreen(props) {
   const dispatch = useDispatch();
   const settings = useSelector(state => state.settings);
+  const theme = useTheme();
 
   const fontSizes = { min: 12, max: 20 };
   const lineHeight = { min: 20, max: 40 };
@@ -17,13 +19,16 @@ function SettingsScreen(props) {
   const exampleStyle = {
     fontSize: settings.fontSize,
     lineHeight: settings.lineHeight,
-    textAlign: settings.textAlign
+    textAlign: settings.textAlign,
+    color: theme.colors.text
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.fontSizeContainer}>
-        <Text style={styles.fontSizeText}>Font size : {settings.fontSize}</Text>
+        <Text style={[styles.fontSizeText, { color: theme.colors.text }]}>
+          Font size : {settings.fontSize}
+        </Text>
         <Slider
           minimumValue={fontSizes["min"]}
           maximumValue={fontSizes["max"]}
@@ -36,7 +41,7 @@ function SettingsScreen(props) {
         />
       </View>
       <View style={styles.fontSizeContainer}>
-        <Text style={styles.fontSizeText}>
+        <Text style={[styles.fontSizeText, { color: theme.colors.text }]}>
           Line height : {settings.lineHeight}
         </Text>
         <Slider
@@ -51,7 +56,7 @@ function SettingsScreen(props) {
         />
       </View>
       <View style={styles.fontSizeContainer}>
-        <Text style={styles.textAlignText}>
+        <Text style={[styles.textAlignText, { color: theme.colors.text }]}>
           Text align : {settings.textAlign}
         </Text>
         {textAlign.map(t => {
@@ -63,7 +68,9 @@ function SettingsScreen(props) {
         })}
       </View>
       <View style={styles.fontSizeContainer}>
-        <Text style={styles.textAlignText}>Theme : {settings.theme}</Text>
+        <Text style={[styles.textAlignText, { color: theme.colors.text }]}>
+          Theme : {settings.theme}
+        </Text>
         {themes.map(t => {
           const checked = settings.theme === t;
           const onPress = () => dispatch(setSetting("theme", t));

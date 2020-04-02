@@ -5,11 +5,13 @@ import getImageSource from "../helpers/getImageSource";
 import getDimensions from "../helpers/getDimensions";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
+import { useTheme } from "@react-navigation/native";
 
 const { width, height } = getDimensions();
 
 function ArticleScreen(props) {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const settings = useSelector(state => state.settings);
   const article = props.route.params;
   const image = getImageSource(article.images);
@@ -17,12 +19,15 @@ function ArticleScreen(props) {
   const contentStyle = {
     fontSize: settings.fontSize,
     lineHeight: settings.lineHeight,
-    textAlign: settings.textAlign
+    textAlign: settings.textAlign,
+    color: theme.colors.text
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>{article.title}</Text>
+      <Text style={[styles.title, { color: theme.colors.text }]}>
+        {article.title}
+      </Text>
       <Image source={image} style={styles.image} />
       <Text style={contentStyle}>{article.content}</Text>
     </ScrollView>

@@ -40,8 +40,8 @@ const styles = {
   container: {
     width: width,
     height: height,
-    alignSelf: "center",
-    backgroundColor: "white"
+    alignSelf: "center"
+    // backgroundColor: "white"
   },
   list: { marginBottom: 75, minHeight: 100 },
   loadMoreBtn: {
