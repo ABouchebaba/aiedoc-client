@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Text, Button, View, FlatList } from "react-native";
+import React from "react";
 import Presenter from "../components/Presenter";
 import ArticleCard from "../components/ArticleCard";
-import { getArticles } from "../actions/articles";
-import { setToLoad } from "../actions/toLoad";
+import { getArticles, setToLoad } from "../Store/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 // REFACTORING THIS MIGHT BE A GOOD IDEA

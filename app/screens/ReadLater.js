@@ -1,18 +1,15 @@
 import React from "react";
 import { View, FlatList } from "react-native";
 import ArticleCard from "../components/ArticleCard";
-import { removeBookmark } from "../actions/bookmark";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const ReadLater = props => {
-  const dispatch = useDispatch();
   const articles = Object.values(useSelector(state => state.bookmarks));
 
   const keyExtractor = item => item.id;
   const renderItem = ({ item }) => (
-    <ArticleCard key={item.id} data={item} unbookmark={unbookmark} deletebtn />
+    <ArticleCard key={item.id} data={item} deletebtn />
   );
-  const unbookmark = id => dispatch(removeBookmark(id));
 
   return (
     <View>

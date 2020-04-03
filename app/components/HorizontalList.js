@@ -31,7 +31,7 @@ function HorizontalList(props) {
   };
 
   return (
-    <View>
+    <View style={styles.listContainer}>
       <FlatList
         data={props.data}
         keyExtractor={props.keyExtractor}
@@ -49,9 +49,12 @@ function HorizontalList(props) {
 }
 
 const styles = {
+  listContainer: {
+    marginBottom: 10
+  },
   container: {
-    width: 0.7 * width,
-    maxHeight: 0.3 * height,
+    width: "100%",
+    maxHeight: 0.4 * height,
     alignSelf: "center",
     marginVertical: 10,
     borderColor: "grey",

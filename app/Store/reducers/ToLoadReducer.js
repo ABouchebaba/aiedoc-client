@@ -1,4 +1,4 @@
-import { SET_TOLOAD } from "../constants/ActionTypes";
+import { SET_TOLOAD } from "../../constants/ActionTypes";
 
 const initialState = {};
 

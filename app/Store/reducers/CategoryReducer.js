@@ -2,7 +2,7 @@ import {
   SET_CATEGORIES,
   LOADING_CATEGORIES,
   ERROR_CATEGORIES
-} from "../constants/ActionTypes";
+} from "../../constants/ActionTypes";
 
 const initialState = {
   categories: [],

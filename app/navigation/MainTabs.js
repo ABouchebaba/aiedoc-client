@@ -3,12 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ForYou from "../screens/ForYou";
 import Headlines from "../screens/Headlines";
 import ReadLater from "../screens/ReadLater";
-import Test from "../screens/Test";
-import HeadlinesNav from "./HeadlinesNav";
-import ReadLaterNav from "./ReadLaterNav";
-import ForYouNav from "./ForYouNav";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
+import Test from "../screens/Test";
 
 const icons = {
   "For You": "md-person",
@@ -17,26 +14,26 @@ const icons = {
   Test: "md-bookmarks"
 };
 
-const Main = createBottomTabNavigator();
+const MainTabs = createBottomTabNavigator();
 
-const MainScreen = () => {
+const MainTabsScreen = () => {
   const theme = useTheme();
   return (
-    <Main.Navigator
+    <MainTabs.Navigator
       initialRouteName="Headlines"
-      tabBarOptions={{ inactiveTintColor: theme.colors.text }}
+      // tabBarOptions={{ inactiveTintColor: theme.colors.text }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ size, color }) => (
           <Ionicons name={icons[route.name]} size={size} color={color} />
         )
       })}
     >
-      {/* <Main.Screen name="Test" component={Test} /> */}
-      <Main.Screen name="For You" component={ForYouNav} />
-      <Main.Screen name="Headlines" component={HeadlinesNav} />
-      <Main.Screen name="Read Later" component={ReadLaterNav} />
-    </Main.Navigator>
+      {/* <MainTabs.Screen name="Test" component={Test} /> */}
+      <MainTabs.Screen name="For You" component={ForYou} />
+      <MainTabs.Screen name="Headlines" component={Headlines} />
+      <MainTabs.Screen name="Read Later" component={ReadLater} />
+    </MainTabs.Navigator>
   );
 };
 
-export default MainScreen;
+export default MainTabsScreen;

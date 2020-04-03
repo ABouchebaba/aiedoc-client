@@ -4,10 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import ArticleGroup from "../components/ArticleGroup";
 import ArticleCard from "../components/ArticleCard";
 import Presenter from "../components/Presenter";
-import getDimensions from "../helpers/getDimensions";
-import { getArticles } from "../actions/articles";
+import { getDimensions } from "../helpers";
+import { getArticles, setToLoad } from "../Store/actions";
 import CategoryHeader from "../components/CategoryHeader";
-import { setToLoad } from "../actions/toLoad";
 
 const { width } = getDimensions();
 

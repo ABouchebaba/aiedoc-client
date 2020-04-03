@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
-import search from "../actions/search";
+import { search } from "../Store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import getDimensions from "../helpers/getDimensions";
+import { getDimensions } from "../helpers";
 
 const { width } = getDimensions();
 

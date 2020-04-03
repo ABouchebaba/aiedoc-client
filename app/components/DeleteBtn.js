@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import getDimensions from "../helpers/getDimensions";
+import { getDimensions } from "../helpers";
 
 const { height, width } = getDimensions();
 

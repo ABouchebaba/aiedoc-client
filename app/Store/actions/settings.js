@@ -1,4 +1,4 @@
-import { SET_SETTING } from "../constants/ActionTypes";
+import { SET_SETTING } from "../../constants/ActionTypes";
 
 export const setSetting = (setting, value) => dispatch => {
   return dispatch({

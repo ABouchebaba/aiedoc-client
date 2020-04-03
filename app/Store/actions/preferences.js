@@ -1,4 +1,4 @@
-import { SET_PREFERENCE } from "../constants/ActionTypes";
+import { SET_PREFERENCE } from "../../constants/ActionTypes";
 
 export const setPreference = (pref, value) => dispatch => {
   return dispatch({

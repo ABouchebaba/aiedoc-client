@@ -1,11 +1,8 @@
 import React from "react";
-import { Text } from "react-native";
-import { store, persistor } from "./app/store";
+import { store, persistor } from "./app/Store";
 import { Provider } from "react-redux";
 import Navigator from "./app/navigation";
-import { getArticles } from "./app/actions/articles";
-import { getCategories } from "./app/actions/categories";
-import { getSources } from "./app/actions/sources";
+import { getArticles, getCategories, getSources } from "./app/Store/actions";
 import { AppLoading } from "expo";
 import { PersistGate } from "redux-persist/integration/react";
 

@@ -1,9 +1,8 @@
 import React from "react";
 import { Text, TouchableWithoutFeedback, View, Image } from "react-native";
-import getDimensions from "../helpers/getDimensions";
-import getImageSource from "../helpers/getImageSource";
+import { getImageSource, getDimensions } from "../helpers";
 import { useSelector, useDispatch } from "react-redux";
-import { addBookmark, removeBookmark } from "../actions/bookmark";
+import { addBookmark, removeBookmark } from "../Store/actions";
 import { useNavigation } from "@react-navigation/native";
 import Bookmark from "./Bookmark";
 
@@ -39,14 +38,14 @@ const styles = {
   itemContainer: {
     alignItems: "center",
     position: "relative",
-    height: 0.3 * height,
-    width: 0.7 * width
+    height: 0.35 * height,
+    width: width
   },
   itemImage: {
     width: "100%",
-    height: "100%",
-    resizeMode: "stretch", ///
-    borderRadius: 10
+    height: "100%"
+    // resizeMode: "stretch", ///
+    // borderRadius: 10
   },
   itemTitleText: {
     backgroundColor: "rgba(150,150,150,0.7);",
@@ -54,6 +53,7 @@ const styles = {
     alignSelf: "center",
     textAlign: "center",
     position: "absolute",
+    paddingHorizontal: 5,
     bottom: 20,
     left: 0,
     right: 0,

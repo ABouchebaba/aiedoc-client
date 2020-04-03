@@ -1,4 +1,4 @@
-import { SET_TOLOAD } from "../constants/ActionTypes";
+import { SET_TOLOAD } from "../../constants/ActionTypes";
 
 export const setToLoad = (category, toload) => dispatch => {
   dispatch({

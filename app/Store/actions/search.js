@@ -1,6 +1,6 @@
-import { LOADING_RESULTS, SET_RESULTS } from "../constants/ActionTypes";
+import { LOADING_RESULTS, SET_RESULTS } from "../../constants/ActionTypes";
 
-const search = (articles, query) => dispatch => {
+export const search = (articles, query) => dispatch => {
   dispatch({ type: LOADING_RESULTS });
 
   const results = articles.filter(a => a.title.includes(query));
@@ -11,5 +11,3 @@ const search = (articles, query) => dispatch => {
     query
   });
 };
-
-export default search;

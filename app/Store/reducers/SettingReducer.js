@@ -1,4 +1,4 @@
-import { SET_SETTING } from "../constants/ActionTypes";
+import { SET_SETTING } from "../../constants/ActionTypes";
 
 const initialState = {
   fontSize: 16,

@@ -1,4 +1,4 @@
-import { SET_PREFERENCE } from "../constants/ActionTypes";
+import { SET_PREFERENCE } from "../../constants/ActionTypes";
 
 const initialState = {
   languages: {},

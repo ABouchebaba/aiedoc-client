@@ -1,6 +1,6 @@
 import React from "react";
 import { View, FlatList, TouchableOpacity, Text } from "react-native";
-import getDimensions from "../helpers/getDimensions";
+import { getDimensions } from "../helpers";
 
 const { width, height } = getDimensions();
 
@@ -41,7 +41,6 @@ const styles = {
     width: width,
     height: height,
     alignSelf: "center"
-    // backgroundColor: "white"
   },
   list: { marginBottom: 75, minHeight: 100 },
   loadMoreBtn: {

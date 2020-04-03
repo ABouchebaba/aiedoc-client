@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, ScrollView, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { setSetting } from "../actions/settings";
+import { setSetting } from "../Store/actions";
 import { Slider } from "react-native";
 import Checkbox from "../components/Checkbox";
 import { useTheme } from "@react-navigation/native";

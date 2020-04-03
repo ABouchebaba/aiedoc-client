@@ -1,3 +1,3 @@
-import Navigator from "./Navigator";
+import RootDrawer from "./RootDrawer";
 
-export default Navigator;
+export default RootDrawer;

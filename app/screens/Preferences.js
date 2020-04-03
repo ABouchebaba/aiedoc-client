@@ -1,9 +1,9 @@
 import React from "react";
-import { Text, Button, View, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Checkbox from "../components/Checkbox";
 import SectionHeader from "../components/SectionHeader";
-import { setPreference } from "../actions/preferences";
+import { setPreference } from "../Store/actions";
 
 function preferencesScreen(props) {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import {
   SET_SOURCES,
   LOADING_SOURCES,
   ERROR_SOURCES
-} from "../constants/ActionTypes";
+} from "../../constants/ActionTypes";
 import { loadSources } from "../api/sources";
 
 export const getSources = () => dispatch => {

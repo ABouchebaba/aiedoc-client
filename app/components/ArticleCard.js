@@ -1,11 +1,9 @@
 import React from "react";
 import { Text, TouchableWithoutFeedback, Image, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import getImageSource from "../helpers/getImageSource";
-import getDimensions from "../helpers/getDimensions";
-import dateDifference from "../helpers/dateDifference";
-import { useNavigation, ThemeProvider } from "@react-navigation/native";
-import { addBookmark, removeBookmark } from "../actions/bookmark";
+import { getImageSource, getDimensions } from "../helpers";
+import { useNavigation } from "@react-navigation/native";
+import { addBookmark, removeBookmark } from "../Store/actions";
 import Bookmark from "./Bookmark";
 import DeleteBtn from "./DeleteBtn";
 import { useTheme } from "@react-navigation/native";
@@ -18,12 +16,11 @@ function ArticleCard(props) {
   const theme = useTheme();
   const bookmarked = useSelector(state => state.bookmarks[props.data.id]);
   const image = getImageSource(props.data.images);
-  const cardStyle = styles.card;
 
   // const hours = dateDifference(props.data.date);
 
-  const pressed = () => navigation.navigate("Article", props.data);
-  const unbookmark = () => props.unbookmark(props.data.id);
+  const pressed = () => navigation.push("Article", props.data);
+  const unbookmark = () => dispatch(removeBookmark(props.data.id));
   const bookmark = () => {
     if (bookmarked) return dispatch(removeBookmark(props.data.id));
     dispatch(addBookmark(props.data));
@@ -32,7 +29,7 @@ function ArticleCard(props) {
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={pressed}>
-        <View style={cardStyle}>
+        <View style={styles.card}>
           <Image source={image} style={styles.image} />
           <View style={styles.text}>
             <Text style={styles.sourceAndDate}>{props.data.source}</Text>

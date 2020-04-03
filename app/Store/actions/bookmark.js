@@ -1,4 +1,4 @@
-import { ADD_BOOKMARK, REMOVE_BOOKMARK } from "../constants/ActionTypes";
+import { ADD_BOOKMARK, REMOVE_BOOKMARK } from "../../constants/ActionTypes";
 
 export const addBookmark = article => dispatch => {
   dispatch({

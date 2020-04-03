@@ -2,7 +2,7 @@ import {
   SET_SOURCES,
   LOADING_SOURCES,
   ERROR_SOURCES
-} from "../constants/ActionTypes";
+} from "../../constants/ActionTypes";
 
 const initialState = {
   sources: [],

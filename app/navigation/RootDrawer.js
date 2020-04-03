@@ -4,13 +4,13 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Profile from "../screens/Profile";
 import PreferenceStack from "./PreferenceStack";
 import SettingStack from "./SettingsStack";
-import Stack from "./Stack";
+import HomeStack from "./HomeStack";
 import { DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-const Drawer = createDrawerNavigator();
+const RootDrawer = createDrawerNavigator();
 
-function Navigator() {
+function RootDrawerScreen() {
   let myTheme = { ...DefaultTheme };
   myTheme.colors.background = "#fff";
   let theme = useSelector(state => state.settings.theme);
@@ -19,14 +19,14 @@ function Navigator() {
 
   return (
     <NavigationContainer theme={theme}>
-      <Drawer.Navigator drawerType="slide" screenOptions={{}}>
-        <Drawer.Screen name="Home" component={Stack} />
-        <Drawer.Screen name="Profile" component={Profile} />
-        <Drawer.Screen name="Preferences" component={PreferenceStack} />
-        <Drawer.Screen name="Settings" component={SettingStack} />
-      </Drawer.Navigator>
+      <RootDrawer.Navigator drawerType="slide" screenOptions={{}}>
+        <RootDrawer.Screen name="Home" component={HomeStack} />
+        {/* <RootDrawer.Screen name="Profile" component={Profile} /> */}
+        <RootDrawer.Screen name="Preferences" component={PreferenceStack} />
+        <RootDrawer.Screen name="Settings" component={SettingStack} />
+      </RootDrawer.Navigator>
     </NavigationContainer>
   );
 }
 
-export default Navigator;
+export default RootDrawerScreen;
