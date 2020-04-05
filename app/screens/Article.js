@@ -17,18 +17,20 @@ function ArticleScreen(props) {
   const article = props.route.params;
   const image = getImageSource(article.images);
 
-  let relatedArticles = articles.filter(a => article.group_nb === a.group_nb);
-  if (relatedArticles.length < 3) {
-    const other = articles
-      .filter(
-        a =>
-          a.category === article.category &&
-          a.lang === article.lang &&
-          relatedArticles.filter(arts => arts.id === a.id).length === 0
-      )
-      .slice(0, 3);
-    relatedArticles = [...relatedArticles, ...other];
-  }
+  /// Getting related articles as :
+  /// articles from same group and
+  /// articles from same category
+  let sameGroup = [];
+  let sameCategory = [];
+
+  articles.map(a => {
+    if (a.group_nb === article.group_nb && a.id !== article.id)
+      sameGroup = [...sameGroup, a];
+    else if (a.category === article.category && a.id !== article.id)
+      sameCategory = [...sameCategory, a];
+  });
+
+  const relatedArticles = [...sameGroup, ...sameCategory.slice(0, 3)];
 
   const contentStyle = {
     fontSize: settings.fontSize,
@@ -49,6 +51,9 @@ function ArticleScreen(props) {
       </View>
       <Image source={image} style={styles.image} />
       <Text style={contentStyle}>{article.content}</Text>
+      {article.author && (
+        <Text style={contentStyle}>Author : {article.author.trim()}</Text>
+      )}
       <Text style={[styles.relatedArticlesTitle, { color: theme.colors.text }]}>
         Related Articles :
       </Text>
@@ -86,9 +91,6 @@ const styles = {
   },
   sourceDate: {
     color: "#efefef"
-    // backgroundColor: "#efefef",
-    // borderRadius: 10,
-    // padding: 2
   }
 };
 
