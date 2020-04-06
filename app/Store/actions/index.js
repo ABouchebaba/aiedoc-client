@@ -5,4 +5,3 @@ export { setPreference } from "./preferences";
 export { search } from "./search";
 export { setSetting } from "./settings";
 export { getSources } from "./sources";
-export { setToLoad } from "./toLoad";

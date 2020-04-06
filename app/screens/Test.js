@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, Dimensions } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ArticleGroup from "../components/ArticleGroup";
 import ArticleCard from "../components/ArticleCard";
 import Presenter from "../components/Presenter";
-import { getDimensions } from "../helpers";
 import { getArticles } from "../Store/actions";
-import CategoryHeader from "../components/CategoryHeader";
 
-const { width } = getDimensions();
+const { width } = Dimensions.get("window");
 
 const renderCard = ({ item }) => <ArticleCard data={item} />;
 const renderGroup = ({ item }) => <ArticleGroup data={item} />;
 
-const cardKeyExtractor = item => item.id;
-const groupKeyExtractor = item => item[0].id;
+const cardKeyExtractor = (item) => item.id;
+const groupKeyExtractor = (item) => item[0].id;
 
 function Test(props) {
   const [category, setCategory] = useState("All");
   const dispatch = useDispatch();
-  const { loading, error } = useSelector(state => state.articles);
-  const topics = useSelector(state => state.topics);
-  const categories = useSelector(state => state.categories);
+  const { loading, error } = useSelector((state) => state.articles);
+  const topics = useSelector((state) => state.topics);
+  const categories = useSelector((state) => state.categories);
 
   let toDisplay = topics.topics;
   let renderItem = renderGroup;
@@ -62,7 +60,7 @@ function Test(props) {
 }
 
 const style = {
-  container: { width: width, alignSelf: "center", backgroundColor: "white" }
+  container: { width: width, alignSelf: "center", backgroundColor: "white" },
 };
 
 export default Test;

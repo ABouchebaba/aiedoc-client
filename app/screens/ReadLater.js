@@ -3,14 +3,13 @@ import { View, Text, FlatList } from "react-native";
 import ArticleCard from "../components/ArticleCard";
 import { useSelector } from "react-redux";
 import { useTheme } from "@react-navigation/native";
+import { getBookmarks } from "../Store/selectors";
 
 const ReadLater = (props) => {
-  const articles = Object.values(useSelector((state) => state.bookmarks));
+  const articles = useSelector(getBookmarks);
   const theme = useTheme();
   const keyExtractor = (item) => item.id;
-  const renderItem = ({ item }) => (
-    <ArticleCard key={item.id} data={item} deletebtn />
-  );
+  const renderItem = ({ item }) => <ArticleCard data={item} deletebtn />;
 
   return (
     <View>

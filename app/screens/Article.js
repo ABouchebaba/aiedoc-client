@@ -1,19 +1,19 @@
 import React from "react";
-import { Text, Image, View } from "react-native";
+import { Text, Image, View, Dimensions } from "react-native";
 import { useDispatch } from "react-redux";
-import { getImageSource, getDimensions } from "../helpers";
+import { getImageSource } from "../helpers";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import { useTheme } from "@react-navigation/native";
 import ArticleCard from "../components/ArticleCard";
 
-const { width, height } = getDimensions();
+const { height } = Dimensions.get("window");
 
 function ArticleScreen(props) {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const settings = useSelector(state => state.settings);
-  const articles = useSelector(state => state.articles.articles);
+  const settings = useSelector((state) => state.settings);
+  const articles = useSelector((state) => state.articles.articles);
   const article = props.route.params;
   const image = getImageSource(article.images);
 
@@ -23,7 +23,7 @@ function ArticleScreen(props) {
   let sameGroup = [];
   let sameCategory = [];
 
-  articles.map(a => {
+  articles.map((a) => {
     if (a.group_nb === article.group_nb && a.id !== article.id)
       sameGroup = [...sameGroup, a];
     else if (a.category === article.category && a.id !== article.id)
@@ -37,7 +37,7 @@ function ArticleScreen(props) {
     lineHeight: settings.lineHeight,
     textAlign: settings.textAlign,
     color: theme.colors.text,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   };
 
   return (
@@ -57,7 +57,7 @@ function ArticleScreen(props) {
       <Text style={[styles.relatedArticlesTitle, { color: theme.colors.text }]}>
         Related Articles :
       </Text>
-      {relatedArticles.map(a => (
+      {relatedArticles.map((a) => (
         <ArticleCard key={a.id} data={a} />
       ))}
     </ScrollView>
@@ -69,29 +69,29 @@ const styles = {
     alignSelf: "center",
     alignItems: "center",
     width: "100%",
-    marginBottom: 50
+    marginBottom: 50,
   },
   title: {
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
     padding: 5,
-    marginVertical: 10
+    marginVertical: 10,
   },
   image: { width: "95%", height: 0.35 * height, margin: 10 },
   relatedArticlesTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    margin: 10
+    margin: 10,
   },
   meta: {
     width: "95%",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   sourceDate: {
-    color: "#efefef"
-  }
+    color: "#efefef",
+  },
 };
 
 export default ArticleScreen;

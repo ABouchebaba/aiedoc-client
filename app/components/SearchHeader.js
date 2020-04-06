@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { TextInput, View } from "react-native";
+import { TextInput, View, Dimensions } from "react-native";
 import { search } from "../Store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import { getDimensions } from "../helpers";
 
-const { width } = getDimensions();
+const { width } = Dimensions.get("window");
 
 function SearchHeader(props) {
   const dispatch = useDispatch();
-  const articles = useSelector(state => state.articles.articles);
-  const oldQuery = useSelector(state => state.search.query);
+  const articles = useSelector((state) => state.articles.articles);
+  const oldQuery = useSelector((state) => state.search.query);
   const [initialQuery, setInitialQuery] = useState(oldQuery);
 
-  const textChange = e => {
+  const textChange = (e) => {
     dispatch(search(articles, e));
     setInitialQuery(e);
   };
@@ -39,14 +38,14 @@ const styles = {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#efefef",
-    borderRadius: 10
+    borderRadius: 10,
   },
   input: {
     fontSize: 15,
-    paddingRight: 10
+    paddingRight: 10,
   },
   icon: {
-    padding: 10
-  }
+    padding: 10,
+  },
 };
 export default SearchHeader;

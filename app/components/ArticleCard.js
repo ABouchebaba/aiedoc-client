@@ -1,20 +1,26 @@
 import React from "react";
-import { Text, TouchableWithoutFeedback, Image, View } from "react-native";
+import {
+  Text,
+  TouchableWithoutFeedback,
+  Image,
+  View,
+  Dimensions,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { getImageSource, getDimensions } from "../helpers";
+import { getImageSource } from "../helpers";
 import { useNavigation } from "@react-navigation/native";
 import { addBookmark, removeBookmark } from "../Store/actions";
 import Bookmark from "./Bookmark";
 import DeleteBtn from "./DeleteBtn";
 import { useTheme } from "@react-navigation/native";
 
-const { height } = getDimensions();
+const { height } = Dimensions.get("window");
 
 function ArticleCard(props) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const theme = useTheme();
-  const bookmarked = useSelector(state => state.bookmarks[props.data.id]);
+  const bookmarked = useSelector((state) => state.bookmarks[props.data.id]);
   const image = getImageSource(props.data.images);
 
   // const hours = dateDifference(props.data.date);
@@ -59,12 +65,12 @@ const styles = {
     borderColor: "#efefef",
     margin: 5,
     alignSelf: "center",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   image: {
     height: "100%",
     width: "35%",
-    borderRadius: 5
+    borderRadius: 5,
   },
   sourceAndDate: {
     alignSelf: "center",
@@ -73,18 +79,18 @@ const styles = {
     borderRadius: 10,
     color: "grey",
     backgroundColor: "#efefef",
-    fontSize: 12
+    fontSize: 12,
   },
   text: {
     flexDirection: "column",
     justifyContent: "space-around",
-    width: "65%"
+    width: "65%",
   },
   title: {
     width: "100%",
     margin: 5,
     fontSize: 13,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 };
 export default ArticleCard;

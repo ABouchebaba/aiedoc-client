@@ -1,5 +1,4 @@
 import { BACKEND_IMAGE_DIR } from "react-native-dotenv";
-import { Dimensions } from "react-native";
 
 export const getImageSource = (partial_link) => {
   if (partial_link) return { uri: BACKEND_IMAGE_DIR + partial_link };
@@ -7,8 +6,6 @@ export const getImageSource = (partial_link) => {
   return { uri: "http://placehold.jp/320x240.png" };
   // return require("../../assets/splash.png");
 };
-
-export const getDimensions = () => Dimensions.get("window");
 
 export const dateDifference = (d) => {
   let current = new Date();

@@ -3,7 +3,6 @@ import ArticleReducer from "./ArticleReducer";
 import SearchReducer from "./SearchReducer";
 import CategoryReducer from "./CategoryReducer";
 import BookmarkReducer from "./BookmarkReducer";
-import ToLoadReducer from "./ToLoadReducer";
 import SourceReducer from "./SourceReducer";
 import PreferenceReducer from "./PreferenceReducer";
 import SettingReducer from "./SettingReducer";
@@ -13,10 +12,9 @@ rootReducer = combineReducers({
   search: SearchReducer,
   categories: CategoryReducer,
   bookmarks: BookmarkReducer,
-  toload: ToLoadReducer,
   sources: SourceReducer,
   preferences: PreferenceReducer,
-  settings: SettingReducer
+  settings: SettingReducer,
 });
 
 export default rootReducer;

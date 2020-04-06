@@ -1,33 +1,19 @@
 import React from "react";
 import Headlines from "../screens/Headlines";
-
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useSelector } from "react-redux";
+import { availableCategories } from "../Store/selectors";
 
 const CategoryTabs = createMaterialTopTabNavigator();
 
 const CategoryTabsScreen = () => {
-  const articles = useSelector((state) => state.articles.articles);
-  let categories = {};
-  articles.map((a) => {
-    categories[a.category] = true;
-  });
-
-  categories = Object.keys(categories);
+  const categories = useSelector(availableCategories);
 
   const tabBarOptions = {
     scrollEnabled: true,
-    tabStyle: {
-      width: "auto",
-      paddingHorizontal: 5,
-    },
-    labelStyle: {
-      fontSize: 12,
-      alignSelf: "center",
-    },
-    style: {
-      height: 40,
-    },
+    tabStyle: { width: "auto", paddingHorizontal: 5 },
+    labelStyle: { fontSize: 12, alignSelf: "center" },
+    style: { height: 40 },
   };
 
   return (

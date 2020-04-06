@@ -4,7 +4,7 @@ import HorizontalList from "./HorizontalList";
 
 function ArticleGroup(props) {
   const renderItem = ({ item }) => <Item item={item} />;
-  const keyExtractor = item => "" + item.id;
+  const keyExtractor = (item) => "" + item.id;
 
   return (
     <HorizontalList
