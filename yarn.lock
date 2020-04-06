@@ -1134,6 +1134,13 @@
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
 
+"@react-navigation/material-top-tabs@^5.1.7":
+  version "5.1.7"
+  resolved "https://registry.yarnpkg.com/@react-navigation/material-top-tabs/-/material-top-tabs-5.1.7.tgz#4975d5d02fe1beb6665bd1e2b49a627c5800d50f"
+  integrity sha512-GffgvFmbr/wpV7B+sBou+OUf1qqwCjvbeNoZpKjekU795ZqnC+KPRvLNeGX7Pd9CQ1+K/7O4CHvs9O22v5mEaQ==
+  dependencies:
+    color "^3.1.2"
+
 "@react-navigation/native@^5.0.9":
   version "5.0.9"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.0.9.tgz#bbd22928f0fbe808a96dd525ebeb9a1aa0b82900"
@@ -5174,6 +5181,11 @@ react-native-snap-carousel@^3.8.4:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
 
+react-native-tab-view@^2.13.0:
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.13.0.tgz#23037aa43b0f8f682ddc20415a4baaaf6f82ae8f"
+  integrity sha512-AeYbp/u91+D/C9+PmVEPBmFb3ixv8IkLMC3Sc5MajJ/fg0Zl3Of+BcEknBvTnKoe7Fj2y8+Qf9zorBbh5xzh4A==
+
 react-native-view-shot@3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.0.2.tgz#daccaec5b8038a680b17533ff7e72876e68c7d0d"
@@ -5435,6 +5447,11 @@ reselect@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
   integrity sha1-79qpjqdFEyTQkrKyFjpqHXqaIUc=
+
+reselect@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.0.0.tgz#f2529830e5d3d0e021408b246a206ef4ea4437f7"
+  integrity sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
 
 resolve-from@^1.0.0:
   version "1.0.1"

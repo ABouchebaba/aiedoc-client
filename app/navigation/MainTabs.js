@@ -1,5 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import CategoryTabs from "./CategoryTabs";
 import ForYou from "../screens/ForYou";
 import Headlines from "../screens/Headlines";
 import ReadLater from "../screens/ReadLater";
@@ -11,7 +12,7 @@ const icons = {
   "For You": "md-person",
   Headlines: "ios-globe",
   "Read Later": "md-bookmarks",
-  Test: "md-bookmarks"
+  Test: "md-bookmarks",
 };
 
 const MainTabs = createBottomTabNavigator();
@@ -25,12 +26,12 @@ const MainTabsScreen = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ size, color }) => (
           <Ionicons name={icons[route.name]} size={size} color={color} />
-        )
+        ),
       })}
     >
       {/* <MainTabs.Screen name="Test" component={Test} /> */}
       <MainTabs.Screen name="For You" component={ForYou} />
-      <MainTabs.Screen name="Headlines" component={Headlines} />
+      <MainTabs.Screen name="Headlines" component={CategoryTabs} />
       <MainTabs.Screen name="Read Later" component={ReadLater} />
     </MainTabs.Navigator>
   );

@@ -11,11 +11,11 @@ import CategoryHeader from "../components/CategoryHeader";
 const { width } = getDimensions();
 
 const filter = (category, articles) => {
-  return articles.filter(a => a.category === category);
+  return articles.filter((a) => a.category === category);
 };
-const group = articles => {
+const group = (articles) => {
   let topics = [];
-  articles.map(article => {
+  articles.map((article) => {
     if (topics[article.group_nb]) {
       topics[article.group_nb] = [...topics[article.group_nb], article];
     } else {
@@ -24,19 +24,19 @@ const group = articles => {
   });
 
   let count = 0;
-  return topics.filter(a => a.length > 1 && count++ < 20);
+  return topics.filter((a) => a.length > 1 && count++ < 20);
 };
 
 const renderCard = ({ item }) => <ArticleCard data={item} bookmarkBtn />;
 const renderGroup = ({ item }) => <ArticleGroup data={item} />;
 
-const cardKeyExtractor = item => item.id;
-const groupKeyExtractor = item => item[0].id;
+const cardKeyExtractor = (item) => item.id;
+const groupKeyExtractor = (item) => item[0].id;
 
-const extractCategories = articles => {
+const extractCategories = (articles) => {
   let categories = {};
 
-  articles.map(a => {
+  articles.map((a) => {
     categories[a.category] = true;
   });
 
@@ -44,11 +44,12 @@ const extractCategories = articles => {
 };
 
 function Headlines(props) {
-  const [category, setCategory] = useState("All");
+  // const [category, setCategory] = useState("All");
+  const category = props.route.params.category;
   const dispatch = useDispatch();
 
-  const data = useSelector(state => state.articles);
-  const toLoad = useSelector(state => state.toload);
+  const data = useSelector((state) => state.articles);
+  const toLoad = useSelector((state) => state.toload);
   if (!toLoad[category]) {
     dispatch(setToLoad(category, 10));
   }
@@ -65,13 +66,14 @@ function Headlines(props) {
 
   // POTENTIAL RE-RENDER PROBLEM HERE WITH categories & toDisplay
   //  ==> THINK IT OVER
-  const categories = ["All", ...extractCategories(data.articles)];
+  // const categories = ["All", ...extractCategories(data.articles)];
   const toDisplay = treatment();
-  const loadMore = length =>
+  const loadMore = (length) =>
     dispatch(setToLoad(category, Math.min(toLoad[category] + 5, length)));
   //////////////////////////////////////////////////////
   const onRefresh = () => dispatch(getArticles());
 
+  // console.log("render : " + category);
   return (
     <View style={styles.container}>
       {data.error && (
@@ -80,11 +82,11 @@ function Headlines(props) {
           <Button title="Retry" onPress={onRefresh} />
         </View>
       )}
-      <CategoryHeader
+      {/* <CategoryHeader
         categories={categories}
         setCategory={setCategory}
         selected={category}
-      />
+      /> */}
       <Presenter
         data={toDisplay}
         renderItem={renderItem}
@@ -100,7 +102,7 @@ function Headlines(props) {
 
 const styles = {
   container: { width: width, alignSelf: "center" },
-  errorContainer: { backgroundColor: "#a94442" }
+  errorContainer: { backgroundColor: "#a94442" },
 };
 
 export default Headlines;
