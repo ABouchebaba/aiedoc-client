@@ -2,7 +2,6 @@ import React from "react";
 import { store, persistor } from "./app/Store";
 import { Provider } from "react-redux";
 import Navigator from "./app/navigation";
-import { getArticles, getCategories, getSources } from "./app/Store/actions";
 import { AppLoading } from "expo";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -12,7 +11,7 @@ enableScreens(); // for performance optimization
 export default class App extends React.Component {
   state = {
     isReady: false,
-    hasError: false
+    hasError: false,
   };
 
   static getDerivedStateFromError(error) {
@@ -26,9 +25,7 @@ export default class App extends React.Component {
 
   async load() {
     // console.log("loading...");
-    store.dispatch(getSources());
-    store.dispatch(getCategories());
-    store.dispatch(getArticles());
+    // do something
     return;
   }
 
