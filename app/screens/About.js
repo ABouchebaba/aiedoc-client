@@ -1,22 +1,22 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
-import { login } from "../Store/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../Store/actions";
 
-const user = {
-  name: "a",
-  email: "a@a.a",
-};
-
-const Auth_1 = (props) => {
+const About = (props) => {
   const dispatch = useDispatch();
-  const onPress = () => dispatch(login(user));
+  const user = useSelector((state) => state.user);
+
+  const onPress = () => dispatch(logout());
 
   return (
     <View style={styles.container}>
-      <Text>This is Auth_1 screen</Text>
+      <Text>About screen</Text>
+      <Text>
+        user : {user.name} with email: {user.email}
+      </Text>
       <TouchableOpacity onPress={onPress}>
-        <Text>Login</Text>
+        <Text>Logout</Text>
       </TouchableOpacity>
     </View>
   );
@@ -31,4 +31,4 @@ const styles = {
   },
 };
 
-export default Auth_1;
+export default About;

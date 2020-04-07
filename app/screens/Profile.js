@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../Store/actions";
 
-const Home = (props) => {
+const Profile = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -11,7 +11,7 @@ const Home = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text>Home screen</Text>
+      <Text>Profile screen</Text>
       <Text>
         user : {user.name} with email: {user.email}
       </Text>
@@ -31,4 +31,4 @@ const styles = {
   },
 };
 
-export default Home;
+export default Profile;
