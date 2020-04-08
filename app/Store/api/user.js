@@ -6,3 +6,7 @@ export const getUserWithPhone = async (phoneNumber) => {
     phone: phoneNumber,
   });
 };
+
+export const registerUser = async (user) => {
+  return axios.post(`${BACKEND_URL}/api/clients/register`, user);
+};

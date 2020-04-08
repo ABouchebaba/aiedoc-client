@@ -7,13 +7,15 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
+  console.log(user);
+
   const onPress = () => dispatch(logout());
 
   return (
     <View style={styles.container}>
       <Text>Home screen</Text>
       <Text>
-        user : {user.name} with email: {user.email}
+        user : {user.firstname} with email: {user.email}
       </Text>
       <TouchableOpacity onPress={onPress}>
         <Text>Logout</Text>

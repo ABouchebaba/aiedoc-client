@@ -1,2 +1,2 @@
 export * from "./firebaseAuth";
-export * from "./getUserWithPhone";
+export * from "./user";

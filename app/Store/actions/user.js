@@ -3,7 +3,7 @@ import {
   UNSET_USER,
   LOGIN_LOADING,
 } from "../../constants/ActionTypes";
-import { validatePin, getUserWithPhone } from "../api";
+import { validatePin, getUserWithPhone, registerUser } from "../api";
 
 export const login = (info, callbacks) => (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
@@ -36,6 +36,19 @@ export const login = (info, callbacks) => (dispatch) => {
         type: UNSET_USER,
       });
       callbacks.onPinError(err);
+    });
+};
+
+export const register = (user) => (dispatch) => {
+  registerUser(user)
+    .then((res) => {
+      dispatch({
+        type: SET_USER,
+        data: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err.message);
     });
 };
 
