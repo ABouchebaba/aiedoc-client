@@ -4,10 +4,21 @@ import { Provider } from "react-redux";
 import Navigator from "./app/navigation";
 import { AppLoading } from "expo";
 import { PersistGate } from "redux-persist/integration/react";
-
+import * as firebase from "firebase/app";
 import { enableScreens } from "react-native-screens";
 enableScreens(); // for performance optimization
 
+// to be put in env or some config file
+const firebaseConfig = {
+  apiKey: "AIzaSyCAopAg2T797E76O4baQ0Kmto_QDZ2whIA",
+  authDomain: "aiedoc-test.firebaseapp.com",
+  databaseURL: "https://aiedoc-test.firebaseio.com",
+  projectId: "aiedoc-test",
+  storageBucket: "aiedoc-test.appspot.com",
+  messagingSenderId: "1055588730579",
+  appId: "1:1055588730579:web:81ee78e07be0a9746ef626",
+  measurementId: "G-F9VYG9D4B6",
+};
 export default class App extends React.Component {
   state = {
     isReady: false,
@@ -26,6 +37,9 @@ export default class App extends React.Component {
   async load() {
     // console.log("loading...");
     // do something
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
     return;
   }
 

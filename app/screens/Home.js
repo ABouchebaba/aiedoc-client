@@ -5,7 +5,7 @@ import { logout } from "../Store/actions";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   const onPress = () => dispatch(logout());
 

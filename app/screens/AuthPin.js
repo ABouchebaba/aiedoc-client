@@ -1,31 +1,42 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, TextInput, Button } from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "../Store/actions";
 
-const user = {
-  name: "a",
-  email: "a@a.a",
-};
-
 const AuthPin = (props) => {
   const dispatch = useDispatch();
-  const onPress = () => dispatch(login(user));
+  const [verificationCode, setVerificationCode] = useState("");
+  const { phoneNumber, verificationId } = props.route.params;
 
-  const verifyPhone = () => {
-    // verify phone number
-    // and send to AuthForm
-    // or set user and go to Home
-    props.navigation.navigate("AuthForm");
-    // dispatch(login(user));
+  const onPinError = () => {
+    alert("Wrong pin code");
   };
+  const onVerfiyPhoneError = (err) => {
+    props.navigation.navigate("AuthForm", { phoneNumber });
+  };
+
+  const onPressConfirmVerificationCode = async () =>
+    dispatch(
+      login(
+        {
+          phoneNumber,
+          verificationId,
+          verificationCode,
+        },
+        {
+          onPinError,
+          onVerfiyPhoneError,
+        }
+      )
+    );
 
   return (
     <View style={styles.container}>
-      <Text>This is user enter pin code</Text>
-      <TouchableOpacity onPress={verifyPhone}>
-        <Text>Verify pin code </Text>
-      </TouchableOpacity>
+      <TextInput onChangeText={setVerificationCode} />
+      <Button
+        title="Confirm Verification Code"
+        onPress={onPressConfirmVerificationCode}
+      />
     </View>
   );
 };

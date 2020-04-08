@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 
 const Navigator = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   return (
     <NavigationContainer theme={DefaultTheme}>
