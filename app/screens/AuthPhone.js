@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { View, TextInput, Button } from "react-native";
-import { useDispatch } from "react-redux";
-import * as firebase from "firebase/app";
-import "firebase/auth";
+import { sendPin, getOptions } from "../Store/api";
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseAuthApplicationVerifier,
@@ -15,9 +13,7 @@ const AuthPhone = (props) => {
   );
 
   const onPressSendVerificationCode = async () => {
-    const phoneProvider = new firebase.auth.PhoneAuthProvider();
-    phoneProvider
-      .verifyPhoneNumber(phoneNumber, recaptchaVerifier)
+    sendPin(phoneNumber, recaptchaVerifier)
       .then((res) =>
         props.navigation.navigate("AuthPin", {
           verificationId: res,
@@ -25,7 +21,7 @@ const AuthPhone = (props) => {
         })
       )
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         alert("Invalid phone number");
       });
   };
@@ -34,19 +30,20 @@ const AuthPhone = (props) => {
     <View style={styles.container}>
       <FirebaseRecaptchaVerifierModal
         ref={setRecaptchaVerifier}
-        firebaseConfig={firebase.app().options}
+        firebaseConfig={getOptions()}
       />
-      <TextInput
-        autoFocus
-        autoCompleteType="tel"
-        keyboardType="phone-pad"
-        textContentType="telephoneNumber"
-        onChangeText={setPhoneNumber}
-      />
-      <Button
-        title="Send Verification Code"
-        onPress={onPressSendVerificationCode}
-      />
+      <View style={styles.TextInput}>
+        <TextInput
+          placeholder="type your phone number ..."
+          autoFocus
+          autoCompleteType="tel"
+          keyboardType="phone-pad"
+          textContentType="telephoneNumber"
+          onChangeText={setPhoneNumber}
+        />
+      </View>
+
+      <Button title="Submit" onPress={onPressSendVerificationCode} />
     </View>
   );
 };
@@ -57,6 +54,18 @@ const styles = {
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
+  },
+  TextInput: {
+    backgroundColor: "white",
+    width: "60%",
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#efefef",
+    borderRadius: 20,
+    marginBottom: 10,
   },
 };
 

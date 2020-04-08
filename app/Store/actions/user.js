@@ -3,8 +3,7 @@ import {
   UNSET_USER,
   LOGIN_LOADING,
 } from "../../constants/ActionTypes";
-import { validatePin } from "../api/validatePin";
-import { getUserWithPhone } from "../api/getUserWithPhone";
+import { validatePin, getUserWithPhone } from "../api";
 
 export const login = (info, callbacks) => (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
@@ -24,10 +23,20 @@ export const login = (info, callbacks) => (dispatch) => {
           });
         })
         // user not registred
-        .catch(callbacks.onVerfiyPhoneError);
+        .catch((err) => {
+          dispatch({
+            type: UNSET_USER,
+          });
+          callbacks.onVerfiyPhoneError(err);
+        });
     })
     // user typed wrong pin code
-    .catch(callbacks.onPinError);
+    .catch((err) => {
+      dispatch({
+        type: UNSET_USER,
+      });
+      callbacks.onPinError(err);
+    });
 };
 
 export const logout = () => (dispatch) => {

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, Button } from "react-native";
-import { useDispatch } from "react-redux";
+import { View, TextInput, Button, ActivityIndicator } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Store/actions";
 
 const AuthPin = (props) => {
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.user.loading);
   const [verificationCode, setVerificationCode] = useState("");
   const { phoneNumber, verificationId } = props.route.params;
 
@@ -32,11 +33,19 @@ const AuthPin = (props) => {
 
   return (
     <View style={styles.container}>
-      <TextInput onChangeText={setVerificationCode} />
-      <Button
-        title="Confirm Verification Code"
-        onPress={onPressConfirmVerificationCode}
-      />
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <View>
+          <View style={styles.TextInput}>
+            <TextInput
+              placeholder="type in pin code ..."
+              onChangeText={setVerificationCode}
+            />
+          </View>
+          <Button title="Submit" onPress={onPressConfirmVerificationCode} />
+        </View>
+      )}
     </View>
   );
 };
@@ -47,6 +56,18 @@ const styles = {
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
+  },
+  TextInput: {
+    backgroundColor: "white",
+    width: "60%",
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#efefef",
+    borderRadius: 20,
+    marginBottom: 10,
   },
 };
 

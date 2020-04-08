@@ -8,3 +8,10 @@ export const validatePin = async (verificationId, verificationCode) => {
   );
   return firebase.auth().signInWithCredential(credential);
 };
+
+export const sendPin = async (phoneNumber, recaptchaVerifier) => {
+  const phoneProvider = new firebase.auth.PhoneAuthProvider();
+  return phoneProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier);
+};
+
+export const getOptions = () => firebase.app().options;
