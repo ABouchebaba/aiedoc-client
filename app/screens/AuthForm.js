@@ -5,39 +5,51 @@ import {
   TouchableOpacity,
   TextInput,
   Platform,
+  ImageBackground,
+  StyleSheet,
+  ActivityIndicator
 } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { register } from "../Store/actions";
 
 const AuthForm = (props) => {
   const dispatch = useDispatch();
-  const { phoneNumber: phone } = props.route.params;
+  //const { phoneNumber: phone } = props.route.params;
+  const phone  = "+213555077412";
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [birthdate, setBirthdate] = useState("");
 
+  //const loading = useSelector((state) => state.user.loading);
+
   const showDatePicker = () => setShow(true);
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate.toISOString();
     setShow(Platform.OS === "ios");
-    setBirthdate(currentDate);
+    if (selectedDate) {
+      const currentDate = selectedDate.toISOString().slice(0,10) ;
+      setBirthdate(currentDate);
+    }
   };
 
   const submit = () => {
     // register user in backend
+    console.log({ phone, email, firstname, lastname, birthdate })
     dispatch(register({ phone, email, firstname, lastname, birthdate }));
+    //props.navigation.push("Home")
   };
 
   return (
     <View style={styles.container}>
-      <Text>Register Form</Text>
-
-      <View style={styles.formContainer}>
-        <TextInput
+      <ImageBackground source={require('../../assets/bg/bg1.png')} style={styles.image}>
+      {/* {loading ?
+        <ActivityIndicator size="large" color="white" />: */}
+      <View style={styles.mainView}>
+          <Text style={{fontSize:25,color:'white', marginBottom:20}}>Formulaire d'inscription</Text>
+          <TextInput
           placeholder="Email"
           onChangeText={setEmail}
           autoCompleteType="email"
@@ -59,8 +71,11 @@ const AuthForm = (props) => {
           textContentType="familyName"
           style={styles.TextInput}
         />
-        <TouchableOpacity onPress={showDatePicker}>
-          <Text>Birthdate: {birthdate}</Text>
+        <TouchableOpacity onPress={showDatePicker} style={styles.TextInput}>
+          {birthdate !== ""? 
+          <Text style={{fontSize:20}} >{birthdate}</Text>:
+          <Text style={{fontSize:20, color:"#bababa"}}>Birthdate</Text>
+        }
         </TouchableOpacity>
         {show && (
           <DateTimePicker
@@ -69,33 +84,61 @@ const AuthForm = (props) => {
             onChange={onChange}
           />
         )}
+        {
+        (email!=="" && firstname!=="" && lastname!=="" && birthdate!=="")?  
+        <TouchableOpacity onPress={submit} style={styles.submit}>
+        <Text style={{fontSize:27,color:'white'}}>Register</Text>
+        </TouchableOpacity>:
+        <TouchableOpacity style={styles.notSubmit} disabled={true}>
+        <Text style={{fontSize:27,color:'#4a4a4a'}}>Register</Text>
+        </TouchableOpacity>
+        }
       </View>
-      <TouchableOpacity onPress={submit}>
-        <Text>Register</Text>
-      </TouchableOpacity>
+      {/* }   */}
+      </ImageBackground>
     </View>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignSelf: "center",
-    alignItems: "center",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
     justifyContent: "center",
   },
-  formContainer: {
-    padding: 20,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "grey",
-    alignItems: "center",
-    alignSelf: "center",
-    justifyContent: "space-around",
+  mainView:{
+    alignItems:'center'
   },
   TextInput: {
-    padding: 10,
+    backgroundColor:"#F2F2F2",
+    width:"80%",
+    borderRadius:50,
+    paddingLeft:20,
+    fontSize:20,
+    paddingVertical:10,
+    marginBottom:40
   },
-};
+  submit:{
+    backgroundColor:"#11A0C1",
+    marginTop:30,
+    paddingVertical:10,
+    alignItems:'center',
+    borderRadius:50,
+    width:'70%',
+    alignSelf:'center'
+  },
+  notSubmit:{
+    backgroundColor:"#bababa",
+    marginTop:30,
+    paddingVertical:10,
+    alignItems:'center',
+    borderRadius:50,
+    width:'70%',
+    alignSelf:'center'
+  },
+});
 
 export default AuthForm;

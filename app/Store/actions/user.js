@@ -40,6 +40,7 @@ export const login = (info, callbacks) => (dispatch) => {
 };
 
 export const register = (user) => (dispatch) => {
+  dispatch({ type: LOGIN_LOADING });
   registerUser(user)
     .then((res) => {
       dispatch({
@@ -48,6 +49,10 @@ export const register = (user) => (dispatch) => {
       });
     })
     .catch((err) => {
+      dispatch({
+        type: UNSET_USER,
+      });
+      alert("Veuillez vérifier votre connexion internet")
       console.log(err.message);
     });
 };
