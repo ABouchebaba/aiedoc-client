@@ -19,7 +19,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.aiedoc.aiedocTest",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      }
     },
     "android": {
       "package": "com.aiedoc.aiedocTest",
