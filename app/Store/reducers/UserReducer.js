@@ -2,10 +2,12 @@ import {
   SET_USER,
   UNSET_USER,
   LOGIN_LOADING,
+  SET_LOCATION
 } from "../../constants/ActionTypes";
 
 const initialState = {
   user: false,
+  location: {},
   loading: false,
 };
 
@@ -31,6 +33,14 @@ const UserReducer = (state = initialState, action) => {
         loading: true,
       };
     }
+    case SET_LOCATION: {
+      return {
+        ...state,
+        location: action.data,
+        loading: false,
+      };
+    }
+
 
     default:
       return state;

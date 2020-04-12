@@ -16,7 +16,7 @@ import { register } from "../Store/actions";
 const AuthForm = (props) => {
   const dispatch = useDispatch();
   //const { phoneNumber: phone } = props.route.params;
-  const phone  = "+213555077412";
+  const phone  = "+213555077414";
   const [email, setEmail] = useState("");
   const [show, setShow] = useState(false);
   const [firstname, setFirstname] = useState("");
@@ -30,7 +30,7 @@ const AuthForm = (props) => {
   const onChange = (event, selectedDate) => {
     setShow(Platform.OS === "ios");
     if (selectedDate) {
-      const currentDate = selectedDate.toISOString().slice(0,10) ;
+      const currentDate = selectedDate.toISOString() ;
       setBirthdate(currentDate);
     }
   };
@@ -73,7 +73,7 @@ const AuthForm = (props) => {
         />
         <TouchableOpacity onPress={showDatePicker} style={styles.TextInput}>
           {birthdate !== ""? 
-          <Text style={{fontSize:20}} >{birthdate}</Text>:
+          <Text style={{fontSize:20}} >{birthdate.slice(0,10)}</Text>:
           <Text style={{fontSize:20, color:"#bababa"}}>Birthdate</Text>
         }
         </TouchableOpacity>
