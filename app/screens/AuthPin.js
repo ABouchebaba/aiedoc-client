@@ -7,7 +7,9 @@ const AuthPin = (props) => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.user.loading);
   const [verificationCode, setVerificationCode] = useState("");
-  const { phoneNumber, verificationId } = props.route.params;
+  // const { phoneNumber, verificationId } = props.route.params;
+  const phoneNumber = "+213556276461";
+  const verificationId = "azerty";
 
   const onPinError = () => {
     alert("Wrong pin code");
@@ -16,20 +18,20 @@ const AuthPin = (props) => {
     props.navigation.navigate("AuthForm", { phoneNumber });
   };
 
-  const onPressConfirmVerificationCode = async () =>
-    dispatch(
-      login(
-        {
-          phoneNumber,
-          verificationId,
-          verificationCode,
-        },
-        {
-          onPinError,
-          onVerfiyPhoneError,
-        }
-      )
-    );
+  const onPressConfirmVerificationCode = async () => {};
+  // dispatch(
+  //   login(
+  //     {
+  //       phoneNumber,
+  //       verificationId,
+  //       verificationCode,
+  //     },
+  //     {
+  //       onPinError,
+  //       onVerfiyPhoneError,
+  //     }
+  //   )
+  // );
 
   return (
     <View style={styles.container}>

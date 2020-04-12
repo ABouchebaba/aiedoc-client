@@ -8,7 +8,7 @@ const AuthStack = createStackNavigator();
 
 function AuthStackScreen() {
   return (
-    <AuthStack.Navigator drawerType="slide" headerMode={false} initialRouteName={"AuthForm"}>
+    <AuthStack.Navigator drawerType="slide" headerMode={false}>
       <AuthStack.Screen name="AuthPhone" component={AuthPhone} />
       <AuthStack.Screen name="AuthPin" component={AuthPin} />
       <AuthStack.Screen name="AuthForm" component={AuthForm} />
