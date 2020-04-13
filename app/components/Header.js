@@ -15,7 +15,7 @@ export const Header = (props) =>{
             <TouchableOpacity onPress={props.navigation.openDrawer}>
               <Entypo name="menu" size={70} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={props.fitToMarkersToMap}>
+            <TouchableOpacity onPress={() => alert("Hi")}>
               <Image
                 style={styles.tinyLogo}
                 source={require("../../assets/boutique.png")}

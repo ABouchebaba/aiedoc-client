@@ -7,7 +7,10 @@ import {
 
 const initialState = {
   user: false,
-  location: {},
+  location: {
+    longitude:'',
+    latitude:''
+  },
   loading: false,
 };
 

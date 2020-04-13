@@ -27,7 +27,7 @@ const Home = (props) => {
   }) }
   
   useEffect(() => {
-    getLocation(dispatch);
+    dispatch(getLocation);
     console.log("HI");
   }, [dispatch]);
 
@@ -37,7 +37,7 @@ const Home = (props) => {
       style={styles.container}
     >
       <View style={styles.header}>
-        <Header navigation={props.navigation} fitToMarkersToMap={fitToMarkersToMap} />
+        <Header navigation={props.navigation}/>
       </View>
       <View style={styles.mapContainer}>
         <MapView 
@@ -59,8 +59,7 @@ const Home = (props) => {
           style={styles.mapStyle}
         >
           <Markers longitude={longitude} latitude={latitude} />
-        </MapView>
-          {/* add filter  */} 
+        </MapView> 
       </View>
     </ImageBackground>
   );
