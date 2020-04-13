@@ -10,3 +10,7 @@ export const getUserWithPhone = async (phoneNumber) => {
 export const registerUser = async (user) => {
   return axios.post(`${BACKEND_URL}/api/clients/register`, user);
 };
+
+export const setToken = (headerName, token) => {
+  axios.defaults.headers.common[headerName] = token;
+};

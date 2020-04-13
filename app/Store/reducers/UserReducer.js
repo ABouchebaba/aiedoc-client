@@ -2,12 +2,12 @@ import {
   SET_USER,
   UNSET_USER,
   LOGIN_LOADING,
-  SET_LOCATION
+  SET_LOCATION,
 } from "../../constants/ActionTypes";
 
 const initialState = {
   user: false,
-  location: {},
+  location: { latitude: 36.7538, longitude: 3.058 },
   loading: false,
 };
 
@@ -40,7 +40,6 @@ const UserReducer = (state = initialState, action) => {
         loading: false,
       };
     }
-
 
     default:
       return state;
