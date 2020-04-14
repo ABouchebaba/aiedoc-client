@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    View,
-    TouchableOpacity,
-    Image,
-    StyleSheet
-  } from "react-native";
+import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 export const Header = (props) =>{
@@ -33,19 +28,19 @@ export const Header = (props) =>{
 }
 
 const styles = StyleSheet.create({
-    image: {
-        flex: 1,
-        justifyContent: "center",
-        paddingHorizontal: 10,
-        borderBottomEndRadius: 20,
-        },
-    headerActions: {
-        justifyContent: "space-between",
-        flexDirection: "row",
-        alignItems: "flex-end",
-    },
-    tinyLogo: {
-        width: 70,
-        height: 70,
-    },
-})
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    borderBottomEndRadius: 20,
+  },
+  headerActions: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "flex-end",
+  },
+  tinyLogo: {
+    width: 70,
+    height: 70,
+  },
+});

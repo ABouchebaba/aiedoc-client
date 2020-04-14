@@ -3,7 +3,8 @@ import {
   UNSET_USER,
   LOGIN_LOADING,
 } from "../../constants/ActionTypes";
-import { validatePin, getUserWithPhone, registerUser } from "../api";
+import { validatePin, getUserWithPhone, registerUser, setToken } from "../api";
+import axios from "axios";
 
 export const login = (info, callbacks) => (dispatch) => {
   dispatch({ type: LOGIN_LOADING });
@@ -21,6 +22,8 @@ export const login = (info, callbacks) => (dispatch) => {
             type: SET_USER,
             data: res.data,
           });
+          // set auth token in axios
+          setToken("x-auth-token", res.headers["x-auth-token"]);
         })
         // user not registred
         .catch((err) => {
@@ -47,17 +50,20 @@ export const register = (user) => (dispatch) => {
         type: SET_USER,
         data: res.data,
       });
+      // set auth token in axios
+      setToken("x-auth-token", res.headers["x-auth-token"]);
     })
     .catch((err) => {
       dispatch({
         type: UNSET_USER,
       });
-      alert("Veuillez vérifier votre connexion internet")
+      alert("Veuillez vérifier votre connexion internet");
       console.log(err.message);
     });
 };
 
 export const logout = () => (dispatch) => {
+  delete axios.defaults.headers.common["x-auth-token"];
   return dispatch({
     type: UNSET_USER,
   });

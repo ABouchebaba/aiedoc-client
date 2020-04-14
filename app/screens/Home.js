@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Dimensions, ImageBackground, StyleSheet, View } from "react-native";
 import MapView from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,20 +16,20 @@ const Home = (props) => {
   const user = useSelector((state) => state.user.user);
 
   const { latitude, longitude } = useSelector((state) => state.user.location);
-  const map = React.useRef()
-  
+  const map = useRef();
+
   function fitToMarkersToMap() {
-    map.current.fitToSuppliedMarkers(['mk0','mk1','mk2','mk4','mk5','mk6','mk7','mk8','mk9'], { edgePadding: 
-      {top: 100,
-      right: 100,
-      bottom: 100,
-      left: 100}
-  }) }
-  
+    map.current.fitToSuppliedMarkers(["user"], {
+      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+    });
+  }
+
   useEffect(() => {
-    dispatch(getLocation);
-    console.log("HI");
-  }, [dispatch]);
+    dispatch(getLocation());
+    fitToMarkersToMap()
+  }, []);
+
+  // useEffect(fitToMarkersToMap, [latitude, longitude]);
 
   return (
     <ImageBackground
@@ -37,18 +37,15 @@ const Home = (props) => {
       style={styles.container}
     >
       <View style={styles.header}>
-        <Header navigation={props.navigation}/>
+        <Header
+          navigation={props.navigation}
+          //fitToMarkersToMap={fitToMarkersToMap}
+        />
       </View>
       <View style={styles.mapContainer}>
-        <MapView 
+        <MapView
           ref={map}
           initialRegion={{
-            latitude: 36.7538,
-            longitude: 3.058,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }}
-          region={{
             latitude: latitude,
             longitude: longitude,
             latitudeDelta: LATITUDE_DELTA,
@@ -59,7 +56,8 @@ const Home = (props) => {
           style={styles.mapStyle}
         >
           <Markers longitude={longitude} latitude={latitude} />
-        </MapView> 
+        </MapView>
+        {/* add filter  */}
       </View>
     </ImageBackground>
   );
@@ -71,11 +69,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   mapContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     overflow: "hidden",
-    alignSelf: "center",
     backgroundColor: "white",
     height: "85%",
     width: "100%",
@@ -83,8 +77,6 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     ...StyleSheet.absoluteFillObject,
-    // height: "100%",
-    // width: "100%",
   },
   image: {
     flex: 1,
