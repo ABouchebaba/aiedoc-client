@@ -26,6 +26,7 @@ const Home = (props) => {
 
   useEffect(() => {
     dispatch(getLocation());
+    fitToMarkersToMap();
   }, []);
 
   useEffect(fitToMarkersToMap, [location]);
@@ -38,7 +39,7 @@ const Home = (props) => {
       <View style={styles.header}>
         <Header
           navigation={props.navigation}
-          fitToMarkersToMap={fitToMarkersToMap}
+          //fitToMarkersToMap={fitToMarkersToMap}
         />
       </View>
       <View style={styles.mapContainer}>

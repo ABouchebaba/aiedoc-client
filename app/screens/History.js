@@ -1,34 +1,87 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../Store/actions";
+import React, { useState } from "react";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import { TabBar, TabView } from "react-native-tab-view";
+import { useDispatch, useSelector } from "react-redux";
+import { Header, Interventions, Purchaces } from "../components";
+
+// const initialLayout = { width: Dimensions.get('window').width };
 
 const History = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const { interventions } = useSelector((state) => state.user.user);
 
-  const onPress = () => dispatch(logout());
+  //console.log(interventions);
+  // props.navigation.openDrawer();
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "first", title: "préstations" },
+    { key: "second", title: "achats" },
+  ]);
+
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "first":
+        return <Interventions interventions={interventions} />;
+      case "second":
+        return <Purchaces />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text>History screen</Text>
-      <Text>
-        user : {user.name} with email: {user.email}
-      </Text>
-      <TouchableOpacity onPress={onPress}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
-    </View>
+    <ImageBackground
+      source={require("../../assets/bg/bgHome.png")}
+      style={styles.container}
+    >
+      <View style={styles.header}>
+        <Header navigation={props.navigation} />
+      </View>
+      <View style={styles.mainView}>
+        <TabView
+          lazy={true}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          renderTabBar={(props) => (
+            <TabBar
+              {...props}
+              indicatorStyle={{ borderColor: "#1FB8E0", borderBottomWidth:3 }}
+              style={styles.tabView}
+              activeColor={"#D61F2C"}
+              inactiveColor={"#48C2E3"}
+              pressColor={"#D61F2C"}
+            />
+          )}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignSelf: "center",
-    alignItems: "center",
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: "contain",
+  },
+  header: {
+    height: "15%",
+    width: "100%",
     justifyContent: "center",
   },
-};
+  mainView: {
+    height: "85%",
+    width: "100%",
+  },
+  tabView: {
+    backgroundColor: "white",
+    borderTopEndRadius: 30,
+    borderTopLeftRadius: 30,
+  },
+  scene: {
+    flex: 1,
+  },
+});
 
 export default History;

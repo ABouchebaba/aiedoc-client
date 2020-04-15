@@ -17,7 +17,7 @@ export const Markers = ({ location }) => {
   const { sps, loading, error } = useSelector((state) => state.sps);
 
   useEffect(() => {
-    // console.log("launching getAvailableSps");
+    console.log(sps);
     dispatch(getAvailableSps());
   }, []);
 
@@ -40,6 +40,7 @@ export const Markers = ({ location }) => {
             latitude: sp.location.coordinates[1],
           }}
           image={require("../../assets/malePin.png")}
+          // image= {require(sp.gender=="male"?"../../assets/malePin.png":"../../assets/malePin.png")}
         />
       ))}
     </React.Fragment>

@@ -1,34 +1,81 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { StyleSheet, View, ImageBackground, TextInput,Text, Button } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Store/actions";
+import { Header } from "../components";
 
 const Profile = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   const onPress = () => dispatch(logout());
-
+  console.log(user);
   return (
-    <View style={styles.container}>
-      <Text>Profile screen</Text>
-      <Text>
-        user : {user.name} with email: {user.email}
-      </Text>
-      <TouchableOpacity onPress={onPress}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
-    </View>
+    <ImageBackground
+      source={require("../../assets/bg/bgHome.png")}
+      style={styles.container}
+    >
+      <View style={styles.mainView}>
+        <Text style={styles.text} >Email</Text>
+        <TextInput  editable={false} value={user.email} style={styles.TextInput}/>
+      </View>
+      <View style={styles.mainView}>
+        <Text style={styles.text} >Nom complet</Text>
+        <TextInput  editable={false} value={user.firstname+' '+ user.lastname} style={styles.TextInput}/>
+      </View>
+      <View style={styles.mainView}>
+        <Text style={styles.text} >Date d'inscription</Text>
+        <TextInput  editable={false} value={user.createdAt.slice(0,10)} style={styles.TextInput}/>
+      </View>
+      <View style={styles.mainView}>
+        <Text style={styles.text} >Date de naissance</Text>
+        <TextInput  editable={false} value={user.birthdate.slice(0,10)} style={styles.TextInput}/>
+      </View>
+      <View style={styles.mainView}>
+        <Text style={styles.text} >Numéro de téléphone</Text>
+        <TextInput  editable={false} value={user.phone} style={styles.TextInput}/>
+      </View>
+      <View style={styles.mainView}>
+        <Button title={"changer le numéro de téléphone"} onPress={()=> alert('Vive Babana, ana ma9aditch')} />
+      </View>
+    </ImageBackground>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignSelf: "center",
-    alignItems: "center",
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: "contain",
+    alignItems: "stretch",
     justifyContent: "center",
   },
-};
+  // header: {
+  //   height: "15%",
+  //   width: "100%",
+  //   justifyContent: "center",
+  // },
+  mainView: {
+    width: "100%",
+    alignItems: "stretch",
+    justifyContent: "center",
+    paddingHorizontal:50
+  },
+  text:{
+    textAlign:'left',
+    fontSize: 20,
+    color:'white',
+    paddingBottom:10
+  },
+  TextInput: {
+    backgroundColor: "#F2F2F2",
+    alignSelf:'center',
+    width: "100%",
+    borderRadius: 50,
+    paddingLeft: 20,
+    fontSize: 20,
+    paddingVertical: 10,
+    marginBottom: 40,
+  },
+});
 
 export default Profile;
