@@ -11,6 +11,7 @@ const History = (props) => {
   const { interventions } = useSelector((state) => state.user.user);
 
   //console.log(interventions);
+  // props.navigation.openDrawer();
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -46,14 +47,13 @@ const History = (props) => {
           renderTabBar={(props) => (
             <TabBar
               {...props}
-              indicatorStyle={{ backgroundColor: "white" }}
+              indicatorStyle={{ borderColor: "#1FB8E0", borderBottomWidth:3 }}
               style={styles.tabView}
               activeColor={"#D61F2C"}
               inactiveColor={"#48C2E3"}
               pressColor={"#D61F2C"}
             />
           )}
-          //renderPager={props => <ScrollPager { ...props } overscroll={true}/>}
         />
       </View>
     </ImageBackground>

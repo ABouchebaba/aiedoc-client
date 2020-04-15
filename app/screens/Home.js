@@ -30,7 +30,7 @@ const Home = (props) => {
   }, []);
 
   // useEffect(fitToMarkersToMap, [latitude, longitude]);
-
+ 
   return (
     <ImageBackground
       source={require("../../assets/bg/bgHome.png")}
