@@ -15,7 +15,7 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
-  const { latitude, longitude } = useSelector((state) => state.user.location);
+  const location = useSelector((state) => state.user.location);
   const map = useRef();
 
   function fitToMarkersToMap() {
@@ -28,7 +28,7 @@ const Home = (props) => {
     dispatch(getLocation());
   }, []);
 
-  // useEffect(fitToMarkersToMap, [latitude, longitude]);
+  useEffect(fitToMarkersToMap, [location]);
 
   return (
     <ImageBackground
@@ -45,8 +45,8 @@ const Home = (props) => {
         <MapView
           ref={map}
           initialRegion={{
-            latitude: latitude,
-            longitude: longitude,
+            latitude: location.latitude,
+            longitude: location.longitude,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
@@ -54,7 +54,7 @@ const Home = (props) => {
           loadingEnabled={true}
           style={styles.mapStyle}
         >
-          <Markers longitude={longitude} latitude={latitude} />
+          <Markers location={location} />
         </MapView>
         {/* add filter  */}
       </View>

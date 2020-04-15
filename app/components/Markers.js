@@ -12,7 +12,7 @@ const markers = [
   { id: "mk5", coordinates: { latitude: 36.733, longitude: 3.19007 } },
 ];
 
-export const Markers = (props) => {
+export const Markers = ({ location }) => {
   const dispatch = useDispatch();
   const { sps, loading, error } = useSelector((state) => state.sps);
 
@@ -27,10 +27,7 @@ export const Markers = (props) => {
         key={"user"}
         title="User"
         identifier={"user"}
-        coordinate={{
-          longitude: props.longitude,
-          latitude: props.latitude,
-        }}
+        coordinate={location}
         image={require("../../assets/malePin.png")}
       />
       {sps.map((sp) => (
