@@ -8,3 +8,7 @@ export const LOGIN_LOADING = "LOGIN_LOADING";
 export const SET_SPS = "SET_SPS";
 export const SPS_LOADING = "SPS_LOADING";
 export const ERROR_SPS = "ERROR_SPS";
+
+export const SET_SERVICES = "SET_SERVICES";
+export const SERVICES_LOADING = "SERVICES_LOADING";
+export const ERROR_SERVICES = "ERROR_SERVICES";

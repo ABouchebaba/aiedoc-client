@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   user: false,
+  token: false,
   location: { latitude: 36.7538, longitude: 3.058 },
   loading: false,
 };
@@ -17,6 +18,7 @@ const UserReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.data,
+        token: action.token,
         loading: false,
       };
     }
@@ -24,6 +26,7 @@ const UserReducer = (state = initialState, action) => {
       return {
         ...state,
         user: false,
+        token: false,
         loading: false,
       };
     }

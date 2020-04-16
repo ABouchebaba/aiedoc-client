@@ -9,7 +9,7 @@ import {
   SexFilter,
   ServiceFilter,
 } from "../components";
-import { getLocation, getAvailableSps } from "../Store/actions";
+import { getLocation, getAvailableSps, getServices } from "../Store/actions";
 
 // function fitToMarkersToMap() {
 //   mapRef.current.fitToSuppliedMarkers(["user"], {
@@ -19,7 +19,7 @@ import { getLocation, getAvailableSps } from "../Store/actions";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const location = useSelector((state) => state.user.location);
+  const { location, token } = useSelector((state) => state.user);
   const { sps, loading, error } = useSelector((state) => state.sps);
   const [mapRef, setMapRef] = useState(null);
   const [filters, setFilters] = useState({ sex: {}, service: {} });
@@ -36,6 +36,7 @@ const Home = (props) => {
   useEffect(() => {
     dispatch(getLocation());
     dispatch(getAvailableSps());
+    dispatch(getServices());
   }, []);
 
   let filtered = [...sps];

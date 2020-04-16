@@ -6,14 +6,14 @@ export const getAvailableSps = () => (dispatch) => {
 
   getReadySps()
     .then((res) => {
-      console.log("got results : " + res.data.length);
+      console.log("Get sps - got results : " + res.data.length);
       return dispatch({
         type: SET_SPS,
         data: res.data,
       });
     })
     .catch((err) => {
-      console.log("got error : " + err.message);
+      console.log("Get sps - got error : " + err.message);
       return dispatch({
         type: ERROR_SPS,
         data: err.message,
