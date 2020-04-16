@@ -1,6 +1,6 @@
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import React from "react";
-import { Alert, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Store/actions";
 
@@ -24,39 +24,42 @@ export function CustomDrawerContent(props) {
   const dispatch = useDispatch();
   const { firstname, lastname } = useSelector((state) => state.user.user);
   return (
-    <DrawerContentScrollView {...props} style={{flex:1, height:height}}>
-      <View style={styles.mainView}>
-        <Text style={styles.firstLetter}>
-          {firstname.charAt(0).toUpperCase()}
-        </Text>
-        <View style={styles.profileView}>
-          <Text style={styles.fullName}>
-            {firstname.charAt(0).toUpperCase() + "." + lastname}
+    <View style={styles.container}>
+      <DrawerContentScrollView {...props} style={{ flex: 1, height: height }}>
+        <View style={styles.mainView}>
+          <Text style={styles.firstLetter}>
+            {firstname.charAt(0).toUpperCase()}
           </Text>
-          <Text style={styles.consult}>Consultez votre compte</Text>
+          <View style={styles.profileView}>
+            <Text style={styles.fullName}>
+              {firstname.charAt(0).toUpperCase() + "." + lastname}
+            </Text>
+            <Text style={styles.consult}>Consultez votre compte</Text>
+          </View>
         </View>
-      </View>
-      <DrawerItemList
-        {...props}
-        // itemStyle={styles.items}
-        // labelStyle={styles.label}
-      />
-      <TouchableOpacity
-        style={styles.disconnectItem}
-        onPress={disconnectAtempt}
-      >
-        <Text style={styles.disconnectLabel}>Déconnexion</Text>
-      </TouchableOpacity>
-      
+        <DrawerItemList
+          {...props}
+          // itemStyle={styles.items}
+          // labelStyle={styles.label}
+        />
+      </DrawerContentScrollView>
       <View style={styles.propos}>
-        <Image source={require("../../assets/logo.png")} style={styles.image} />
-        <Text style={styles.proposText}>2020 - AieDoc</Text>
+        <TouchableOpacity
+          style={styles.disconnectItem}
+          onPress={disconnectAtempt}
+        >
+          <Text style={styles.disconnectLabel}>Déconnexion</Text>
+        </TouchableOpacity>
+        {/* <Image source={require("../../assets/logo.png")} style={styles.image} /> */}
       </View>
-    </DrawerContentScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+  },
   mainView: {
     flexDirection: "row",
     paddingVertical: 10,
@@ -104,8 +107,6 @@ const styles = StyleSheet.create({
     color: "#48C2E3",
   },
   disconnectItem: {
-    borderBottomWidth: 1,
-    borderColor: "white",
     height: height * 0.06,
     justifyContent: "center",
     alignItems: "center",
@@ -116,18 +117,21 @@ const styles = StyleSheet.create({
     color: "white",
   },
   propos: {
+    width: "100%",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
     backgroundColor: "#1FB8E0",
-    
+    position: "absolute",
+    bottom: 0,
   },
   proposText: {
     color: "white",
     textAlign: "center",
     fontSize: 30,
-    backgroundColor:'red'
+    backgroundColor: "red",
   },
   image: {
+    alignSelf: "center",
     width: 100,
     resizeMode: "contain",
   },
