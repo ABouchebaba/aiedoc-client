@@ -16,8 +16,8 @@ export const Markers = ({ location, sps }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log(sps);
     // dispatch(getAvailableSps());
+    // console.log(sps);
   }, []);
 
   return (
@@ -27,9 +27,10 @@ export const Markers = ({ location, sps }) => {
         title="User"
         identifier={"user"}
         coordinate={location}
-        image={require("../../assets/malePin.png")}
+        //image={require("../../assets/malePin.png")}
       />
       {sps.map((sp) => (
+        
         <Marker.Animated
           key={sp._id}
           title={sp.sex}
@@ -39,7 +40,7 @@ export const Markers = ({ location, sps }) => {
             latitude: sp.location.coordinates[1],
           }}
           image={require("../../assets/malePin.png")}
-          // image= {require(sp.gender=="male"?"../../assets/malePin.png":"../../assets/malePin.png")}
+          //image= {require((sp.sex=="male"?"../../assets/malePin.png":"../../assets/malePin.png"))}
         />
       ))}
     </React.Fragment>

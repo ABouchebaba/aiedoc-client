@@ -3,7 +3,6 @@ import React from "react";
 import { Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Store/actions";
-
 const { width, height } = Dimensions.get("screen");
 
 export function CustomDrawerContent(props) {
