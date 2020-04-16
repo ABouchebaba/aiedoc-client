@@ -6,3 +6,5 @@ export * from "./CustomDrawer";
 export * from "./Map";
 export * from "./BackImage";
 export * from "./InterventionModel";
+export * from "./SexFilter";
+export * from "./ServiceFilter";

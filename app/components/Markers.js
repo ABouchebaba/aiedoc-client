@@ -1,23 +1,12 @@
 import React, { useEffect } from "react";
 import { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
-import { getAvailableSps } from "../Store/actions";
-
-const markers = [
-  { id: "mk0", coordinates: { latitude: 36.735, longitude: 3.1801299 } },
-  { id: "mk1", coordinates: { latitude: 36.736, longitude: 3.17015 } },
-  { id: "mk2", coordinates: { latitude: 36.737, longitude: 3.1601 } },
-  { id: "mk3", coordinates: { latitude: 36.738, longitude: 3.15008 } },
-  { id: "mk4", coordinates: { latitude: 36.7322, longitude: 3.14808 } },
-  { id: "mk5", coordinates: { latitude: 36.733, longitude: 3.19007 } },
-];
 
 export const Markers = ({ location, sps }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     // console.log(sps);
-    // dispatch(getAvailableSps());
   }, []);
 
   return (

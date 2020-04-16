@@ -1,10 +1,4 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
-import { View, TouchableOpacity, Image, StyleSheet, Text } from "react-native";
 
 import React from "react";
 import About from "../screens/About";
@@ -22,18 +16,22 @@ function HomeDrawerScreen() {
       drawerType="slide"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       initialRouteName={"Accueil"}
-      
+
       // drawerStyle={{height:"100%"}}
     >
       <HomeDrawer.Screen name="Accueil" component={Home} />
       <HomeDrawer.Screen name="Profile" component={Profile} />
       <HomeDrawer.Screen name="Historique" component={History} />
       <HomeDrawer.Screen name="About" component={About} />
-      <HomeDrawer.Screen name="ChangePhoneNumber" options={{
-                drawerLabel: () => null,
-                title: null,
-                drawerIcon: () => null
-            }} component={ChangePhoneNumber} />
+      <HomeDrawer.Screen
+        name="ChangePhoneNumber"
+        options={{
+          drawerLabel: () => null,
+          title: null,
+          drawerIcon: () => null,
+        }}
+        component={ChangePhoneNumber}
+      />
     </HomeDrawer.Navigator>
   );
 }

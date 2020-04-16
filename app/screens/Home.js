@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Header, Markers, Map, BackImage } from "../components";
+import {
+  Header,
+  Markers,
+  Map,
+  BackImage,
+  SexFilter,
+  ServiceFilter,
+} from "../components";
 import { getLocation, getAvailableSps } from "../Store/actions";
 
 // function fitToMarkersToMap() {
@@ -41,24 +48,17 @@ const Home = (props) => {
         <Header navigation={props.navigation} />
       </View>
 
-      <View style={styles.sexFilter}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setFilter("sex", "male")}
-        >
-          <Text>Homme</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setFilter("sex", "female")}
-        >
-          <Text>Femme</Text>
-        </TouchableOpacity>
-      </View>
+      <SexFilter
+        setFilter={setFilter}
+        style={styles.sexFilter}
+        selected={filters.sex}
+      />
 
       <Map setRef={setMapRef} location={location}>
         <Markers sps={filtered} location={location} />
       </Map>
+
+      <ServiceFilter style={styles.serviceFilter} />
     </BackImage>
   );
 };
@@ -71,18 +71,20 @@ const styles = StyleSheet.create({
   },
   sexFilter: {
     position: "absolute",
-    top: 150,
-    zIndex: 2,
-    backgroundColor: "red",
+    top: 120,
+    zIndex: 1,
     width: "60%",
     flexDirection: "row",
     alignSelf: "center",
     justifyContent: "space-around",
   },
-  button: {
-    padding: 15,
-    borderRadius: 20,
-    backgroundColor: "yellow",
+  serviceFilter: {
+    position: "absolute",
+    bottom: 0,
+    zIndex: 1,
+    width: "100%",
+    alignSelf: "center",
+    justifyContent: "space-around",
   },
 });
 
