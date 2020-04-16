@@ -1,16 +1,23 @@
 import React from "react";
-import { Button, ImageBackground, StyleSheet, Text, TextInput, View, TouchableOpacity } from "react-native";
+import {
+  Button,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Store/actions";
 import { Entypo } from "@expo/vector-icons";
-
 
 const Profile = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
 
   const onPress = () => dispatch(logout());
-  console.log(user);
+  // console.log(user);
   return (
     <ImageBackground
       source={require("../../assets/bg/bgHome.png")}
@@ -64,7 +71,7 @@ const Profile = (props) => {
       <View style={styles.inputGroup}>
         <Button
           title={"changer le numéro de téléphone"}
-          onPress={() => props.navigation.navigate('ChangePhoneNumber')}
+          onPress={() => props.navigation.navigate("ChangePhoneNumber")}
         />
       </View>
     </ImageBackground>
@@ -82,7 +89,7 @@ const styles = StyleSheet.create({
     height: "15%",
     width: "100%",
     justifyContent: "center",
-    paddingLeft:30,
+    paddingLeft: 30,
   },
   inputGroup: {
     width: "100%",

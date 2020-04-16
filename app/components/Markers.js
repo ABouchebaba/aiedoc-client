@@ -12,13 +12,12 @@ const markers = [
   { id: "mk5", coordinates: { latitude: 36.733, longitude: 3.19007 } },
 ];
 
-export const Markers = (props) => {
+export const Markers = ({ location, sps }) => {
   const dispatch = useDispatch();
-  const { sps, loading, error } = useSelector((state) => state.sps);
 
   useEffect(() => {
-    console.log(sps);
-    dispatch(getAvailableSps());
+    // console.log(sps);
+    // dispatch(getAvailableSps());
   }, []);
 
   return (
@@ -27,16 +26,13 @@ export const Markers = (props) => {
         key={"user"}
         title="User"
         identifier={"user"}
-        coordinate={{
-          longitude: props.longitude,
-          latitude: props.latitude,
-        }}
+        coordinate={location}
         image={require("../../assets/malePin.png")}
       />
       {sps.map((sp) => (
         <Marker.Animated
           key={sp._id}
-          title={sp.email}
+          title={sp.sex}
           identifier={sp._id}
           coordinate={{
             longitude: sp.location.coordinates[0],
