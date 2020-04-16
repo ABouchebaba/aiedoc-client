@@ -10,13 +10,15 @@ import {
 } from "react-native";
 import { sendPin, getOptions } from "../Store/api";
 import { login } from "../Store/actions";
+import { AntDesign } from "@expo/vector-icons";
+
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseAuthApplicationVerifier,
 } from "expo-firebase-recaptcha";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const AuthPhone = (props) => {
+const ChangePhoneNumber = (props) => {
   const dispatch = useDispatch();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [recaptchaVerifier, setRecaptchaVerifier] = useState(
@@ -47,7 +49,7 @@ const AuthPhone = (props) => {
   };
   const onVerfiyPhoneError = (err) => {
     restartProcess();
-    props.navigation.navigate("AuthForm", { phoneNumber });
+    props.navigation.navigate("Profile");
   };
   const restartProcess = () => {
     setVerificationId("");
@@ -55,13 +57,15 @@ const AuthPhone = (props) => {
     setVerificationCode("");
     setStep(0);
   };
-  const onPressConfirmVerificationCode = async () =>
-    dispatch(
-      login(
-        { phoneNumber, verificationId, verificationCode },
-        { onPinError, onVerfiyPhoneError }
-      )
-    );
+  const onPressConfirmVerificationCode = async () => {
+    onVerfiyPhoneError();
+  }
+    // dispatch(
+    //   login(
+    //     { phoneNumber, verificationId, verificationCode },
+    //     { onPinError, onVerfiyPhoneError }
+    //   )
+    // );
 
   return (
     <View style={styles.container}>
@@ -69,6 +73,12 @@ const AuthPhone = (props) => {
         source={require("../../assets/bg/bg1.png")}
         style={styles.image}
       >
+        <View style={styles.header}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Profile')}>
+          <AntDesign name="arrowleft" size={70} color="white" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.body}>
         {step === 0 && (
           <>
             <FirebaseRecaptchaVerifierModal
@@ -76,7 +86,7 @@ const AuthPhone = (props) => {
               firebaseConfig={getOptions()}
             />
             <View style={styles.mainView}>
-              <Text style={{ fontSize: 22, color: "white", marginBottom: 10 }}>
+              <Text style={{ fontSize: 20, color: "white", marginBottom: 10 }}>
               Entrez votre numéro de téléphone
               </Text>
               <View style={styles.inputView}>
@@ -146,6 +156,7 @@ const AuthPhone = (props) => {
               </TouchableOpacity>
             </>
           ))}
+          </View>
       </ImageBackground>
     </View>
   );
@@ -158,7 +169,17 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
+    justifyContent: "flex-start",
+  },
+  body:{
+    height:"70%",
     justifyContent: "center",
+  },
+  header: {
+    height: "15%",
+    //width: "100%",
+    justifyContent: "center",
+    paddingLeft:30,
   },
   mainView: {
     paddingHorizontal: "8%",
@@ -212,4 +233,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AuthPhone;
+export default ChangePhoneNumber;

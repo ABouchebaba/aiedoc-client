@@ -24,7 +24,7 @@ export function CustomDrawerContent(props) {
   const dispatch = useDispatch();
   const { firstname, lastname } = useSelector((state) => state.user.user);
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} style={{flex:1, height:height}}>
       <View style={styles.mainView}>
         <Text style={styles.firstLetter}>
           {firstname.charAt(0).toUpperCase()}
@@ -38,18 +38,20 @@ export function CustomDrawerContent(props) {
       </View>
       <DrawerItemList
         {...props}
-        itemStyle={styles.items}
-        labelStyle={styles.label}
+        // itemStyle={styles.items}
+        // labelStyle={styles.label}
       />
-      <View style={styles.propos}>
-        <Image source={require("../../assets/logo.png")} style={styles.image} />
-      </View>
       <TouchableOpacity
         style={styles.disconnectItem}
         onPress={disconnectAtempt}
       >
         <Text style={styles.disconnectLabel}>Déconnexion</Text>
       </TouchableOpacity>
+      
+      <View style={styles.propos}>
+        <Image source={require("../../assets/logo.png")} style={styles.image} />
+        <Text style={styles.proposText}>2020 - AieDoc</Text>
+      </View>
     </DrawerContentScrollView>
   );
 }
@@ -102,32 +104,31 @@ const styles = StyleSheet.create({
     color: "#48C2E3",
   },
   disconnectItem: {
-    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: "white",
-    height: height * 0.12,
+    height: height * 0.06,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1FB8E0",
+    backgroundColor: "#e01f1f",
   },
   disconnectLabel: {
-    fontSize: 25,
+    fontSize: 20,
     color: "white",
   },
   propos: {
-    height: height * 0.28,
-    backgroundColor: "red",
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#1FB8E0",
+    
   },
   proposText: {
     color: "white",
     textAlign: "center",
     fontSize: 30,
+    backgroundColor:'red'
   },
   image: {
-    width: "60%",
+    width: 100,
     resizeMode: "contain",
   },
 });

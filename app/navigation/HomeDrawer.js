@@ -11,6 +11,7 @@ import About from "../screens/About";
 import History from "../screens/History";
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
+import ChangePhoneNumber from "../screens/ChangePhoneNumber";
 import { CustomDrawerContent } from "../components";
 
 const HomeDrawer = createDrawerNavigator();
@@ -20,7 +21,7 @@ function HomeDrawerScreen() {
     <HomeDrawer.Navigator
       drawerType="slide"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      initialRouteName={"History"}
+      initialRouteName={"Accueil"}
       
       // drawerStyle={{height:"100%"}}
     >
@@ -28,6 +29,11 @@ function HomeDrawerScreen() {
       <HomeDrawer.Screen name="Profile" component={Profile} />
       <HomeDrawer.Screen name="Historique" component={History} />
       <HomeDrawer.Screen name="About" component={About} />
+      <HomeDrawer.Screen name="ChangePhoneNumber" options={{
+                drawerLabel: () => null,
+                title: null,
+                drawerIcon: () => null
+            }} component={ChangePhoneNumber} />
     </HomeDrawer.Navigator>
   );
 }
