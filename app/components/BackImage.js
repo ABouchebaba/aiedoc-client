@@ -1,7 +1,7 @@
 import React from "react";
 import { View, ImageBackground } from "react-native";
 
-const BackImage = (props) => {
+export const BackImage = (props) => {
   return (
     <View style={styles.container}>
       <ImageBackground source={props.source} style={styles.image}>
@@ -21,5 +21,3 @@ const styles = {
     justifyContent: "center",
   },
 };
-
-export default BackImage;

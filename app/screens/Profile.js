@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, View, ImageBackground, TextInput,Text, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  TextInput,
+  Text,
+  Button,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Store/actions";
 import { Header } from "../components";
@@ -9,34 +16,57 @@ const Profile = (props) => {
   const user = useSelector((state) => state.user.user);
 
   const onPress = () => dispatch(logout());
-  console.log(user);
+  // console.log(user);
   return (
     <ImageBackground
       source={require("../../assets/bg/bgHome.png")}
       style={styles.container}
     >
       <View style={styles.mainView}>
-        <Text style={styles.text} >Email</Text>
-        <TextInput  editable={false} value={user.email} style={styles.TextInput}/>
+        <Text style={styles.text}>Email</Text>
+        <TextInput
+          editable={false}
+          value={user.email}
+          style={styles.TextInput}
+        />
       </View>
       <View style={styles.mainView}>
-        <Text style={styles.text} >Nom complet</Text>
-        <TextInput  editable={false} value={user.firstname+' '+ user.lastname} style={styles.TextInput}/>
+        <Text style={styles.text}>Nom complet</Text>
+        <TextInput
+          editable={false}
+          value={user.firstname + " " + user.lastname}
+          style={styles.TextInput}
+        />
       </View>
       <View style={styles.mainView}>
-        <Text style={styles.text} >Date d'inscription</Text>
-        <TextInput  editable={false} value={user.createdAt.slice(0,10)} style={styles.TextInput}/>
+        <Text style={styles.text}>Date d'inscription</Text>
+        <TextInput
+          editable={false}
+          value={user.createdAt.slice(0, 10)}
+          style={styles.TextInput}
+        />
       </View>
       <View style={styles.mainView}>
-        <Text style={styles.text} >Date de naissance</Text>
-        <TextInput  editable={false} value={user.birthdate.slice(0,10)} style={styles.TextInput}/>
+        <Text style={styles.text}>Date de naissance</Text>
+        <TextInput
+          editable={false}
+          value={user.birthdate.slice(0, 10)}
+          style={styles.TextInput}
+        />
       </View>
       <View style={styles.mainView}>
-        <Text style={styles.text} >Numéro de téléphone</Text>
-        <TextInput  editable={false} value={user.phone} style={styles.TextInput}/>
+        <Text style={styles.text}>Numéro de téléphone</Text>
+        <TextInput
+          editable={false}
+          value={user.phone}
+          style={styles.TextInput}
+        />
       </View>
       <View style={styles.mainView}>
-        <Button title={"changer le numéro de téléphone"} onPress={()=> alert('Vive Babana, ana ma9aditch')} />
+        <Button
+          title={"changer le numéro de téléphone"}
+          onPress={() => alert("Vive Babana, ana ma9aditch")}
+        />
       </View>
     </ImageBackground>
   );
@@ -58,17 +88,17 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "stretch",
     justifyContent: "center",
-    paddingHorizontal:50
+    paddingHorizontal: 50,
   },
-  text:{
-    textAlign:'left',
+  text: {
+    textAlign: "left",
     fontSize: 20,
-    color:'white',
-    paddingBottom:10
+    color: "white",
+    paddingBottom: 10,
   },
   TextInput: {
     backgroundColor: "#F2F2F2",
-    alignSelf:'center',
+    alignSelf: "center",
     width: "100%",
     borderRadius: 50,
     paddingLeft: 20,

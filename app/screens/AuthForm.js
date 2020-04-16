@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../Store/actions";
 import DatePicker from "../components/DatePicker";
 import Button from "../components/Button";
-import BackImage from "../components/BackImage";
+import { BackImage } from "../components/";
 
 const AuthForm = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const AuthForm = (props) => {
   const submit = () => {
     // register user in backend
     console.log({ phone, email, firstname, lastname, birthdate });
-    // dispatch(register({ phone, email, firstname, lastname, birthdate }));
+    dispatch(register({ phone, email, firstname, lastname, birthdate }));
   };
 
   return (

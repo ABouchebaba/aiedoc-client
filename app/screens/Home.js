@@ -1,102 +1,88 @@
-import React, { useEffect, useRef } from "react";
-import { Dimensions, ImageBackground, StyleSheet, View } from "react-native";
-import MapView from "react-native-maps";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Header, Markers } from "../components";
-import { getLocation } from "../Store/actions";
+import { Header, Markers, Map, BackImage } from "../components";
+import { getLocation, getAvailableSps } from "../Store/actions";
 
-const screen = Dimensions.get("window");
-
-const ASPECT_RATIO = screen.width / screen.height;
-const LATITUDE_DELTA = 0.0922;
-const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+// function fitToMarkersToMap() {
+//   mapRef.current.fitToSuppliedMarkers(["user"], {
+//     edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+//   });
+// }
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-
   const location = useSelector((state) => state.user.location);
-  const map = useRef();
+  const { sps, loading, error } = useSelector((state) => state.sps);
+  const [mapRef, setMapRef] = useState(null);
+  const [filters, setFilters] = useState({ sex: {}, service: {} });
 
-  function fitToMarkersToMap() {
-    map.current.fitToSuppliedMarkers(["user"], {
-      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-    });
-  }
+  const setFilter = (filter, value) => {
+    if (filters[filter][value]) {
+      delete filters[filter][value];
+    } else {
+      filters[filter][value] = true;
+    }
+    setFilters({ ...filters });
+  };
 
   useEffect(() => {
     dispatch(getLocation());
-    fitToMarkersToMap();
+    dispatch(getAvailableSps());
   }, []);
 
-  useEffect(fitToMarkersToMap, [location]);
+  let filtered = [...sps];
+  if (Object.keys(filters.sex).length > 0)
+    filtered = filtered.filter((sp) => Boolean(filters.sex[sp.sex]));
 
   return (
-    <ImageBackground
-      source={require("../../assets/bg/bgHome.png")}
-      style={styles.container}
-    >
+    <BackImage source={require("../../assets/bg/bgHome.png")}>
       <View style={styles.header}>
-        <Header
-          navigation={props.navigation}
-          //fitToMarkersToMap={fitToMarkersToMap}
-        />
+        <Header navigation={props.navigation} />
       </View>
-      <View style={styles.mapContainer}>
-        <MapView
-          ref={map}
-          initialRegion={{
-            latitude: location.latitude,
-            longitude: location.longitude,
-            latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }}
-          showsTraffic={true}
-          loadingEnabled={true}
-          style={styles.mapStyle}
+
+      <View style={styles.sexFilter}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setFilter("sex", "male")}
         >
-          <Markers location={location} />
-        </MapView>
-        {/* add filter  */}
+          <Text>Homme</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setFilter("sex", "female")}
+        >
+          <Text>Femme</Text>
+        </TouchableOpacity>
       </View>
-    </ImageBackground>
+
+      <Map setRef={setMapRef} location={location}>
+        <Markers sps={filtered} location={location} />
+      </Map>
+    </BackImage>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: "cover",
-  },
-  mapContainer: {
-    overflow: "hidden",
-    backgroundColor: "white",
-    height: "85%",
-    width: "100%",
-    borderRadius: 30,
-  },
-  mapStyle: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 10,
-    borderBottomEndRadius: 20,
-  },
   header: {
     height: "15%",
     width: "100%",
     justifyContent: "center",
   },
-  headerActions: {
-    justifyContent: "space-between",
+  sexFilter: {
+    position: "absolute",
+    top: 150,
+    zIndex: 2,
+    backgroundColor: "red",
+    width: "60%",
     flexDirection: "row",
-    alignItems: "flex-end",
+    alignSelf: "center",
+    justifyContent: "space-around",
   },
-  tinyLogo: {
-    width: 70,
-    height: 70,
+  button: {
+    padding: 15,
+    borderRadius: 20,
+    backgroundColor: "yellow",
   },
 });
 
