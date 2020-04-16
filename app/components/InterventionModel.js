@@ -25,7 +25,7 @@ export const InterventionModel = (props) => {
 
   return (
     <Modal
-      animationType="fade"
+      animationType="slide"
       transparent={true}
       visible={props.showModel}
       onRequestClose={props.close}
@@ -51,11 +51,11 @@ export const InterventionModel = (props) => {
           <FontAwesome name="user-md" size={20} color="green">
             <Text style={styles.modelText}> {intervention.sp_name}</Text>
           </FontAwesome>
-          <View style={{alignItems:'center'}}>
-          {/* <FontAwesome name="user-md" size={20} color="green">
+          <View style={{ alignItems: "center" }}>
+            {/* <FontAwesome name="user-md" size={20} color="green">
             <Text style={styles.modelText}> Services:</Text>
           </FontAwesome> */}
-          <Text style={styles.modelText}> Services:</Text>
+            <Text style={styles.modelText}> Services:</Text>
             <Text style={styles.modelText}>
               {"\n" + intervention.services.toString()}
             </Text>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   ratingView: {
     flexDirection: "row",
-    alignSelf:'center'
+    alignSelf: "center",
   },
   icon: {
     backgroundColor: "#4EC7E6",

@@ -21,9 +21,8 @@ export const login = (info, callbacks) => (dispatch) => {
           dispatch({
             type: SET_USER,
             data: res.data,
+            token: res.headers["x-auth-token"],
           });
-          // set auth token in axios
-          setToken("x-auth-token", res.headers["x-auth-token"]);
         })
         // user not registred
         .catch((err) => {
@@ -49,9 +48,8 @@ export const register = (user) => (dispatch) => {
       dispatch({
         type: SET_USER,
         data: res.data,
+        token: res.headers["x-auth-token"],
       });
-      // set auth token in axios
-      setToken("x-auth-token", res.headers["x-auth-token"]);
     })
     .catch((err) => {
       dispatch({

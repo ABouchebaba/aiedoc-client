@@ -8,3 +8,5 @@ export * from "./Map";
 export * from "./BackImage";
 export * from "./InterventionModel";
 export * from './ProductCard'
+export * from "./SexFilter";
+export * from "./ServiceFilter";
