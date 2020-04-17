@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { Marker } from "react-native-maps";
+import { View, Text } from "react-native";
+import { Marker, Callout } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
+import { SpInfo } from "./SpInfo";
 
 export const Markers = ({ location, sps }) => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ export const Markers = ({ location, sps }) => {
       />
       {sps.map((sp) => (
         <Marker.Animated
+          onPress={() => alert("press")}
           key={sp._id}
           title={sp.sex}
           identifier={sp._id}
@@ -29,7 +32,11 @@ export const Markers = ({ location, sps }) => {
           }}
           image={require("../../assets/malePin.png")}
           // image= {require(sp.gender=="male"?"../../assets/malePin.png":"../../assets/malePin.png")}
-        />
+        >
+          <Callout style={{ position: "absolute" }}>
+            <SpInfo sp={sp} />
+          </Callout>
+        </Marker.Animated>
       ))}
     </React.Fragment>
   );
