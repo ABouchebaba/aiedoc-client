@@ -35,8 +35,6 @@ export default class App extends React.Component {
   }
 
   async load() {
-    // console.log("loading...");
-    // do something
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
 

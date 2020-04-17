@@ -10,3 +10,4 @@ export * from "./InterventionModel";
 export * from './ProductCard'
 export * from "./SexFilter";
 export * from "./ServiceFilter";
+export * from "./Checkbox";

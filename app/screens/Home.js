@@ -19,7 +19,7 @@ import { getLocation, getAvailableSps, getServices } from "../Store/actions";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const { location, token } = useSelector((state) => state.user);
+  const { location } = useSelector((state) => state.user);
   const { sps, loading, error } = useSelector((state) => state.sps);
   const [mapRef, setMapRef] = useState(null);
   const [filters, setFilters] = useState({ sex: {}, service: {} });
@@ -39,37 +39,40 @@ const Home = (props) => {
     dispatch(getServices());
   }, []);
 
-  let filtered = [...sps];
+  // empty filters(sex/service) are not taken into consideration
+  let filtered = sps;
   if (Object.keys(filters.sex).length > 0)
-    filtered = filtered.filter((sp) => Boolean(filters.sex[sp.sex]));
+    filtered = filtered.filter((sp) => filters.sex[sp.sex]);
+
+  if (Object.keys(filters.service).length > 0)
+    filtered = filtered.filter((sp) => {
+      for (let i = 0; i < sp.services.length; i++) {
+        if (filters.service[sp.services[i]]) return true;
+      }
+      return false;
+    });
 
   return (
     <BackImage source={require("../../assets/bg/bgHome.png")}>
-      <View style={styles.header}>
-        <Header navigation={props.navigation} />
-      </View>
-
+      <Header />
       <SexFilter
         setFilter={setFilter}
-        style={styles.sexFilter}
         selected={filters.sex}
+        style={styles.sexFilter}
       />
-
       <Map setRef={setMapRef} location={location}>
         <Markers sps={filtered} location={location} />
       </Map>
-
-      <ServiceFilter style={styles.serviceFilter} />
+      <ServiceFilter
+        setFilter={setFilter}
+        selected={filters.service}
+        style={styles.serviceFilter}
+      />
     </BackImage>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    height: "15%",
-    width: "100%",
-    justifyContent: "center",
-  },
   sexFilter: {
     position: "absolute",
     top: 120,
@@ -84,8 +87,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 1,
     width: "100%",
-    alignSelf: "center",
-    justifyContent: "space-around",
   },
 });
 
