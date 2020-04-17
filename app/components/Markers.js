@@ -8,6 +8,7 @@ export const Markers = ({ location, sps }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // dispatch(getAvailableSps());
     // console.log(sps);
   }, []);
 
@@ -18,9 +19,10 @@ export const Markers = ({ location, sps }) => {
         title="User"
         identifier={"user"}
         coordinate={location}
-        image={require("../../assets/malePin.png")}
+        //image={require("../../assets/malePin.png")}
       />
       {sps.map((sp) => (
+        
         <Marker.Animated
           onPress={() => alert("press")}
           key={sp._id}

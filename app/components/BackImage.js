@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ImageBackground } from "react-native";
+import { View, ImageBackground, StatusBar, StyleSheet } from "react-native";
 
 export const BackImage = (props) => {
   return (
@@ -11,8 +11,9 @@ export const BackImage = (props) => {
   );
 };
 
-const styles = {
+const styles =StyleSheet.create({
   container: {
+    marginTop: StatusBar.currentHeight,
     flex: 1,
   },
   image: {
@@ -20,4 +21,4 @@ const styles = {
     resizeMode: "cover",
     justifyContent: "center",
   },
-};
+});
