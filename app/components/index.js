@@ -8,3 +8,4 @@ export * from "./BackImage";
 export * from "./InterventionModel";
 export * from "./SexFilter";
 export * from "./ServiceFilter";
+export * from "./Checkbox";

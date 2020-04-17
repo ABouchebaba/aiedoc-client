@@ -39,9 +39,17 @@ const Home = (props) => {
     dispatch(getServices());
   }, []);
 
-  let filtered = [...sps];
+  let filtered = sps;
   if (Object.keys(filters.sex).length > 0)
-    filtered = filtered.filter((sp) => Boolean(filters.sex[sp.sex]));
+    filtered = filtered.filter((sp) => filters.sex[sp.sex]);
+
+  if (Object.keys(filters.service).length > 0)
+    filtered = filtered.filter((sp) => {
+      for (let i = 0; i < sp.services.length; i++) {
+        if (filters.service[sp.services[i]]) return true;
+      }
+      return false;
+    });
 
   return (
     <BackImage source={require("../../assets/bg/bgHome.png")}>
@@ -51,15 +59,19 @@ const Home = (props) => {
 
       <SexFilter
         setFilter={setFilter}
-        style={styles.sexFilter}
         selected={filters.sex}
+        style={styles.sexFilter}
       />
 
       <Map setRef={setMapRef} location={location}>
         <Markers sps={filtered} location={location} />
       </Map>
 
-      <ServiceFilter style={styles.serviceFilter} />
+      <ServiceFilter
+        setFilter={setFilter}
+        selected={filters.service}
+        style={styles.serviceFilter}
+      />
     </BackImage>
   );
 };

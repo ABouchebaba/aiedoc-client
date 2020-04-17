@@ -1,26 +1,19 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import Animated, { Easing } from "react-native-reanimated";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import { Checkbox } from "./Checkbox";
+import Animated from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
+import { timing } from "../helpers";
 
-const timing = (value, toValue, duration = 300) => {
-  return Animated.timing(value, {
-    toValue,
-    duration,
-    easing: Easing.linear,
-  });
-};
-
-export const ServiceFilter = ({ style }) => {
+export const ServiceFilter = ({ style, setFilter, selected }) => {
   const { services, loading, error } = useSelector((state) => state.services);
   const [open, setopen] = useState(false);
-  const [height, setheight] = useState(new Animated.Value(0));
-  const [opacity, setopacity] = useState(new Animated.Value(0));
+  const [height] = useState(new Animated.Value(0));
+  const [opacity] = useState(new Animated.Value(0));
 
   const openFilters = () => {
     timing(height, 250).start();
     timing(opacity, 1).start();
-    // timing(height, 250).start();
     setopen(true);
   };
 
@@ -42,11 +35,20 @@ export const ServiceFilter = ({ style }) => {
       </TouchableOpacity>
 
       <Animated.View style={[styles.content, { height }]}>
-        <Animated.View style={{ opacity }}>
-          {services.map((s) => (
-            <Animated.Text key={s._id}>{s.type}</Animated.Text>
-          ))}
-        </Animated.View>
+        <ScrollView>
+          <Animated.View style={[styles.innerContent, { opacity }]}>
+            {services.map((type) =>
+              type.services.map((s) => (
+                <Checkbox
+                  key={s._id}
+                  title={s.name}
+                  selected={selected[s.name]}
+                  onPress={() => setFilter("service", s.name)}
+                />
+              ))
+            )}
+          </Animated.View>
+        </ScrollView>
       </Animated.View>
     </View>
   );
@@ -69,7 +71,13 @@ const styles = {
     fontSize: 24,
   },
   content: {
+    width: "100%",
     backgroundColor: "white",
+  },
+  innerContent: {
+    flexWrap: "wrap",
+    width: "100%",
+    height: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
