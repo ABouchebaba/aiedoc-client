@@ -11,7 +11,7 @@ import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 export const ProductCard = (props) => {
   const product = {
-    discount: 10,
+    discount:0,
     _id: "5e8283076079920016fb9586",
     name: "Gél hydro",
     brand: "Venus",
@@ -22,7 +22,7 @@ export const ProductCard = (props) => {
   };
 
   return (
-    <TouchableOpacity style={styles.card} onPress={() => alert("hi")}>
+    <TouchableOpacity style={styles.card} onPress={() => props.navigation.navigate("ProductProfile")}>
       <View style={styles.imageSide}>
         <Image source={require("../../assets/logo.png")} style={styles.image} />
       </View>

@@ -49,7 +49,7 @@ const StoreHome = (props) => {
         >
           {
             [...Array(10)].map((x,i)=>
-                <ProductCard key={i} /> 
+                <ProductCard key={i} navigation={props.navigation} /> 
             )
           }
           
