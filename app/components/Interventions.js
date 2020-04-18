@@ -1,9 +1,21 @@
-import React from "react";
-import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import { FontAwesome, Entypo } from "@expo/vector-icons";
+import { Entypo, FontAwesome } from "@expo/vector-icons";
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import  {InterventionModel} from "./InterventionModel";
+import { useDispatch, useSelector } from "react-redux";
+import {  getInterventions } from "../Store/actions";
 
 export const Interventions = (props) => {
-  //const interventions = props.interventions
+  const dispatch = useDispatch();
+  const a = useSelector((state) => state.interventions);
+  const {_id} = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    dispatch(getInterventions(_id));
+    console.log(a)
+  }, []);
+
+  // const interventions = props.interventions
   const interventions = [
     {
       _id: "5e655fad2e011c00165eeb06",
@@ -23,10 +35,20 @@ export const Interventions = (props) => {
     },
   ];
 
+  const [intervention, setIntervention] = useState(false);
+
+  function interventionModel() {
+    setIntervention(!intervention);
+  }
+
   return (
     <ScrollView style={styles.scrollView}>
       {interventions.map((inv, i) => (
-        <TouchableOpacity key={i} style={styles.card} onPress={props.model}>
+        <TouchableOpacity
+          key={i}
+          style={styles.card}
+          onPress={interventionModel}
+        >
           <View style={styles.leftSide}>
             <Entypo name="calendar" size={20} color="gray">
               <Text style={styles.text}> {inv.date.slice(0, 10)}</Text>
@@ -39,18 +61,16 @@ export const Interventions = (props) => {
             </FontAwesome>
           </View>
           <View style={styles.rightSide}>
-              <Text style={styles.text}>Rating</Text>
-              <View style={styles.ratingView}>
-                {
-                  [...Array(inv.rating)].map((x,i) =>(
-                    <Entypo key={i} name="star" size={30} color="#FFD700">
-                    </Entypo>
-                  ))
-                }
-              </View>
+            <Text style={styles.text}>Rating</Text>
+            <View style={styles.ratingView}>
+              {[...Array(inv.rating)].map((x, i) => (
+                <Entypo key={i} name="star" size={30} color="#FFD700"></Entypo>
+              ))}
+            </View>
           </View>
         </TouchableOpacity>
       ))}
+      <InterventionModel close={interventionModel} showModel={intervention} />
     </ScrollView>
   );
 };
@@ -64,7 +84,7 @@ const styles = StyleSheet.create({
   },
   card: {
     height: 120,
-    flexDirection:'row',
+    flexDirection: "row",
     backgroundColor: "white",
     marginBottom: 10,
     padding: 15,
@@ -79,19 +99,19 @@ const styles = StyleSheet.create({
 
     elevation: 2,
   },
-  leftSide:{
+  leftSide: {
     justifyContent: "space-around",
-    flex:1,
-    width:'50%',
+    flex: 1,
+    width: "50%",
   },
-  rightSide:{
-    width:'50%',
-    flex:1,
-    alignItems:'center',
-    justifyContent:'center'
+  rightSide: {
+    width: "50%",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  ratingView:{
-    flexDirection:'row'
+  ratingView: {
+    flexDirection: "row",
   },
   text: {
     color: "black",

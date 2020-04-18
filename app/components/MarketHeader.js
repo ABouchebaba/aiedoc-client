@@ -7,7 +7,7 @@ export const MarketHeader = (props) => {
     <View style={styles.image}>
       <View style={styles.headerActions}>
         <TouchableOpacity onPress={props.navigation.openDrawer}>
-          <SimpleLineIcons name="menu" size={60} color="white" />
+          <SimpleLineIcons name="menu" size={40} color="white" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => alert("Hi")}>
           <Image
@@ -16,7 +16,7 @@ export const MarketHeader = (props) => {
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => alert("Hi")}>
-          <SimpleLineIcons name="basket" size={60} color="white" />
+          <SimpleLineIcons name="basket" size={40} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     width:"90%"
   },
   tinyLogo: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     resizeMode: "contain",
   },
 });

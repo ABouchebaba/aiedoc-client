@@ -10,16 +10,18 @@ import {
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 
 export const ProductCard = (props) => {
-  const product = {
-    discount:0,
-    _id: "5e8283076079920016fb9586",
-    name: "Gél hydro",
-    brand: "Venus",
-    category: "Gel",
-    price: 1000,
-    options: [],
-    rating: 3,
-  };
+  // const product = {
+  //   discount:0,
+  //   _id: "5e8283076079920016fb9586",
+  //   name: "Gél hydro",
+  //   brand: "Venus",
+  //   category: "Gel",
+  //   price: 1000,
+  //   options: [],
+  //   rating: 3,
+  // };
+
+  const product = props.product
 
   return (
     <TouchableOpacity style={styles.card} onPress={() => props.navigation.navigate("ProductProfile")}>
@@ -31,8 +33,9 @@ export const ProductCard = (props) => {
         <Text style={styles.brand}>{product.brand}</Text>
         <Text style={styles.category}>{product.category}</Text>
         <View style={styles.ratingView}>
-          {[...Array(product.rating)].map((x, i) => (
-            <Entypo key={i} name="star" size={25} color="#FFD700"></Entypo>
+          {[...Array(5)].map((x, i) => (
+            (product.rating > i )?<Entypo key={i} name="star" size={25} color="#D61F2C"/>:
+            <Entypo key={i} name="star" size={25} color="white"/>
           ))}
         </View>
       </View>

@@ -6,6 +6,7 @@ import { logout } from "../Store/actions";
 const { width, height } = Dimensions.get("screen");
 
 export function CustomDrawerContent(props) {
+  
   const disconnectAtempt = () => {
     Alert.alert(
       "Déconnexion",

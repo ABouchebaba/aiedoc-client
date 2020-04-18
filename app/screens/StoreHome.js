@@ -8,14 +8,26 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BackImage, MarketHeader, ProductCard } from "../components";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
+import { getCategories, getProducts } from "../Store/actions";
+import axios from "axios";
 
 const { width, height } = Dimensions.get("window");
 
 const StoreHome = (props) => {
+  const dispatch = useDispatch();
+  const { products, categories } = useSelector((state) => state.store);
+
+  useEffect(() => {
+    dispatch(getCategories());
+    dispatch(getProducts());
+    // console.log(categories);
+  }, []);
+
   return (
     <BackImage source={require("../../assets/bg/bgMarket.png")}>
       <View style={styles.header}>
@@ -37,22 +49,28 @@ const StoreHome = (props) => {
             style={styles.scroll}
             contentContainerStyle={styles.scrollContain}
           >
-            {[...Array(5)].map((x, i) => (
+            {categories.map((x, i) => (
               <TouchableOpacity key={i} style={styles.filter}>
-                <Text style={styles.filterText}>Filtre</Text>
+                <Text style={styles.filterText}>{x.name}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
-        <ScrollView style={styles.list}  
-        // contentContainerStyle={styles.listStyle}
+        <ScrollView
+          style={styles.list}
+          // contentContainerStyle={styles.listStyle}
         >
-          {
-            [...Array(10)].map((x,i)=>
-                <ProductCard key={i} navigation={props.navigation} /> 
-            )
-          }
-          
+          {products.map((product, i) => {
+            // const category = categories[];
+            return (
+              <ProductCard
+                key={i}
+                navigation={props.navigation}
+                product={product}
+                category={""}
+              />
+            );
+          })}
         </ScrollView>
       </View>
     </BackImage>
@@ -63,12 +81,12 @@ export default StoreHome;
 
 const styles = StyleSheet.create({
   header: {
-    height: "15%",
+    height: "10%",
     width: "100%",
     justifyContent: "center",
   },
   mainView: {
-    height: "85%",
+    height: "90%",
     width: "100%",
     backgroundColor: "rgba(17, 160, 193, .7)",
     borderTopLeftRadius: 30,
