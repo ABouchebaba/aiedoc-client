@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   ScrollView,
+  Image,
 } from "react-native";
 import { Checkbox } from "./Checkbox";
 import Animated from "react-native-reanimated";
@@ -38,6 +39,7 @@ export const ServiceFilter = ({ style, setFilter, selected }) => {
     <View style={style}>
       <TouchableWithoutFeedback onPress={toggleFilters}>
         <View style={styles.filterToggle}>
+          <Image source={require("../../assets/line.png")} />
           <Text style={styles.toggleText}>Filtres</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -64,16 +66,16 @@ export const ServiceFilter = ({ style, setFilter, selected }) => {
 
 const styles = {
   filterToggle: {
-    padding: 15,
+    padding: 10,
     backgroundColor: "white",
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     borderColor: "#c6c6c6",
     borderWidth: 1,
+    alignItems: "center",
   },
   toggleText: {
-    width: "100%",
-    alignSelf: "center",
+    marginTop: 3,
     textAlign: "center",
     color: "#8edbef",
     fontSize: 24,

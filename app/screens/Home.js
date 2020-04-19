@@ -23,6 +23,7 @@ const Home = (props) => {
   const { location } = useSelector((state) => state.user);
   const { sps, loading, error } = useSelector((state) => state.sps);
   const [mapRef, setMapRef] = useState(null);
+  const [validateEnabled, setvalidateEnabled] = useState(false);
   const [filters, setFilters] = useState({ sex: {}, service: {} });
 
   const setFilter = (filter, value) => {
@@ -66,18 +67,26 @@ const Home = (props) => {
         selected={filters.sex}
         style={styles.sexFilter}
       />
-      <Map setRef={setMapRef} location={location}>
-        <Markers sps={filtered} location={location} />
+      <Map
+        setRef={setMapRef}
+        location={location}
+        onPress={() => setvalidateEnabled(false)}
+      >
+        <Markers
+          sps={filtered}
+          location={location}
+          setvalidateEnabled={setvalidateEnabled}
+        />
       </Map>
       <View style={styles.serviceFilter}>
-        <TouchableOpacity style={styles.validate}>
+        <TouchableOpacity
+          style={styles.validate}
+          onPress={() => alert("lol")}
+          disabled={!validateEnabled}
+        >
           <Ionicons name="md-checkmark" color="white" size={40} />
         </TouchableOpacity>
-        <ServiceFilter
-          setFilter={setFilter}
-          selected={filters.service}
-          // style={styles.serviceFilter}
-        />
+        <ServiceFilter setFilter={setFilter} selected={filters.service} />
       </View>
     </BackImage>
   );

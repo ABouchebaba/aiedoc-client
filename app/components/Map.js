@@ -19,6 +19,7 @@ export const Map = (props) => {
           latitudeDelta: LATITUDE_DELTA,
           longitudeDelta: LONGITUDE_DELTA,
         }}
+        onPress={props.onPress}
         showsTraffic={true}
         loadingEnabled={true}
         style={styles.mapStyle}

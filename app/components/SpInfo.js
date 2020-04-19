@@ -4,22 +4,21 @@ import { View, Text } from "react-native";
 export const SpInfo = ({ sp }) => {
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 24 }}>
-        name : {sp.firstname} {sp.lastname}
+      <Text style={{}}>
+        {sp.firstname} {sp.lastname}
       </Text>
-      <Text>sex : {sp.sex} </Text>
-      <Text>email : {sp.email} </Text>
+      <Text style={styles.jobTitle}>{sp.jobTitle} </Text>
     </View>
   );
 };
 
 const styles = {
   container: {
-    alignItems: "flex-start",
+    alignItems: "center",
     justifyContent: "space-around",
-    // height: 200,
-    // flex: 1,
-    // padding: 10,
-    // backgroundColor: "red",
+  },
+  jobTitle: {
+    color: "#8edbef",
+    fontSize: 18,
   },
 };
