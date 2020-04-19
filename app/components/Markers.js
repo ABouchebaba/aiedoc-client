@@ -7,6 +7,9 @@ import { SpInfo } from "./SpInfo";
 export const Markers = ({ location, sps }) => {
   const dispatch = useDispatch();
 
+  const malePin = require("../../assets/malePin.png");
+  const femalePin = require("../../assets/femalePin.png");
+
   useEffect(() => {
     // dispatch(getAvailableSps());
     // console.log(sps);
@@ -21,25 +24,26 @@ export const Markers = ({ location, sps }) => {
         coordinate={location}
         //image={require("../../assets/malePin.png")}
       />
-      {sps.map((sp) => (
-        
-        <Marker.Animated
-          onPress={() => alert("press")}
-          key={sp._id}
-          title={sp.sex}
-          identifier={sp._id}
-          coordinate={{
-            longitude: sp.location.coordinates[0],
-            latitude: sp.location.coordinates[1],
-          }}
-          image={require("../../assets/malePin.png")}
-          // image= {require(sp.gender=="male"?"../../assets/malePin.png":"../../assets/malePin.png")}
-        >
-          <Callout style={{ position: "absolute" }}>
-            <SpInfo sp={sp} />
-          </Callout>
-        </Marker.Animated>
-      ))}
+      {sps.map((sp) => {
+        const pin = sp.sex === "male" ? malePin : femalePin;
+        return (
+          <Marker.Animated
+            // onPress={() => alert("press")}
+            key={sp._id}
+            title={sp.sex}
+            identifier={sp._id}
+            coordinate={{
+              longitude: sp.location.coordinates[0],
+              latitude: sp.location.coordinates[1],
+            }}
+            image={pin}
+          >
+            <Callout style={{ position: "absolute" }}>
+              <SpInfo sp={sp} />
+            </Callout>
+          </Marker.Animated>
+        );
+      })}
     </React.Fragment>
   );
 };
