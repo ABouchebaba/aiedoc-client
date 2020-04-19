@@ -25,11 +25,16 @@ const Home = (props) => {
   const [filters, setFilters] = useState({ sex: {}, service: {} });
 
   const setFilter = (filter, value) => {
-    if (filters[filter][value]) {
-      delete filters[filter][value];
+    if (value === false) {
+      filters[filter] = {};
     } else {
-      filters[filter][value] = true;
+      if (filters[filter][value]) {
+        delete filters[filter][value];
+      } else {
+        filters[filter][value] = true;
+      }
     }
+
     setFilters({ ...filters });
   };
 
@@ -77,10 +82,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 120,
     zIndex: 1,
-    width: "60%",
+    width: "100%",
     flexDirection: "row",
     alignSelf: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
   serviceFilter: {
     position: "absolute",

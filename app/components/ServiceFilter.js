@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  ScrollView,
+} from "react-native";
 import { Checkbox } from "./Checkbox";
 import Animated from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,9 +36,11 @@ export const ServiceFilter = ({ style, setFilter, selected }) => {
 
   return (
     <View style={style}>
-      <TouchableOpacity style={styles.filterToggle} onPress={toggleFilters}>
-        <Text style={styles.toggleText}>Filtres</Text>
-      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={toggleFilters}>
+        <View style={styles.filterToggle}>
+          <Text style={styles.toggleText}>Filtres</Text>
+        </View>
+      </TouchableWithoutFeedback>
 
       <Animated.View style={[styles.content, { height }]}>
         <ScrollView>
