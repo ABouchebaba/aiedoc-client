@@ -30,21 +30,18 @@ export const ProductCard = (props) => {
       </View>
       <View style={styles.leftSide}>
         <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.brand}>{product.brand}</Text>
-        <Text style={styles.category}>{product.category}</Text>
+        <Text style={styles.brand}>Marque: {product.brand}</Text>
         <View style={styles.ratingView}>
           {[...Array(5)].map((x, i) => (
-            (product.rating > i )?<Entypo key={i} name="star" size={25} color="#D61F2C"/>:
-            <Entypo key={i} name="star" size={25} color="white"/>
+            (product.rating > i )?<Entypo key={i} name="star" size={15} color="#D61F2C"/>:
+            <Entypo key={i} name="star" size={15} color="#E7AAAE" />
           ))}
         </View>
-      </View>
-      <View style={styles.rightSide}>
-        {product.discount === 0 ? 
-        <Text style={styles.price}>{product.price} DA</Text>:<>
-        <Text style={styles.priceOld}>{product.price} DA</Text>
-        <Text style={styles.priceDiscount}>{product.price-product.price*(product.discount/100)} DA</Text></>
-      }
+        {product.discount !== 0 ? 
+          <Text style={styles.price}>{product.price} DA</Text>:<View style={{flexDirection:'row', justifyContent:'space-around'}}>
+          <Text style={styles.priceOld}>{product.price} DA</Text>
+          <Text style={styles.priceDiscount}>{product.price-product.price*(product.discount/100)} DA</Text></View>
+        }
       </View>
     </TouchableOpacity>
   );
@@ -52,32 +49,25 @@ export const ProductCard = (props) => {
 
 const styles = StyleSheet.create({
   card: {
-    height: 120,
-    flexDirection: "row",
-    // borderWidth: 1,
-    // backgroundColor:'yellow',
-    width: "100%",
-    borderBottomWidth:1,
+    height: 220,
+    backgroundColor:'white',
+    width: "46%",
+    borderWidth:1,
     borderColor:"white",
+    borderRadius:10
   },
   imageSide: {
-    width: "30%",
+    height: "55%",
     alignItems: "center",
     justifyContent: "center",
   },
   image: {
     width: "100%",
-    // height: "auto",
+    height: "100%",
     resizeMode: "contain",
   },
   leftSide: {
-    width: "45%",
     paddingHorizontal: 5,
-    //backgroundColor: "blue",
-  },
-  rightSide: {
-    width: "25%",
-    // backgroundColor: "green",
   },
   ratingView: {
     flexDirection: "row",
@@ -87,12 +77,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   name: {
-    color: "white",
-    fontSize: 18,
+    color: "#11A0C1",
+    fontSize: 16,
   },
   brand: {
-    color: "white",
-    fontSize: 16,
+    color: "#11A0C1",
+    fontSize: 14,
     fontStyle: "italic",
   },
   price: {
@@ -110,7 +100,7 @@ const styles = StyleSheet.create({
     textDecorationStyle:'dotted'
   },
   priceDiscount:{
-    color: "gold",
+    color: "#D61F2C",
     fontSize: 18,
     fontWeight:"bold",
     fontStyle: "normal",

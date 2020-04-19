@@ -25,7 +25,7 @@ const StoreHome = (props) => {
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
-    // console.log(categories);
+    console.log((products.length));
   }, []);
 
   return (
@@ -63,14 +63,30 @@ const StoreHome = (props) => {
           {products.map((product, i) => {
             // const category = categories[];
             return (
-              <ProductCard
-                key={i}
-                navigation={props.navigation}
-                product={product}
-                category={""}
-              />
+              <View style={styles.row} key={i}>
+                  <ProductCard
+                  key={i}
+                  navigation={props.navigation}
+                  product={product}
+                  category={""}
+                />
+              </View>
             );
           })}
+          {/* <View style={styles.row}>
+            <ProductCard
+              // key={i}
+              navigation={props.navigation}
+              product={products[0]}
+              category={""}
+            />
+            <ProductCard
+              // key={i}
+              navigation={props.navigation}
+              product={products[0]}
+              category={""}
+            />
+          </View> */}
         </ScrollView>
       </View>
     </BackImage>
@@ -100,14 +116,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     // backgroundColor: "blue",
   },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom:10
+    // alignItems:'baseline'
+  },
   list: {
     height: "80%",
     flex: 1,
-    // justifyContent:'flex-start',
-    // alignItems:'center',
-    marginHorizontal: 20,
-    marginVertical: 10,
-    // backgroundColor: "red",
+    margin: 10,
   },
   inputView: {
     flexDirection: "row",

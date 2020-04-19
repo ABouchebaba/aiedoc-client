@@ -13,25 +13,48 @@ import React from "react";
 import { BackImage, MarketHeader, ProductCard } from "../components";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import Gallery from 'react-native-image-gallery';
+import Gallery from "react-native-image-gallery";
+
+// import {
+//   SelectMultipleButton,
+//   SelectMultipleGroupButton,
+// } from "react-native-selectmultiple-button";
 
 const { width, height } = Dimensions.get("window");
 
 const ProductProfile = (props) => {
   // const product = props.product
+
+  const data = [
+    { id: 1, label: "Money" },
+    { id: 2, label: "Credit card" },
+    { id: 3, label: "Debit card" },
+    { id: 4, label: "Online payment" },
+    { id: 5, label: "Bitcoin" },
+  ];
+
   const product = {
-    discount:0,
+    discount: 0,
     _id: "5e8283076079920016fb9586",
     name: "Gél hydro",
     brand: "Venus",
     category: "Gel",
     price: 1000,
-    options: [],
+    options: [
+      {
+        qty: 100,
+        name: "Red 45",
+      },
+      {
+        qty: 100,
+        name: "Blue 45",
+      },
+    ],
     rating: 3,
   };
 
-  function addTocart(){
-
+  function addTocart() {
+    console.log(options.length);
   }
 
   return (
@@ -40,64 +63,80 @@ const ProductProfile = (props) => {
         <MarketHeader navigation={props.navigation} />
       </View>
       <View style={styles.mainView}>
-        {/* <View style={styles.search}>
-          <ScrollView
-            horizontal={true}
-            contentContainerStyle={styles.scrollContain}
-          >
-            {[...Array(10)].map((x, i) => (
-              <View
-                style={{
-                  borderWidth:1,
-                  borderRadius: 20,
-                  padding: 1,
-                  margin: 3,
-                }}
-                key={i}
-              >
-                <Image
-                  source={require("../../assets/logo.png")}
-                  style={styles.image}
-                />
-              </View>
-            ))}
-          </ScrollView>
-        </View> */}
         <View style={styles.search}>
           <Gallery
-          style={{ flex: 1}}
-          images={[
-            { source: require('../../assets/logo.png'), dimensions: { width: 300, height: 300 } },
-            { source: require('../../assets/logo.png'), dimensions: { width: 300, height: 300 } },
-            { source: require('../../assets/logo.png'), dimensions: { width: 300, height: 300 } },
-          ]}
-          initialNumToRender={2}
-              // Turning this off will make it feel faster
-              // and prevent the scroller to slow down
-              // on fast swipes.
-          sensitiveScroll={false}
-        />
-      </View>
-        <Text style={styles.name}>Lorem ipsum</Text>
+            style={{ flex: 1, paddingVertical: 10, backgroundColor: "white" }}
+            images={[
+              {
+                source: require("../../assets/logo.png"),
+                dimensions: { width: 300, height: 300 },
+              },
+              {
+                source: require("../../assets/logo.png"),
+                dimensions: { width: 300, height: 300 },
+              },
+              {
+                source: require("../../assets/logo.png"),
+                dimensions: { width: 300, height: 300 },
+              },
+            ]}
+            initialNumToRender={2}
+            // Turning this off will make it feel faster
+            // and prevent the scroller to slow down
+            // on fast swipes.
+            sensitiveScroll={false}
+          />
+        </View>
+        <Text style={styles.name}>{product.name}</Text>
+        <Text style={styles.brand}>{product.brand.toUpperCase()}</Text>
         <View style={styles.ratingView}>
-          <View>
-            <Text style={styles.brand}>Marque</Text>
-            <View>
-              <View style={styles.ratingView}>
-                {[...Array(3)].map((x, i) => (
-                  <Entypo
-                    key={i}
-                    name="star"
-                    size={25}
-                    color="#FFD700"
-                  />
-                ))} 
-              </View>
-              <Text>(22)</Text>
-              <Button title={"aze"} onPress={addTocart} />
-            </View>
+          {[...Array(5)].map((x, i) =>
+            product.rating > i ? (
+              <Entypo key={i} name="star" size={20} color="#D6C41F" />
+            ) : (
+              <Entypo key={i} name="star" size={20} color="white" />
+            )
+          )}
+          <Text style={{ color: "#D6C41F", fontWeight: "bold" }}> (22)</Text>
+        </View>
+        <View style={styles.buy}>
+          <Text style={styles.name}>{product.price} DA</Text>
+          <TouchableOpacity style={styles.buyButton} onPress={addTocart}>
+            <Text style={styles.buyText}>Acheter</Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <Text style={styles.brand}>Variation</Text>
+          <Text>Taille</Text>
+          <View style={styles.ratingView}>
+            {/* <SelectMultipleGroupButton
+              multiple={false}
+              // defaultSelectedIndexes={defaultSelectedIndex_group_gender}
+              containerViewStyle={{ flexDirection: "column", width: 100 }}
+              highLightStyle={{
+                borderColor: "gray",
+                backgroundColor: "transparent",
+                textColor: "gray",
+                borderTintColor: "green",
+                backgroundTintColor: "green",
+                textTintColor: "white",
+              }}
+              buttonViewStyle={{ width: 40, height: 40, borderRadius: 20 }}
+              singleTap={(valueTap) => {
+                alert(valueTap);
+              }}
+              group={data}
+            /> */}
           </View>
         </View>
+        <Text style={styles.brand}>Desciption</Text>
+        <Text style={styles.description}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis
+          laoreet lorem vitae rhoncus. Orci varius natoque penatibus et magnis
+          dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum
+          convallis vestibulum. Praesent fringilla semper vestibulum. Proin eget
+          tincidunt lorem. Phasellus fermentum placerat urna.
+        </Text>
       </View>
     </BackImage>
   );
@@ -123,13 +162,13 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    // borderRightWidth: 4,
-    // backgroundColor: "green",
   },
   search: {
     height: 200,
+    width: width,
     marginVertical: 10,
     alignItems: "center",
+    alignSelf: "center",
     justifyContent: "space-between",
   },
   image: {
@@ -139,14 +178,39 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   name: {
-    fontSize: 30,
+    fontSize: 25,
     color: "white",
   },
   brand: {
-    fontSize: 25,
+    fontSize: 20,
     color: "white",
   },
   ratingView: {
     flexDirection: "row",
+    alignItems: "center",
+  },
+  buy: {
+    marginVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    //backgroundColor:'red',
+    justifyContent: "space-between",
+  },
+  buyButton: {
+    backgroundColor: "#D61F2C",
+    width: "65%",
+    borderRadius: 30,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buyText: {
+    color: "white",
+    fontSize: 30,
+  },
+  description: {
+    color: "white",
+    fontSize: 15,
+    textAlign: "justify",
   },
 });
