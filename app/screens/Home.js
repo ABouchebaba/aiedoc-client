@@ -10,6 +10,7 @@ import {
   ServiceFilter,
 } from "../components";
 import { getLocation, getAvailableSps, getServices } from "../Store/actions";
+import { Ionicons } from "@expo/vector-icons";
 
 // function fitToMarkersToMap() {
 //   mapRef.current.fitToSuppliedMarkers(["user"], {
@@ -68,16 +69,35 @@ const Home = (props) => {
       <Map setRef={setMapRef} location={location}>
         <Markers sps={filtered} location={location} />
       </Map>
-      <ServiceFilter
-        setFilter={setFilter}
-        selected={filters.service}
-        style={styles.serviceFilter}
-      />
+      <View style={styles.serviceFilter}>
+        <TouchableOpacity style={styles.validate}>
+          <Ionicons name="md-checkmark" color="white" size={40} />
+        </TouchableOpacity>
+        <ServiceFilter
+          setFilter={setFilter}
+          selected={filters.service}
+          // style={styles.serviceFilter}
+        />
+      </View>
     </BackImage>
   );
 };
 
 const styles = StyleSheet.create({
+  validate: {
+    position: "relative",
+    alignSelf: "flex-end",
+    marginEnd: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "white",
+    backgroundColor: "#8edbef",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
+  },
   sexFilter: {
     position: "absolute",
     top: 120,
