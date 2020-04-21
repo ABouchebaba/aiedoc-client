@@ -14,8 +14,8 @@ import { BackImage } from "../components/";
 
 const AuthForm = (props) => {
   const dispatch = useDispatch();
-  // const { phoneNumber: phone } = props.route.params;
-  const phone = "+213555077412";
+  const { phoneNumber: phone } = props.route.params;
+  // const phone = "+213555077412";
   const [email, setEmail] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
