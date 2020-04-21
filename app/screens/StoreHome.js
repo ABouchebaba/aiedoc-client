@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   mainView: {
-    height: "90%",
+    height: "86%",
     width: "100%",
     backgroundColor: "rgba(17, 160, 193, .7)",
     borderTopLeftRadius: 30,
