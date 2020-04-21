@@ -1,24 +1,33 @@
 import React from "react";
 import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { Entypo, SimpleLineIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export const MarketHeader = (props) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.image}>
-      <View style={styles.headerActions}>
-        <TouchableOpacity onPress={props.navigation.openDrawer}>
-          <SimpleLineIcons name="menu" size={40} color="white" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("Hi")}>
-          <Image
-            style={styles.tinyLogo}
-            source={require("../../assets/logo_V2.png")}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("Hi")}>
-          <SimpleLineIcons name="basket" size={40} color="white" />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={navigation.openDrawer}>
+        <SimpleLineIcons
+          name="menu"
+          size={50}
+          color="white"
+          style={styles.logo}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => alert("Hi")}>
+        <Image
+          style={styles.tinyLogo}
+          source={require("../../assets/logo_V2.png")}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
+        <Image
+          style={styles.tinyLogo}
+          source={require("../../assets/cart.png")}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -26,19 +35,21 @@ export const MarketHeader = (props) => {
 const styles = StyleSheet.create({
   image: {
     flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 10,
-  },
-  headerActions: {
     justifyContent: "space-between",
+    marginHorizontal: 10,
     flexDirection: "row",
-    alignItems: "flex-end",
-    alignSelf:'center',
-    width:"90%"
+    alignItems: "center",
+    marginBottom:10,
+    alignSelf: "center",
+    width: "90%",
   },
   tinyLogo: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     resizeMode: "contain",
+  },
+  logo: {
+    width: 60,
+    height: 60,
   },
 });

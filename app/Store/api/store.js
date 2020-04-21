@@ -8,3 +8,7 @@ export const products = async () => {
 export const categories = async () => {
     return axios.get(`${BACKEND_URL}/api/categories/`);
   };
+
+export const setCommand = async (data) => {
+  return axios.post(`${BACKEND_URL}/api/commands/`,data)
+}

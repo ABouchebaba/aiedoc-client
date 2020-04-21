@@ -8,23 +8,12 @@ import {
   Image,
 } from "react-native";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
+import { TagSelect } from 'react-native-tag-select';
 
 export const ProductCard = (props) => {
-  // const product = {
-  //   discount:0,
-  //   _id: "5e8283076079920016fb9586",
-  //   name: "Gél hydro",
-  //   brand: "Venus",
-  //   category: "Gel",
-  //   price: 1000,
-  //   options: [],
-  //   rating: 3,
-  // };
-
   const product = props.product
-
   return (
-    <TouchableOpacity style={styles.card} onPress={() => props.navigation.navigate("ProductProfile")}>
+    <TouchableOpacity style={styles.card} onPress={() => props.navigation.navigate("ProductProfile", {product})}>
       <View style={styles.imageSide}>
         <Image source={require("../../assets/logo.png")} style={styles.image} />
       </View>
@@ -37,7 +26,7 @@ export const ProductCard = (props) => {
             <Entypo key={i} name="star" size={15} color="#E7AAAE" />
           ))}
         </View>
-        {product.discount !== 0 ? 
+        {product.discount === 0 ? 
           <Text style={styles.price}>{product.price} DA</Text>:<View style={{flexDirection:'row', justifyContent:'space-around'}}>
           <Text style={styles.priceOld}>{product.price} DA</Text>
           <Text style={styles.priceDiscount}>{product.price-product.price*(product.discount/100)} DA</Text></View>
@@ -54,17 +43,20 @@ const styles = StyleSheet.create({
     width: "46%",
     borderWidth:1,
     borderColor:"white",
-    borderRadius:10
+    borderRadius:10,
+    marginBottom:10
   },
   imageSide: {
     height: "55%",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor:'black'
   },
   image: {
     width: "100%",
     height: "100%",
     resizeMode: "contain",
+    borderWidth:1
   },
   leftSide: {
     paddingHorizontal: 5,
@@ -86,7 +78,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   price: {
-    color: "white",
+    color: "#D61F2C",
     fontSize: 18,
     fontWeight:"bold"
   },

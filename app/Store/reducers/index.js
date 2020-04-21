@@ -6,6 +6,7 @@ import ServiceReducer from "./ServiceReducer";
 import StoreReducer from "./StoreReducer";
 import InterventionsReducer from "./InterventionsReducer";
 import CommandsReducer from "./CommandsReducer";
+import CartReducer from "./CartReducer";
 
 const rootReducer = combineReducers({
   init: InitReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   services: ServiceReducer,
   store: StoreReducer,
   interventions: InterventionsReducer,
-  commands: CommandsReducer
+  commands: CommandsReducer,
+  cart: CartReducer
 });
 
 export default rootReducer;

@@ -6,7 +6,7 @@ import {
   Text,
   TextInput,
   Dimensions,
-  KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,12 +20,12 @@ const { width, height } = Dimensions.get("window");
 
 const StoreHome = (props) => {
   const dispatch = useDispatch();
-  const { products, categories } = useSelector((state) => state.store);
+  const { products, categories, loading } = useSelector((state) => state.store);
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
-    console.log((products.length));
+    console.log(products.length);
   }, []);
 
   return (
@@ -44,50 +44,44 @@ const StoreHome = (props) => {
               <FontAwesome name="search" size={25} color="black" />
             </View>
           </View>
-          <ScrollView
-            horizontal={true}
-            style={styles.scroll}
-            contentContainerStyle={styles.scrollContain}
-          >
-            {categories.map((x, i) => (
-              <TouchableOpacity key={i} style={styles.filter}>
-                <Text style={styles.filterText}>{x.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          {loading ? (
+            <ActivityIndicator size="large" color="white" />
+          ) : (
+            <ScrollView
+              horizontal={true}
+              style={styles.scroll}
+              contentContainerStyle={styles.scrollContain}
+            >
+              {categories.map((x, i) => (
+                <TouchableOpacity key={i} style={styles.filter}>
+                  <Text style={styles.filterText}>{x.name}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          )}
         </View>
-        <ScrollView
-          style={styles.list}
-          // contentContainerStyle={styles.listStyle}
-        >
-          {products.map((product, i) => {
-            // const category = categories[];
-            return (
-              <View style={styles.row} key={i}>
-                  <ProductCard
+        {loading ? (
+          <View style={styles.scrollContain}>
+            <ActivityIndicator size="large" color="white" />
+          </View>
+        ) : (
+          <ScrollView
+            style={styles.list}
+            contentContainerStyle={styles.listStyle}
+          >
+            {products.map((product, i) => {
+              // console.log(product)
+              return (
+                <ProductCard
                   key={i}
                   navigation={props.navigation}
                   product={product}
                   category={""}
                 />
-              </View>
-            );
-          })}
-          {/* <View style={styles.row}>
-            <ProductCard
-              // key={i}
-              navigation={props.navigation}
-              product={products[0]}
-              category={""}
-            />
-            <ProductCard
-              // key={i}
-              navigation={props.navigation}
-              product={products[0]}
-              category={""}
-            />
-          </View> */}
-        </ScrollView>
+              );
+            })}
+          </ScrollView>
+        )}
       </View>
     </BackImage>
   );
@@ -97,9 +91,10 @@ export default StoreHome;
 
 const styles = StyleSheet.create({
   header: {
-    height: "10%",
+    height: "15%",
     width: "100%",
     justifyContent: "center",
+    alignItems:'center'
   },
   mainView: {
     height: "90%",
@@ -119,13 +114,21 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom:10
+    marginBottom: 10,
     // alignItems:'baseline'
   },
   list: {
     height: "80%",
     flex: 1,
     margin: 10,
+    marginBottom:50
+  },
+  listStyle: {
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+    width: "100%",
+    flexDirection: "row",
   },
   inputView: {
     flexDirection: "row",

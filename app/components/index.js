@@ -11,3 +11,4 @@ export * from './ProductCard'
 export * from "./SexFilter";
 export * from "./ServiceFilter";
 export * from "./Checkbox";
+export * from './CartCard'

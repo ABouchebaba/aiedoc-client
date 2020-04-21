@@ -1,71 +1,56 @@
+import { Entypo } from "@expo/vector-icons";
+import React, { useState, useRef } from "react";
 import {
-  View,
-  TouchableOpacity,
-  Image,
+  Dimensions,
   StyleSheet,
   Text,
-  TextInput,
-  Dimensions,
-  KeyboardAvoidingView,
-  Button,
+  TouchableOpacity,
+  View,
+  StatusBar,
 } from "react-native";
-import React from "react";
-import { BackImage, MarketHeader, ProductCard } from "../components";
-import { Entypo, FontAwesome } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
 import Gallery from "react-native-image-gallery";
-
-// import {
-//   SelectMultipleButton,
-//   SelectMultipleGroupButton,
-// } from "react-native-selectmultiple-button";
+import RNPickerSelect from "react-native-picker-select";
+import { useDispatch, useSelector } from "react-redux";
+import { BackImage, MarketHeader } from "../components";
+import { addToCart, removeProduct } from "../Store/actions";
+import DropdownAlert from "react-native-dropdownalert";
 
 const { width, height } = Dimensions.get("window");
 
-const ProductProfile = (props) => {
-  // const product = props.product
+const ProductProfile = ({ route, navigation }) => {
+  const { product } = route.params;
+  const alert = useRef(null);
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
+  const [option, setOption] = useState("");
 
-  const data = [
-    { id: 1, label: "Money" },
-    { id: 2, label: "Credit card" },
-    { id: 3, label: "Debit card" },
-    { id: 4, label: "Online payment" },
-    { id: 5, label: "Bitcoin" },
-  ];
-
-  const product = {
-    discount: 0,
-    _id: "5e8283076079920016fb9586",
-    name: "Gél hydro",
-    brand: "Venus",
-    category: "Gel",
-    price: 1000,
-    options: [
-      {
-        qty: 100,
-        name: "Red 45",
-      },
-      {
-        qty: 100,
-        name: "Blue 45",
-      },
-    ],
-    rating: 3,
-  };
-
-  function addTocart() {
-    console.log(options.length);
+  function _addToCart() {
+    const productAdd = {
+      product_id: product._id,
+      product_name: product.name,
+      brand: product.brand,
+      qty: 1,
+      option: option,
+      price: product.price,
+    };
+    // dispatch(addToCart(productAdd, cart));
+    // dispatch(removeProduct(product._id, cart));
+    alert.current.alertWithType(
+      "success",
+      "Ajouté",
+      `${product.name} ajouté au panier.`
+    );
   }
 
   return (
     <BackImage source={require("../../assets/bg/bgMarket.png")}>
       <View style={styles.header}>
-        <MarketHeader navigation={props.navigation} />
+        <MarketHeader />
       </View>
       <View style={styles.mainView}>
         <View style={styles.search}>
           <Gallery
-            style={{ flex: 1, paddingVertical: 10, backgroundColor: "white" }}
+            style={{ flex: 1, paddingVertical: 10, backgroundColor: "black" }}
             images={[
               {
                 source: require("../../assets/logo.png"),
@@ -89,46 +74,63 @@ const ProductProfile = (props) => {
         </View>
         <Text style={styles.name}>{product.name}</Text>
         <Text style={styles.brand}>{product.brand.toUpperCase()}</Text>
-        <View style={styles.ratingView}>
-          {[...Array(5)].map((x, i) =>
-            product.rating > i ? (
-              <Entypo key={i} name="star" size={20} color="#D6C41F" />
-            ) : (
-              <Entypo key={i} name="star" size={20} color="white" />
-            )
-          )}
-          <Text style={{ color: "#D6C41F", fontWeight: "bold" }}> (22)</Text>
-        </View>
+        {product.rating > 0 && (
+          <View style={styles.ratingView}>
+            {[...Array(5)].map((x, i) =>
+              product.rating > i ? (
+                <Entypo key={i} name="star" size={20} color="#D6C41F" />
+              ) : (
+                <Entypo key={i} name="star" size={20} color="white" />
+              )
+            )}
+            <Text style={{ color: "#D6C41F", fontWeight: "bold" }}>
+              ({product.rating})
+            </Text>
+          </View>
+        )}
         <View style={styles.buy}>
           <Text style={styles.name}>{product.price} DA</Text>
-          <TouchableOpacity style={styles.buyButton} onPress={addTocart}>
+          <TouchableOpacity
+            style={styles.buyButton}
+            onPress={_addToCart}
+            disabled={
+              option === ""
+                ? product.options.length === 0
+                  ? false
+                  : true
+                : false
+            }
+          >
             <Text style={styles.buyText}>Acheter</Text>
           </TouchableOpacity>
         </View>
-        <View>
-          <Text style={styles.brand}>Variation</Text>
-          <Text>Taille</Text>
-          <View style={styles.ratingView}>
-            {/* <SelectMultipleGroupButton
-              multiple={false}
-              // defaultSelectedIndexes={defaultSelectedIndex_group_gender}
-              containerViewStyle={{ flexDirection: "column", width: 100 }}
-              highLightStyle={{
-                borderColor: "gray",
-                backgroundColor: "transparent",
-                textColor: "gray",
-                borderTintColor: "green",
-                backgroundTintColor: "green",
-                textTintColor: "white",
+
+        {product.options.length !== 0 && (
+          <View>
+            <Text style={styles.brand}>Variation</Text>
+            <RNPickerSelect
+              placeholder={{
+                label: "Select...",
+                value: "",
+                color: "blue",
               }}
-              buttonViewStyle={{ width: 40, height: 40, borderRadius: 20 }}
-              singleTap={(valueTap) => {
-                alert(valueTap);
+              value={option}
+              useNativeAndroidPickerStyle={false}
+              style={{
+                ...pickerSelectStyles,
+                iconContainer: {
+                  top: 10,
+                  right: 12,
+                },
               }}
-              group={data}
-            /> */}
+              onValueChange={(value) => setOption(value)}
+              items={product.options.map((x) => ({
+                label: x.option,
+                value: x.option,
+              }))}
+            />
           </View>
-        </View>
+        )}
         <Text style={styles.brand}>Desciption</Text>
         <Text style={styles.description}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mattis
@@ -138,6 +140,13 @@ const ProductProfile = (props) => {
           tincidunt lorem. Phasellus fermentum placerat urna.
         </Text>
       </View>
+      <DropdownAlert
+        ref={alert}
+        updateStatusBar={false}
+        closeInterval={3000}
+        elevation={3}
+        // inactiveStatusBarBackgroundColor={"success"}
+      />
     </BackImage>
   );
 };
@@ -212,5 +221,29 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 15,
     textAlign: "justify",
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 18,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    borderRadius: 20,
+    color: "#0F95B9",
+    paddingRight: 30, // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+    backgroundColor: "white",
+    fontSize: 18,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    marginVertical: 10,
+    // borderWidth: 0.5,
+    borderColor: "purple",
+    borderRadius: 20,
+    color: "#0F95B9",
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
 });
