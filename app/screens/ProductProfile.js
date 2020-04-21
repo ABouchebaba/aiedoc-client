@@ -33,7 +33,7 @@ const ProductProfile = ({ route, navigation }) => {
       option: option,
       price: product.price,
     };
-    // dispatch(addToCart(productAdd, cart));
+    dispatch(addToCart(productAdd, cart));
     // dispatch(removeProduct(product._id, cart));
     alert.current.alertWithType(
       "success",
