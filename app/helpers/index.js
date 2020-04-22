@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Animated, { Easing } from "react-native-reanimated";
 
 export const timing = (value, toValue, duration = 300) => {
@@ -7,3 +8,5 @@ export const timing = (value, toValue, duration = 300) => {
     easing: Easing.linear,
   });
 };
+
+export * from "./Socket";

@@ -11,6 +11,7 @@ import {
 } from "../components";
 import { getLocation, getAvailableSps, getServices } from "../Store/actions";
 import { Ionicons } from "@expo/vector-icons";
+import { Socket } from "../helpers";
 
 // function fitToMarkersToMap() {
 //   mapRef.current.fitToSuppliedMarkers(["user"], {
@@ -20,10 +21,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const { location } = useSelector((state) => state.user);
+  const { location, user } = useSelector((state) => state.user);
   const { sps, loading, error } = useSelector((state) => state.sps);
   const [mapRef, setMapRef] = useState(null);
-  const [validateEnabled, setvalidateEnabled] = useState(false);
+  const [selectedSp, setSelectedSp] = useState(false);
   const [filters, setFilters] = useState({ sex: {}, service: {} });
 
   const setFilter = (filter, value) => {
@@ -40,12 +41,34 @@ const Home = (props) => {
     setFilters({ ...filters });
   };
 
+  // console.log(user._id);
+
   useEffect(() => {
     dispatch(getLocation());
     dispatch(getAvailableSps());
     dispatch(getServices());
   }, []);
 
+  const onValidate = () => {
+    const intervention = {
+      client_id: user._id,
+      sp_id: selectedSp._id,
+      client_name: user.firstname + user.lastname,
+      sp_name: selectedSp.firstname + selectedSp.lastname,
+      services: ["Injection"],
+    };
+    // Socket is a singleton class, only one socket is needed at a time
+    const socket = Socket.getInstance();
+    // initialise connexion to server
+    socket.init();
+    // after emitting "init", server responds with "wait"
+    socket.on("wait", (intervention) => {
+      alert("intervention created: " + intervention._id);
+    });
+    socket.emit("init", intervention);
+  };
+
+  //Filtering logic
   // empty filters(sex/service) are not taken into consideration
   let filtered = sps;
   if (Object.keys(filters.sex).length > 0)
@@ -70,19 +93,19 @@ const Home = (props) => {
       <Map
         setRef={setMapRef}
         location={location}
-        onPress={() => setvalidateEnabled(false)}
+        onPress={() => setSelectedSp(false)}
       >
         <Markers
           sps={filtered}
           location={location}
-          setvalidateEnabled={setvalidateEnabled}
+          setSelectedSp={setSelectedSp}
         />
       </Map>
       <View style={styles.serviceFilter}>
         <TouchableOpacity
           style={styles.validate}
-          onPress={() => alert("lol")}
-          disabled={!validateEnabled}
+          onPress={onValidate}
+          disabled={!selectedSp}
         >
           <Ionicons name="md-checkmark" color="white" size={40} />
         </TouchableOpacity>
