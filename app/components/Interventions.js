@@ -1,22 +1,22 @@
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from "react-native";
 import  {InterventionModel} from "./InterventionModel";
 import { useDispatch, useSelector } from "react-redux";
 import {  getInterventions } from "../Store/actions";
 
 export const Interventions = (props) => {
   const dispatch = useDispatch();
-  const a = useSelector((state) => state.interventions);
+  const {interventions,loading} = useSelector((state) => state.interventions);
   const {_id} = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(getInterventions(_id));
-    console.log(a)
+    console.log(interventions)
   }, []);
 
   // const interventions = props.interventions
-  const interventions = [
+  const fakeInt = [
     {
       _id: "5e655fad2e011c00165eeb06",
       totalPrice: 0,
@@ -41,9 +41,13 @@ export const Interventions = (props) => {
     setIntervention(!intervention);
   }
 
-  return (
+  return loading ? (
+    <View style={styles.scrollContain}>
+      <ActivityIndicator size="large" color="#11A0C1" />
+    </View>
+  ) : (
     <ScrollView style={styles.scrollView}>
-      {interventions.map((inv, i) => (
+      {fakeInt.map((inv, i) => (
         <TouchableOpacity
           key={i}
           style={styles.card}
@@ -116,5 +120,12 @@ const styles = StyleSheet.create({
   text: {
     color: "black",
     fontSize: 18,
+  },
+  scrollContain: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRightWidth: 4,
+    backgroundColor: "#cadce6",
   },
 });

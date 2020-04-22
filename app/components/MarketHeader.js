@@ -9,17 +9,17 @@ export const MarketHeader = (props) => {
   return (
     <View style={styles.image}>
       <TouchableOpacity onPress={navigation.openDrawer}>
-        <SimpleLineIcons
+        <Entypo
           name="menu"
-          size={50}
+          size={60}
           color="white"
           style={styles.logo}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => alert("Hi")}>
+      <TouchableOpacity onPress={() => navigation.navigate("StoreHome")}>
         <Image
           style={styles.tinyLogo}
-          source={require("../../assets/logo_V2.png")}
+          source={require("../../assets/boutique.png")}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Cart")}>

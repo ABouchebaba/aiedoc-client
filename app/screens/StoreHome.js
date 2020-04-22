@@ -1,20 +1,18 @@
+import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import React, { useEffect } from "react";
 import {
-  View,
-  TouchableOpacity,
-  Image,
+  ActivityIndicator,
+  Dimensions,
   StyleSheet,
   Text,
   TextInput,
-  Dimensions,
-  ActivityIndicator,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { BackImage, MarketHeader, ProductCard } from "../components";
-import { Entypo, FontAwesome } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
 import { getCategories, getProducts } from "../Store/actions";
-import axios from "axios";
 
 const { width, height } = Dimensions.get("window");
 
@@ -37,7 +35,7 @@ const StoreHome = (props) => {
         <View style={styles.search}>
           <View style={styles.inputView}>
             <TextInput
-              placeholder="Préservatif DUREX"
+              placeholder="Tensiomètre électronique"
               style={styles.TextInput}
             />
             <View style={styles.icon}>
@@ -58,6 +56,7 @@ const StoreHome = (props) => {
                 </TouchableOpacity>
               ))}
             </ScrollView>
+            // <></>
           )}
         </View>
         {loading ? (
@@ -83,6 +82,10 @@ const StoreHome = (props) => {
           </ScrollView>
         )}
       </View>
+      <TouchableOpacity style={styles.command}>
+        <AntDesign name="CodeSandbox" size={30} color="#11A0C1" />
+        <Text style={{fontSize:10, textAlign:'center', color:'#11A0C1', fontWeight:'bold'}}>Commandes</Text>
+      </TouchableOpacity>
     </BackImage>
   );
 };
@@ -94,7 +97,7 @@ const styles = StyleSheet.create({
     height: "15%",
     width: "100%",
     justifyContent: "center",
-    alignItems:'center'
+    alignItems: "center",
   },
   mainView: {
     height: "86%",
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
   },
   search: {
-    height: 120,
+    // height: 120,
     marginHorizontal: 20,
     marginVertical: 10,
     alignItems: "center",
@@ -121,7 +124,10 @@ const styles = StyleSheet.create({
     height: "80%",
     flex: 1,
     margin: 10,
-    marginBottom:50
+    marginBottom: 10,
+  },
+  scroll: {
+    height: 70,
   },
   listStyle: {
     alignItems: "center",
@@ -139,8 +145,8 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomLeftRadius: 50,
     borderTopLeftRadius: 50,
-    paddingLeft: 10,
-    fontSize: 20,
+    paddingLeft: 20,
+    fontSize: 18,
   },
   icon: {
     borderBottomRightRadius: 50,
@@ -159,8 +165,8 @@ const styles = StyleSheet.create({
   },
   filter: {
     borderRadius: 50,
-    height: 45,
-    width: 100,
+    height: 35,
+    width: 80,
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
@@ -176,6 +182,27 @@ const styles = StyleSheet.create({
   },
   filterText: {
     color: "#4EC7E6",
-    fontSize: 20,
+    fontSize: 18,
+  },
+  command: {
+    borderWidth: 1,
+    borderColor: "rgba(0,0,0,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 80,
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+    height: 80,
+    backgroundColor: "#fff",
+    borderRadius: 100,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
   },
 });

@@ -1,19 +1,12 @@
 import { Entypo } from "@expo/vector-icons";
-import React, { useState, useRef } from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  StatusBar,
-} from "react-native";
+import React, { useRef, useState } from "react";
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import DropdownAlert from "react-native-dropdownalert";
 import Gallery from "react-native-image-gallery";
 import RNPickerSelect from "react-native-picker-select";
 import { useDispatch, useSelector } from "react-redux";
 import { BackImage, MarketHeader } from "../components";
-import { addToCart, removeProduct } from "../Store/actions";
-import DropdownAlert from "react-native-dropdownalert";
+import { addToCart } from "../Store/actions";
 
 const { width, height } = Dimensions.get("window");
 
@@ -50,18 +43,18 @@ const ProductProfile = ({ route, navigation }) => {
       <View style={styles.mainView}>
         <View style={styles.search}>
           <Gallery
-            style={{ flex: 1, paddingVertical: 10, backgroundColor: "black" }}
+            style={{ flex: 1, paddingVertical: 10, backgroundColor: "white" }}
             images={[
               {
-                source: require("../../assets/logo.png"),
+                source: require("../../assets/product.jpg"),
                 dimensions: { width: 300, height: 300 },
               },
               {
-                source: require("../../assets/logo.png"),
+                source: require("../../assets/product.jpg"),
                 dimensions: { width: 300, height: 300 },
               },
               {
-                source: require("../../assets/logo.png"),
+                source: require("../../assets/product.jpg"),
                 dimensions: { width: 300, height: 300 },
               },
             ]}
@@ -143,9 +136,8 @@ const ProductProfile = ({ route, navigation }) => {
       <DropdownAlert
         ref={alert}
         updateStatusBar={false}
-        closeInterval={3000}
+        closeInterval={1000}
         elevation={3}
-        // inactiveStatusBarBackgroundColor={"success"}
       />
     </BackImage>
   );
@@ -155,12 +147,12 @@ export default ProductProfile;
 
 const styles = StyleSheet.create({
   header: {
-    height: "10%",
+    height: "15%",
     width: "100%",
     justifyContent: "center",
   },
   mainView: {
-    height: "90%",
+    height: "85%",
     width: "100%",
     backgroundColor: "rgba(17, 160, 193, .7)",
     borderTopLeftRadius: 30,

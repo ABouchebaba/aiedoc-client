@@ -1,21 +1,13 @@
+import { Entypo } from "@expo/vector-icons";
 import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-} from "react-native";
-import { FontAwesome, Entypo } from "@expo/vector-icons";
-import { TagSelect } from 'react-native-tag-select';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export const ProductCard = (props) => {
   const product = props.product
   return (
-    <TouchableOpacity style={styles.card} onPress={() => props.navigation.navigate("ProductProfile", {product})}>
+    <TouchableOpacity style={styles.card} activeOpacity={0.6} onPress={() => props.navigation.navigate("ProductProfile", {product})}>
       <View style={styles.imageSide}>
-        <Image source={require("../../assets/logo.png")} style={styles.image} />
+        <Image source={require("../../assets/product.jpg")} style={styles.image} />
       </View>
       <View style={styles.leftSide}>
         <Text style={styles.name}>{product.name}</Text>
@@ -44,15 +36,16 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderColor:"white",
     borderRadius:10,
-    marginBottom:10
+    marginBottom:10,
+    backgroundColor:'white'
   },
   imageSide: {
     height: "55%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor:'black'
   },
   image: {
+    marginTop: 10,
     width: "100%",
     height: "100%",
     resizeMode: "contain",
@@ -60,6 +53,7 @@ const styles = StyleSheet.create({
   },
   leftSide: {
     paddingHorizontal: 5,
+    backgroundColor:'white'
   },
   ratingView: {
     flexDirection: "row",
