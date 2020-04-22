@@ -1,24 +1,47 @@
+import React, { useState } from "react";
 import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  ScrollView,
-  TouchableOpacity,
   Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { BackImage, MarketHeader, CartCard } from "../components";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
-import { removeProduct, addQuantity, removeQuantity,addCommand } from "../Store/actions";
-import { useNavigation } from "@react-navigation/native";
+import {
+  BackImage,
+  CartCard,
+  MarketHeader,
+  CartModal,
+  CommandSetModal,
+} from "../components";
+import {
+  addQuantity,
+  removeProduct,
+  removeQuantity,
+  addCommand,
+} from "../Store/actions";
 
 const { width, height } = Dimensions.get("window");
 
-const Cart = (props) => {
+const Cart = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
   const { _id } = useSelector((state) => state.user.user);
+
+  const [model, setModel] = useState(false);
+  const [done, setDone] = useState(false);
+
+  function close() {
+    setModel(false);
+  }
+
+  function doneModal() {
+    setDone(true);
+    setTimeout(() => {
+      navigation.navigate("StoreHome");
+    }, 1500);
+  }
 
   function remove(id) {
     dispatch(removeProduct(id, cart));
@@ -36,8 +59,11 @@ const Cart = (props) => {
     return accumulator + currentValue.qty * currentValue.price;
   }, 0);
 
-  function _setCommand() {
+  function submit(address) {
     const data = {
+      address: address.address,
+      wilaya: address.wilaya,
+      location: address.location,
       user_id: _id,
       user_type: "Client",
       total_price: total,
@@ -46,14 +72,13 @@ const Cart = (props) => {
           product_id: product.product_id,
           product_name: product.product_name,
           qty: product.qty,
-          option: product.option
+          option: product.option,
         };
       }),
     };
-    // console.log(data);
-    dispatch(addCommand(data))
-    // useNavigation().navigate('commandDone')
-
+    console.log(data);
+    dispatch(addCommand(data));
+    doneModal();
   }
 
   return (
@@ -64,11 +89,11 @@ const Cart = (props) => {
       <View style={styles.mainView}>
         {cart.length !== 0 ? (
           <>
-            <Text style={styles.name}>Panier</Text>
-            <Image
+            <Text style={styles.name}>Votre panier</Text>
+            {/* <Image
               style={styles.tinyLogo}
               source={require("../../assets/cart.png")}
-            />
+            /> */}
             <View style={styles.scrollNotch} />
             <ScrollView
               style={styles.list}
@@ -90,7 +115,7 @@ const Cart = (props) => {
             </View>
             <TouchableOpacity
               style={styles.confirm}
-              onPress={_setCommand}
+              onPress={() => setModel(true)}
             >
               <Text style={styles.confirmText}>CONFIRMER</Text>
             </TouchableOpacity>
@@ -99,18 +124,20 @@ const Cart = (props) => {
           <Text>Votre panier est vide</Text>
         )}
       </View>
+      <CartModal showModel={model} close={close} submit={submit} />
+      <CommandSetModal done={done} close={close} />
     </BackImage>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    height: "10%",
+    height: "15%",
     width: "100%",
     justifyContent: "center",
   },
   mainView: {
-    height: "90%",
+    height: "85%",
     width: "100%",
     backgroundColor: "rgba(17, 160, 193, .7)",
     borderTopLeftRadius: 30,
@@ -137,6 +164,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 25,
     color: "white",
+    marginBottom: 10,
   },
   list: {
     flex: 1,

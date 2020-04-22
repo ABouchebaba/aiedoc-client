@@ -24,7 +24,7 @@ const Profile = (props) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={props.navigation.openDrawer}>
-            <Entypo name="menu" size={70} color="white" />
+            <Entypo name="menu" size={60} color="white" />
           </TouchableOpacity>
         </View>
         <View style={styles.mainView}>
@@ -68,12 +68,12 @@ const Profile = (props) => {
               style={styles.TextInput}
             />
           </View>
-          <View style={styles.inputGroup}>
+          {/* <View style={styles.inputGroup}>
             <Button
               title={"changer le numéro de téléphone"}
               onPress={() => props.navigation.navigate("ChangePhoneNumber")}
             />
-          </View>
+          </View> */}
         </View>
       </View>
     </BackImage>
@@ -89,10 +89,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   header: {
-    height: "10%",
+    height: "15%",
     width: "100%",
     alignItems: "flex-start",
-    justifyContent: "flex-start",
+    justifyContent: "center",
   },
   inputGroup: {
     width: "100%",
@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   mainView:{
-    height:"90%",
-    justifyContent:'center',
+    height:"85%",
+    justifyContent:'flex-start',
   }
 });
 
