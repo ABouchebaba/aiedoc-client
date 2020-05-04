@@ -1,5 +1,5 @@
 import { AntDesign, Entypo, FontAwesome, Feather } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -7,20 +7,30 @@ import {
   Text,
   TouchableOpacity,
   View,
+  RefreshControl
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommands } from "../Store/actions";
 import { CommandModel } from "./CommandModel";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const Commands = () => {
   const dispatch = useDispatch();
-  const { commands, loading } = useSelector((state) => state.commands);
+  const { commands, loading } = useSelector((state) => state.history);
   const { _id } = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(getCommands(_id));
     // console.log(commands);
   }, []);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+      setRefreshing(true);
+      dispatch(getCommands(_id))
+      setRefreshing(false);
+  }, [refreshing,command]);
 
   // const interventions = props.interventions
   const [command, setCommand] = useState({
@@ -41,7 +51,14 @@ export const Commands = () => {
       <ActivityIndicator size="large" color="#11A0C1" />
     </View>
   ) : (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView 
+    style={styles.scrollView}
+    refreshControl={
+      <RefreshControl 
+      refreshing={refreshing} onRefresh={onRefresh}
+      />
+    }
+    >
       {commands.map((cmd, i) => (
         <TouchableOpacity
           key={i}

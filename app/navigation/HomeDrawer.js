@@ -20,9 +20,9 @@ function HomeDrawerScreen() {
     >
       <HomeDrawer.Screen name="Accueil" component={Home} />
       <HomeDrawer.Screen name="Boutique" component={StoreStack} />
-      <HomeDrawer.Screen name="Profile" component={ProfileStack} />
       <HomeDrawer.Screen name="Mes prestations" component={History} />
       <HomeDrawer.Screen name="Mes achats" component={Commands} />
+      <HomeDrawer.Screen name="Profile" component={ProfileStack} />
       <HomeDrawer.Screen name="A propos" component={About} />
     </HomeDrawer.Navigator>
   );

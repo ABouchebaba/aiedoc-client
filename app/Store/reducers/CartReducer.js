@@ -1,12 +1,4 @@
-import {
-  SET_COMMAND,
-  CANCEL_COMMAND,
-  ADD_PRODUCT,
-  CART_LOADING,
-  REMOVE_PRODUCT,
-  ERROR_CART,
-  REMOVE_QUANTITY,
-} from "../../constants/ActionTypes";
+import { SET_PRODUCT, CART_LOADING, ERROR_CART } from "../../constants/ActionTypes";
 
 const initialState = {
   cart: [],
@@ -16,7 +8,7 @@ const initialState = {
 
 const CartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_PRODUCT: {
+    case SET_PRODUCT: {
       return {
         ...state,
         cart: [...action.data],
@@ -24,22 +16,6 @@ const CartReducer = (state = initialState, action) => {
         error: false,
       };
     }
-    case REMOVE_PRODUCT: {
-        return {
-          ...state,
-          cart: action.data,
-          loading: false,
-          error: false,
-        };
-      }
-    case REMOVE_QUANTITY: {
-        return {
-          ...state,
-          cart: action.data,
-          loading: false,
-          error: false,
-        };
-      }
     case ERROR_CART: {
       return {
         ...state,

@@ -1,30 +1,64 @@
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
-import React, { useEffect } from "react";
+import _ from "lodash";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
   StyleSheet,
-  Text,
   TextInput,
-  TouchableOpacity,
   View,
+  TouchableOpacity,
+  Text,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import { BackImage, MarketHeader, ProductCard } from "../components";
+import {
+  BackImage,
+  CategoriesFilter,
+  MarketHeader,
+  ProductCard,
+} from "../components";
 import { getCategories, getProducts } from "../Store/actions";
-
 const { width, height } = Dimensions.get("window");
 
 const StoreHome = (props) => {
   const dispatch = useDispatch();
-  const { products, categories, loading } = useSelector((state) => state.store);
+  const { products, categories, loadingCat, loadingProd } = useSelector(
+    (state) => state.store
+  );
+
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
-    console.log(products.length);
+    setFilteredData(products);
   }, []);
+
+  function searchByCategory(cat) {
+    let data = products;
+    if (cat !== "") {
+      data = data.filter((product) => product.category === cat);
+    }
+    setFilteredData(data);
+  }
+
+  function sortAZ(sorted) {
+    if (sorted) {
+      setFilteredData(_.orderBy(filteredData, ["name"], ["asc"]));
+    } else {
+      setFilteredData(_.orderBy(filteredData, ["name"], ["desc"]));
+    }
+  }
+
+  function sortPrice(sorted) {
+    if (sorted) {
+      setFilteredData(_.orderBy(filteredData, ["price"], ["asc"]));
+    } else {
+      setFilteredData(_.orderBy(filteredData, ["price"], ["desc"]));
+    }
+  }
 
   return (
     <BackImage source={require("../../assets/bg/bgMarket.png")}>
@@ -37,29 +71,25 @@ const StoreHome = (props) => {
             <TextInput
               placeholder="Tensiomètre électronique"
               style={styles.TextInput}
+              onChangeText={(e) => setSearchText(e)}
             />
             <View style={styles.icon}>
               <FontAwesome name="search" size={25} color="black" />
             </View>
           </View>
-          {loading ? (
+          {loadingCat ? (
             <ActivityIndicator size="large" color="white" />
           ) : (
-            <ScrollView
-              horizontal={true}
-              style={styles.scroll}
-              contentContainerStyle={styles.scrollContain}
-            >
-              {categories.map((x, i) => (
-                <TouchableOpacity key={i} style={styles.filter}>
-                  <Text style={styles.filterText}>{x.name}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+            <CategoriesFilter
+              categories={categories}
+              filter={searchByCategory}
+              sortAZ={sortAZ}
+              sortPrice={sortPrice}
+            />
             // <></>
           )}
         </View>
-        {loading ? (
+        {loadingProd ? (
           <View style={styles.scrollContain}>
             <ActivityIndicator size="large" color="white" />
           </View>
@@ -68,23 +98,43 @@ const StoreHome = (props) => {
             style={styles.list}
             contentContainerStyle={styles.listStyle}
           >
-            {products.map((product, i) => {
-              // console.log(product)
-              return (
-                <ProductCard
-                  key={i}
-                  navigation={props.navigation}
-                  product={product}
-                  category={""}
-                />
-              );
-            })}
+            {filteredData
+              .filter((product) =>
+                product.name.toUpperCase().includes(searchText.toUpperCase())
+              )
+              .map((product, i) => {
+                // console.log(product)
+                return (
+                  <ProductCard
+                    key={i}
+                    navigation={props.navigation}
+                    product={product}
+                    category={""}
+                  />
+                );
+              })}
           </ScrollView>
         )}
       </View>
-      <TouchableOpacity style={styles.command}>
+      <TouchableOpacity
+        style={styles.command}
+        // onPress={() => props.navigation.navigate("Mes achats")}
+        onPress={() => 
+          setTimeout(() => {
+            props.navigation.navigate("Mes achats");
+          }, 5000)}
+      >
         <AntDesign name="CodeSandbox" size={30} color="#11A0C1" />
-        <Text style={{fontSize:10, textAlign:'center', color:'#11A0C1', fontWeight:'bold'}}>Commandes</Text>
+        <Text
+          style={{
+            fontSize: 10,
+            textAlign: "center",
+            color: "#11A0C1",
+            fontWeight: "bold",
+          }}
+        >
+          Commandes
+        </Text>
       </TouchableOpacity>
     </BackImage>
   );
@@ -126,9 +176,6 @@ const styles = StyleSheet.create({
     margin: 10,
     marginBottom: 10,
   },
-  scroll: {
-    height: 70,
-  },
   listStyle: {
     alignItems: "center",
     justifyContent: "space-around",
@@ -162,27 +209,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRightWidth: 4,
-  },
-  filter: {
-    borderRadius: 50,
-    height: 35,
-    width: 80,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-    marginRight: 10,
-  },
-  filterText: {
-    color: "#4EC7E6",
-    fontSize: 18,
   },
   command: {
     borderWidth: 1,

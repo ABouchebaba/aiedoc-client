@@ -33,6 +33,9 @@ export const CartModal = (props) => {
         wilaya: wilaya,
         location: location,
       };
+      setAdresse('')
+      setWilaya('')
+      setLocation({})
       return props.submit(data);
     }
     Alert.alert("Erreur", "Veuillez compléter le formulaire");

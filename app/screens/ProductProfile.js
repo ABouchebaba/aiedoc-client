@@ -88,9 +88,7 @@ const ProductProfile = ({ route, navigation }) => {
             onPress={_addToCart}
             disabled={
               option === ""
-                ? product.options.length === 0
-                  ? false
-                  : true
+                ? product.options.length !== 0
                 : false
             }
           >
