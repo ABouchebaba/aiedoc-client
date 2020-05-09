@@ -36,6 +36,7 @@ const StoreHome = (props) => {
   }, []);
 
   useEffect(() => {
+    
     setFilteredData(products);
   }, [products]);
 
