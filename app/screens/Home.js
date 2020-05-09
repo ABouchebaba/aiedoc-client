@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,17 +12,12 @@ import {
 import { getLocation, getAvailableSps, getServices } from "../Store/actions";
 import { Ionicons } from "@expo/vector-icons";
 
-// function fitToMarkersToMap() {
-//   mapRef.current.fitToSuppliedMarkers(["user"], {
-//     edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-//   });
-// }
+
 
 const Home = (props) => {
   const dispatch = useDispatch();
   const { location } = useSelector((state) => state.user);
   const { sps, loading, error } = useSelector((state) => state.sps);
-  const [mapRef, setMapRef] = useState(null);
   const [validateEnabled, setvalidateEnabled] = useState(false);
   const [filters, setFilters] = useState({ sex: {}, service: {} });
 
@@ -39,6 +34,13 @@ const Home = (props) => {
 
     setFilters({ ...filters });
   };
+
+  /* function fitToMarkersToMap() {
+    // mapRef.current.fitToSuppliedMarkers(["user"], {
+    //   edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+    // });
+    
+  } */
 
   useEffect(() => {
     dispatch(getLocation());
@@ -58,6 +60,7 @@ const Home = (props) => {
       }
       return false;
     });
+    
 
   return (
     <BackImage source={require("../../assets/bg/bgHome.png")}>
@@ -68,7 +71,6 @@ const Home = (props) => {
         style={styles.sexFilter}
       />
       <Map
-        setRef={setMapRef}
         location={location}
         onPress={() => setvalidateEnabled(false)}
       >

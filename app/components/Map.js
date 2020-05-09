@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import MapView from "react-native-maps";
 
@@ -9,10 +9,19 @@ const LATITUDE_DELTA = 0.50922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export const Map = (props) => {
+
+  const mapRef = useRef(null);
+  setTimeout(()=>{
+    mapRef.current.fitToSuppliedMarkers(["markers"], {
+      edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+      animated: true,
+    });
+  },1000)
+
   return (
     <View style={styles.mapContainer}>
       <MapView
-        ref={(ref) => props.setRef(ref)}
+        ref={mapRef}
         initialRegion={{
           latitude: props.location.latitude,
           longitude: props.location.longitude,

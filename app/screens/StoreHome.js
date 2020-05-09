@@ -33,7 +33,6 @@ const StoreHome = (props) => {
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
-    
   }, []);
 
   useEffect(() => {

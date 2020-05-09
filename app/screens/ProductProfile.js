@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import DropdownAlert from "react-native-dropdownalert";
 import Gallery from "react-native-image-gallery";
+import GallerySwiper from "react-native-gallery-swiper";
+
 import RNPickerSelect from "react-native-picker-select";
 import { useDispatch, useSelector } from "react-redux";
 import { BackImage, MarketHeader } from "../components";
@@ -42,7 +44,7 @@ const ProductProfile = ({ route, navigation }) => {
       </View>
       <View style={styles.mainView}>
         <View style={styles.search}>
-          <Gallery
+          <GallerySwiper
             style={{ flex: 1, paddingVertical: 10, backgroundColor: "white" }}
             images={[
               {
