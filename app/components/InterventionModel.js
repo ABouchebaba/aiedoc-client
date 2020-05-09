@@ -1,28 +1,19 @@
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import React from "react";
-import { Image, Modal, StyleSheet, Text, View, Animated } from "react-native";
+import { Image, Modal, StyleSheet, Text, View, ScrollView } from "react-native";
 
 export const InterventionModel = (props) => {
-  // const intervention = props.intervention
-  const intervention = {
-    date: "2012-15-02",
-    type: "regular",
-    totalPrice: "123",
-    services: [
-      "service1",
-      "service2",
-      "service3",
-      "service1",
-      "service2",
-      "service3",
-      "service1",
-      "service2",
-      "service3",
-    ],
-    sp_name: "3etman bouchlaghem",
-    rating: 4,
-  };
-
+  // const services = props.services
+  const services = [
+    {
+      service: 'injection',
+      prix: 200,
+    },
+    {
+      service: 'massage',
+      prix: 300,
+    }
+  ];
   return (
     <Modal
       animationType="slide"
@@ -32,39 +23,25 @@ export const InterventionModel = (props) => {
     >
       <View style={styles.modelCard}>
         <View style={styles.modelInfo}>
-          <Image
-            source={require("../../assets/maleIntervention.png")}
-            style={styles.image}
-          />
-          <Entypo name="calendar" size={20} color="gray">
-            <Text style={styles.modelText}> {intervention.date}</Text>
-          </Entypo>
-          <Entypo name="price-tag" size={20} color="#FFD700">
-            <Text style={styles.modelText}> {intervention.totalPrice} DA</Text>
-          </Entypo>
-          <FontAwesome name="user-md" size={20} color="green">
-            <Text style={styles.modelText}> {intervention.sp_name}</Text>
-          </FontAwesome>
-          <FontAwesome name="user-md" size={20} color="green">
-            <Text style={styles.modelText}> {intervention.sp_name}</Text>
-          </FontAwesome>
-          <FontAwesome name="user-md" size={20} color="green">
-            <Text style={styles.modelText}> {intervention.sp_name}</Text>
-          </FontAwesome>
-          <View style={{ alignItems: "center" }}>
-            {/* <FontAwesome name="user-md" size={20} color="green">
-            <Text style={styles.modelText}> Services:</Text>
-          </FontAwesome> */}
-            <Text style={styles.modelText}> Services:</Text>
-            <Text style={styles.modelText}>
-              {"\n" + intervention.services.toString()}
-            </Text>
-          </View>
-          <View style={styles.ratingView}>
-            {[...Array(intervention.rating)].map((x, i) => (
-              <Entypo key={i} name="star" size={30} color="#FFD700"></Entypo>
+          <Text style={styles.modelText}>
+            Liste des produits ({services.length})
+          </Text>
+          <ScrollView
+            style={styles.list}
+            contentContainerStyle={styles.listStyle}
+          >
+            <View style={styles.prd}>
+                <Text style={styles.prdTitle}>Service: </Text>
+                <Text style={styles.prdTitle}>Prix: </Text>
+              </View>
+            {services.map((srv, index) => (
+              <View key={index} style={styles.prd}>
+                <Text style={styles.prdText}>{srv.service}</Text>
+                <Text style={styles.total}>{srv.prix}</Text>
+              </View>
             ))}
-          </View>
+            
+          </ScrollView>
         </View>
         <Entypo
           name="cross"
@@ -87,11 +64,12 @@ const styles = StyleSheet.create({
   },
   modelInfo: {
     backgroundColor: "#4EC7E6",
-    width: "70%",
-    height: "50%",
+    width: "80%",
+    height: "70%",
     paddingHorizontal: 20,
+    paddingVertical: 20,
     alignItems: "flex-start",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     borderRadius: 20,
     marginBottom: 30,
     shadowColor: "#000",
@@ -104,22 +82,13 @@ const styles = StyleSheet.create({
 
     elevation: 2,
   },
-  image: {
-    width: "100%",
-    height: 70,
-    resizeMode: "contain",
-  },
   modelText: {
-    // alignSelf: "center",
-    color: "white",
-    fontSize: 18,
-  },
-  ratingView: {
-    flexDirection: "row",
     alignSelf: "center",
+    color: "white",
+    fontSize: 20,
   },
   icon: {
-    backgroundColor: "#4EC7E6",
+    backgroundColor: "red",
     borderRadius: 50,
     shadowColor: "#000",
     shadowOffset: {
@@ -129,5 +98,46 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
+  },
+  list: {
+    flex: 1,
+    height: "50%",
+    width: "100%",
+    paddingVertical: 10,
+    // marginTop:10
+  },
+  listStyle: {
+    paddingVertical: 10,
+    backgroundColor: "white",
+    // alignItems: "center",
+    borderTopWidth: 1,
+    borderColor: "#707070",
+    justifyContent: "flex-start",
+  },
+  prd: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    justifyContent:'space-around',
+    flexDirection:'row'
+  },
+  prdText: {
+    width:'80%',
+    color: "#11A0C1",
+    fontSize: 16,
+    textAlign:'left'
+  },
+  total: {
+    textAlign: "right",
+    color: "#11A0C1",
+    fontSize: 16,
+  },
+  prdTitle: {
+    alignSelf: "center",
+    color: "white",
+    fontSize: 18,
+    backgroundColor: "#11A0C1",
+    paddingHorizontal: 10,
+    borderRadius: 20,
   },
 });

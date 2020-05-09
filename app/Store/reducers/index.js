@@ -4,8 +4,7 @@ import UserReducer from "./UserReducer";
 import SpsReducer from "./SpsReducer";
 import ServiceReducer from "./ServiceReducer";
 import StoreReducer from "./StoreReducer";
-import InterventionsReducer from "./InterventionsReducer";
-import CommandsReducer from "./CommandsReducer";
+import HistoryReducer from "./HistoryReducer";
 import CartReducer from "./CartReducer";
 
 const rootReducer = combineReducers({
@@ -14,8 +13,7 @@ const rootReducer = combineReducers({
   sps: SpsReducer,
   services: ServiceReducer,
   store: StoreReducer,
-  interventions: InterventionsReducer,
-  commands: CommandsReducer,
+  history: HistoryReducer,
   cart: CartReducer
 });
 

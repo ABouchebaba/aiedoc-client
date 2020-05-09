@@ -1,19 +1,35 @@
 import { Entypo, FontAwesome } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from "react-native";
-import  {InterventionModel} from "./InterventionModel";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+  RefreshControl
+} from "react-native";
+import { InterventionModel } from "./InterventionModel";
 import { useDispatch, useSelector } from "react-redux";
-import {  getInterventions } from "../Store/actions";
+import { getInterventions } from "../Store/actions";
 
 export const Interventions = (props) => {
   const dispatch = useDispatch();
-  const {interventions,loading} = useSelector((state) => state.interventions);
-  const {_id} = useSelector((state) => state.user.user);
+  const { interventions, loading } = useSelector((state) => state.history);
+  const { _id } = useSelector((state) => state.user.user);
 
   useEffect(() => {
     dispatch(getInterventions(_id));
-    console.log(interventions)
+    console.log(interventions);
   }, []);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    dispatch(getInterventions(_id));
+    setRefreshing(false);
+  }, [refreshing, interventions]);
 
   // const interventions = props.interventions
   const fakeInt = [
@@ -23,7 +39,7 @@ export const Interventions = (props) => {
       intervention_id: "5e655fad2e011c00165eeb05",
       date: "2020-03-08T21:12:13.409Z",
       sp_name: "service provider",
-      rating: 5
+      rating: 5,
     },
     {
       _id: "5e655fad2e011c00165eeb06",
@@ -31,14 +47,21 @@ export const Interventions = (props) => {
       intervention_id: "5e655fad2e011c00165eeb05",
       date: "2020-03-08T21:12:13.409Z",
       sp_name: "service provider",
-      rating: 3
+      rating: 3,
     },
   ];
 
-  const [intervention, setIntervention] = useState(false);
+  const [intervention, setIntervention] = useState({
+    open: false,
+    services: [],
+  });
 
-  function interventionModel() {
-    setIntervention(!intervention);
+  function close() {
+    setIntervention({ open: false, services: [] });
+  }
+
+  function interventionModel(services) {
+    setIntervention({ open: true, services: services });
   }
 
   return loading ? (
@@ -46,12 +69,17 @@ export const Interventions = (props) => {
       <ActivityIndicator size="large" color="#11A0C1" />
     </View>
   ) : (
-    <ScrollView style={styles.scrollView}>
+    <ScrollView
+      style={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
       {fakeInt.map((inv, i) => (
         <TouchableOpacity
           key={i}
           style={styles.card}
-          onPress={interventionModel}
+          onPress={() => interventionModel(inv.services)}
         >
           <View style={styles.leftSide}>
             <Entypo name="calendar" size={20} color="gray">
@@ -74,7 +102,11 @@ export const Interventions = (props) => {
           </View>
         </TouchableOpacity>
       ))}
-      <InterventionModel close={interventionModel} showModel={intervention} />
+      <InterventionModel
+        close={close}
+        showModel={intervention.open}
+        services={intervention.services}
+      />
     </ScrollView>
   );
 };

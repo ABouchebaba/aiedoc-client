@@ -13,24 +13,24 @@ export const CartCard = (props) => {
   function deleteProduct() {
     Alert.alert(
       "Retiner du panier",
-      `Êtes-vous sûr de vouloir supprimer ${product.product_name}`,
+      `Êtes-vous sûr de vouloir supprimer ${product.product_name} ${product.option}`,
       [
         {
           text: "ANNULER",
           style: "cancel",
         },
-        { text: "RETIRER", onPress: () => props.remove(product.product_id) },
+        { text: "RETIRER", onPress: () => props.remove(product.product_id, product.option) },
       ],
       { cancelable: false }
     );
   }
 
   function minus(){
-    if(product.qty > 1 ) props.minus(product.product_id)
+    if(product.qty > 1 ) props.minus(product.product_id, product.option)
   }
 
   function plus(){
-    props.plus(product.product_id)
+    props.plus(product.product_id, product.option)
   }
 
   return (
@@ -38,8 +38,12 @@ export const CartCard = (props) => {
       <View style={styles.upView}>
         <Text style={styles.name}>{product.product_name}</Text>
         <Text style={styles.brand}>{product.brand}</Text>
+        <Text style={styles.brand}>option: {product.option?product.option:'standard'}</Text>
+        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Text style={styles.price}>{product.price} DA </Text>
         <Text style={styles.fullPrice}>{product.price * product.qty} DA</Text>
+        </View>
+        
       </View>
       <View style={styles.downView}>
         <TouchableOpacity onPress={deleteProduct} >
