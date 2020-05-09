@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 export const MarketHeader = (props) => {
   const { cart } = useSelector((state) => state.cart);
   const navigation = useNavigation();
-  // console.log("cart", cart);
+
   return (
     <View style={styles.image}>
       <TouchableOpacity onPress={navigation.openDrawer}>

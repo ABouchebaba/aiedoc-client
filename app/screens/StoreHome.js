@@ -35,8 +35,7 @@ const StoreHome = (props) => {
     dispatch(getProducts());
   }, []);
 
-  useEffect(() => {
-    
+  useEffect(() => {  
     setFilteredData(products);
   }, [products]);
 
