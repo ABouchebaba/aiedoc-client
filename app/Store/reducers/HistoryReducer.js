@@ -42,7 +42,7 @@ import {
       case GET_COMMANDS: {
         return {
           ...state,
-          interventions: action.data,
+          commands: action.data,
           loading: false,
           error: false,
         };
