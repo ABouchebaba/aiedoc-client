@@ -16,25 +16,21 @@ export const CommandModel = (props) => {
     >
       <View style={styles.modelCard}>
         <View style={styles.modelInfo}>
-          <Text style={styles.modelText}>Liste des produits</Text>
+          <Text style={styles.modelText}>Liste des produits ({props.products.length})</Text>
           <ScrollView
             style={styles.list}
             contentContainerStyle={styles.listStyle}
           >
             {props.products.map((prd, index) => (
               <View key={index} style={styles.prd}>
-                <Text style={styles.prdText} >Nom: {prd.product_name}</Text>
+                <Text style={styles.prdTitle} >Nom: {prd.product_name}</Text>
                 <Text style={styles.prdText} >Option: {prd.option}</Text>
+                <Text style={styles.prdText} >Prix: 100</Text>
                 <Text style={styles.prdText} >Quantité: {prd.qty}</Text>
+                <Text style={styles.total} >TOTAL:{prd.qty*100}</Text>
               </View>
             ))}
-            {props.products.map((prd, index) => (
-              <View key={index} style={styles.prd}>
-                <Text style={styles.prdText} >{prd.product_name}</Text>
-                <Text style={styles.prdText} >Option: {prd.option}</Text>
-                <Text style={styles.prdText} >Quantité: {prd.qty}</Text>
-              </View>
-            ))}
+            
           </ScrollView>
         </View>
         <Entypo
@@ -59,7 +55,7 @@ const styles = StyleSheet.create({
   modelInfo: {
     backgroundColor: "#4EC7E6",
     width: "80%",
-    height: "50%",
+    height: "70%",
     paddingHorizontal: 20,
     paddingVertical: 20,
     alignItems: "flex-start",
@@ -82,7 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   icon: {
-    backgroundColor: "#4EC7E6",
+    backgroundColor: "red",
     borderRadius: 50,
     shadowColor: "#000",
     shadowOffset: {
@@ -95,24 +91,41 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    height:100,
+    height:"50%",
     width: "100%",
-    paddingVertical: 30,
+    paddingVertical: 10,
+    // marginTop:10
   },
   listStyle: {
-    height: 250,
-    // backgroundColor: "blue",
+    
+    paddingVertical:10,
+    backgroundColor: "white",
     // alignItems: "center",
+    borderTopWidth:1,
+    borderColor:'#707070',
     justifyContent: "flex-start",
   },
   prd:{
-    paddingLeft:10,
-    paddingBottom:10,
-    borderBottomWidth:3
+    paddingHorizontal:10,
+    paddingVertical:10,
+    borderBottomWidth:1
   },
   prdText:{
     // alignSelf: "center",
+    color: "#11A0C1",
+    fontSize: 16,
+  },
+  total:{
+    textAlign: "right",
+    color: "#11A0C1",
+    fontSize: 16,
+  },
+  prdTitle:{
+    alignSelf: "center",
     color: "white",
-    fontSize: 15,
+    fontSize: 18,
+    backgroundColor:'#11A0C1',
+    paddingHorizontal:10,
+    borderRadius:20
   }
 });

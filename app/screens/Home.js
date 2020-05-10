@@ -1,40 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Header,
-  Markers,
-  Map,
   BackImage,
   GenderFilter,
+  Header,
+  LoadingModal,
+  Map,
+  Markers,
   ServiceFilter,
   SpModal,
-  LoadingModal,
 } from "../components";
-import { getLocation, getAvailableSps, getServices } from "../Store/actions";
-import { Ionicons } from "@expo/vector-icons";
-import { Socket, resync, AppStateEvents } from "../helpers";
-import { available_sps } from "../Store/selectors";
+import { AppStateEvents, Socket } from "../helpers";
 import {
-  unsetCurrent,
+  getAvailableSps,
+  getLocation,
+  getServices,
+  resetCurrentIntervention,
   setCurrentIntervention,
   setCurrentSp,
-  resetCurrentIntervention,
+  unsetCurrent,
 } from "../Store/actions";
-
-// function fitToMarkersToMap() {
-//   mapRef.current.fitToSuppliedMarkers(["user"], {
-//     edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-//   });
-// }
+import { available_sps } from "../Store/selectors";
 
 const Home = (props) => {
   const dispatch = useDispatch();
   const sps = useSelector(available_sps);
   const { location, user } = useSelector((state) => state.user);
   const { intervention, sp, loading } = useSelector((state) => state.current);
-
-  const [mapRef, setMapRef] = useState(null);
 
   const modalShown = intervention.state === "pending";
 
@@ -105,11 +99,7 @@ const Home = (props) => {
       <Header />
       <SpModal showModal={modalShown} onClose={cancel} sp={sp} />
       <GenderFilter style={styles.genderFilter} />
-      <Map
-        setRef={setMapRef}
-        location={location}
-        onPress={() => selectSp(false)}
-      >
+      <Map location={location} onPress={() => selectSp(false)}>
         <Markers sps={sps} location={location} setSelectedSp={selectSp} />
       </Map>
       <View style={styles.serviceFilter}>

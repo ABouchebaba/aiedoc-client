@@ -11,8 +11,10 @@ export * from "./ProductCard";
 export * from "./GenderFilter";
 export * from "./ServiceFilter";
 export * from "./Checkbox";
+
 export * from "./CartCard";
 export * from "./CartModal";
 export * from "./CommandSetModal";
 export * from "./SpModal";
 export * from "./LoadingModal";
+export * from "./CategoriesFilter";

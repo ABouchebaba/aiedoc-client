@@ -6,27 +6,29 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image,
+  ActivityIndicator
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   BackImage,
   CartCard,
-  MarketHeader,
   CartModal,
   CommandSetModal,
+  MarketHeader,
 } from "../components";
 import {
+  addCommand,
   addQuantity,
   removeProduct,
   removeQuantity,
-  addCommand,
 } from "../Store/actions";
 
 const { width, height } = Dimensions.get("window");
 
 const Cart = ({ route, navigation }) => {
   const dispatch = useDispatch();
-  const { cart } = useSelector((state) => state.cart);
+  const { cart, loading } = useSelector((state) => state.cart);
   const { _id } = useSelector((state) => state.user.user);
 
   const [model, setModel] = useState(false);
@@ -40,19 +42,19 @@ const Cart = ({ route, navigation }) => {
     setDone(true);
     setTimeout(() => {
       navigation.navigate("StoreHome");
-    }, 1500);
+    }, 2000);
   }
 
-  function remove(id) {
-    dispatch(removeProduct(id, cart));
+  function remove(id, option) {
+    dispatch(removeProduct(id, option, cart));
   }
 
-  function plus(id) {
-    dispatch(addQuantity(id, cart));
+  function plus(id, option) {
+    dispatch(addQuantity(id, option, cart));
   }
 
-  function minus(id) {
-    dispatch(removeQuantity(id, cart));
+  function minus(id, option) {
+    dispatch(removeQuantity(id,option, cart));
   }
 
   const total = cart.reduce(function (accumulator, currentValue) {
@@ -65,20 +67,20 @@ const Cart = ({ route, navigation }) => {
       // wilaya: address.wilaya,
       // location: address.location,
       user_id: _id,
-      user_type: "Client",
+      user_type: "ServiceProvider",
       total_price: total,
       products: cart.map((product) => {
         return {
           product_id: product.product_id,
           product_name: product.product_name,
           qty: product.qty,
-          option: product.option,
+          option: product.option + " ",
         };
       }),
     };
-    console.log(data);
-    dispatch(addCommand(data));
-    doneModal();
+    // console.log(data);
+    dispatch(addCommand(data, doneModal));
+    close();
   }
 
   return (
@@ -87,7 +89,11 @@ const Cart = ({ route, navigation }) => {
         <MarketHeader />
       </View>
       <View style={styles.mainView}>
-        {cart.length !== 0 ? (
+        {loading ? (
+          <View style={styles.scrollContain}>
+            <ActivityIndicator size="large" color="white" />
+          </View>
+        ) : cart.length !== 0 ? (
           <>
             <Text style={styles.name}>Votre panier</Text>
             {/* <Image
@@ -121,7 +127,12 @@ const Cart = ({ route, navigation }) => {
             </TouchableOpacity>
           </>
         ) : (
-          <Text>Votre panier est vide</Text>
+          <>
+            <Text style={{ color: "white", fontSize: 30, marginVertical: 40 }}>
+              Votre panier est vide
+            </Text>
+            <Image source={require("../../assets/empty_cart_big.png")} />
+          </>
         )}
       </View>
       <CartModal showModel={model} close={close} submit={submit} />
@@ -211,6 +222,13 @@ const styles = StyleSheet.create({
   confirmText: {
     fontSize: 30,
     color: "white",
+  },
+  scrollContain: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    // borderRightWidth: 4,
+    // backgroundColor: "#cadce6",
   },
 });
 

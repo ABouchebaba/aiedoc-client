@@ -21,7 +21,7 @@ export const Markers = ({ location, sps, setSelectedSp }) => {
         onPress={() => setSelectedSp(false)}
         key={"user"}
         title="User"
-        identifier={"user"}
+        identifier={"markers"}
         coordinate={location}
         //image={require("../../assets/malePin.png")}
       />
@@ -32,7 +32,7 @@ export const Markers = ({ location, sps, setSelectedSp }) => {
             onPress={() => setSelectedSp(sp)}
             key={sp._id}
             title={sp.sex}
-            identifier={sp._id}
+            identifier={"markers"}
             coordinate={{
               longitude: sp.location.coordinates[0],
               latitude: sp.location.coordinates[1],

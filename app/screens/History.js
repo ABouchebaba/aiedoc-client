@@ -38,44 +38,6 @@ const styles = StyleSheet.create({
     height: "85%",
     width: "100%",
   },
-  tabView: {
-    backgroundColor: "white",
-    borderTopEndRadius: 30,
-    borderTopLeftRadius: 30,
-  },
-  scene: {
-    flex: 1,
-  },
-  modelCard: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba( 250, 250, 250, 0.5 )",
-  },
-  modelInfo: {
-    backgroundColor: "#4EC7E6",
-    width: "70%",
-    height: "50%",
-    justifyContent: "space-evenly",
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-  },
-  image: {
-    width: "auto",
-    height: 70,
-    resizeMode: "contain",
-  },
-  modelText: {
-    alignSelf: "center",
-    fontSize: 20,
-  },
   head: {
     backgroundColor: "white",
     height: 50,

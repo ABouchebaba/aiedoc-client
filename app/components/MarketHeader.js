@@ -1,20 +1,17 @@
 import React from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Image, StyleSheet, Text } from "react-native";
 import { Entypo, SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 export const MarketHeader = (props) => {
+  const { cart } = useSelector((state) => state.cart);
   const navigation = useNavigation();
 
   return (
     <View style={styles.image}>
       <TouchableOpacity onPress={navigation.openDrawer}>
-        <Entypo
-          name="menu"
-          size={60}
-          color="white"
-          style={styles.logo}
-        />
+        <Entypo name="menu" size={60} color="white" style={styles.logo} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("StoreHome")}>
         <Image
@@ -23,10 +20,20 @@ export const MarketHeader = (props) => {
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
-        <Image
-          style={styles.tinyLogo}
-          source={require("../../assets/cart.png")}
-        />
+        {cart.length === 0 ? (
+          <Image
+            style={{width:55,height:55,resizeMode:'contain'}}
+            source={require("../../assets/empty_cart.png")}
+          />
+        ) : (
+          <>
+            <Text style={styles.text}>{cart.length}</Text>
+            <Image
+              style={{width:50,height:50,resizeMode:'contain'}}
+              source={require("../../assets/fill_cart.png")}
+            />
+          </>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom:10,
+    marginBottom: 10,
     alignSelf: "center",
     width: "90%",
   },
@@ -51,5 +58,14 @@ const styles = StyleSheet.create({
   logo: {
     width: 60,
     height: 60,
+  },
+  text: {
+    color: "white",
+    backgroundColor: "red",
+    textAlign: "center",
+    width: 20,
+    height: 20,
+    borderRadius: 50,
+    fontWeight: "bold",
   },
 });

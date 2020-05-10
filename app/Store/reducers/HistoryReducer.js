@@ -14,7 +14,7 @@ import {
       error: false,
   };
   
-  const InterventionsReducer = (state = initialState, action) => {
+  const HistoryReducer = (state = initialState, action) => {
     switch (action.type) {
       case GET_INTERVENTIONS: {
         return {
@@ -42,7 +42,7 @@ import {
       case GET_COMMANDS: {
         return {
           ...state,
-          interventions: action.data,
+          commands: action.data,
           loading: false,
           error: false,
         };
@@ -66,5 +66,5 @@ import {
     }
   };
   
-  export default InterventionsReducer;
+  export default HistoryReducer;
   
