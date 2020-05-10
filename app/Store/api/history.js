@@ -6,5 +6,5 @@ export const commands = async (id) => {
 };
 
 export const interventions = async (id) => {
-    return axios.get(`${BACKEND_URL}/api/clients/${id}/interventions/`);
-  };
+  return axios.get(`${BACKEND_URL}/api/clients/${id}/interventions/`);
+};

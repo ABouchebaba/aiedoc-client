@@ -9,13 +9,19 @@ export class Socket {
   static getInstance() {
     if (Socket.instance === false) {
       Socket.instance = new Socket();
+      // console.log("new instance");
     }
 
     return this.instance;
   }
 
+  isInitialized() {
+    return Boolean(this.socket);
+  }
+
   init() {
-    this.socket = socketIOClient(BACKEND_URL);
+    console.log("Socket " + BACKEND_URL);
+    this.socket = socketIOClient(BACKEND_URL, { reconnection: false });
   }
 
   get() {
@@ -25,6 +31,9 @@ export class Socket {
   on(key, callback) {
     if (this.socket) {
       this.socket.on(key, callback);
+    } else {
+      console.log("can't add event to socket");
+      // console.log(this.socket);
     }
   }
 
@@ -34,7 +43,11 @@ export class Socket {
     }
   }
 
-  destory() {
-    this.socket = false;
+  destroy() {
+    if (this.socket) {
+      // disconnect before
+      this.socket.emit("disconnect");
+      this.socket = false;
+    }
   }
 }

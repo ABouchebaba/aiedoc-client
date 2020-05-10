@@ -7,10 +7,12 @@ export * from "./CustomDrawer";
 export * from "./Map";
 export * from "./BackImage";
 export * from "./InterventionModel";
-export * from './ProductCard'
-export * from "./SexFilter";
+export * from "./ProductCard";
+export * from "./GenderFilter";
 export * from "./ServiceFilter";
 export * from "./Checkbox";
-export * from './CartCard'
-export * from './CartModal'
-export * from './CommandSetModal'
+export * from "./CartCard";
+export * from "./CartModal";
+export * from "./CommandSetModal";
+export * from "./SpModal";
+export * from "./LoadingModal";

@@ -10,7 +10,7 @@ export const getServices = () => (dispatch) => {
 
   getServiceTypes()
     .then((res) => {
-      console.log("Get services - got results : " + res.data.length);
+      // console.log("Get services - got results : " + res.data.length);
       return dispatch({
         type: SET_SERVICES,
         data: res.data,

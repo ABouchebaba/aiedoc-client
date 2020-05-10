@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const getUserWithPhone = async (phoneNumber) => {
   // console.log(BACKEND_URL);
+
   return axios.post(`${BACKEND_URL}/api/clients/verifyPhone`, {
     phone: phoneNumber,
   });

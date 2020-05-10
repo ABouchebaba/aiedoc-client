@@ -6,7 +6,7 @@ export const getAvailableSps = () => (dispatch) => {
 
   getReadySps()
     .then((res) => {
-      console.log("Get sps - got results : " + res.data.length);
+      // console.log("Get sps - got results : " + res.data.length);
       return dispatch({
         type: SET_SPS,
         data: res.data,

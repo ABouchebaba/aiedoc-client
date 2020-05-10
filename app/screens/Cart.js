@@ -61,9 +61,9 @@ const Cart = ({ route, navigation }) => {
 
   function submit(address) {
     const data = {
-      address: address.address,
-      wilaya: address.wilaya,
-      location: address.location,
+      // address: address.address,
+      // wilaya: address.wilaya,
+      // location: address.location,
       user_id: _id,
       user_type: "Client",
       total_price: total,

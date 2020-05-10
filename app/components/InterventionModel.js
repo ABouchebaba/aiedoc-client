@@ -1,6 +1,6 @@
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import React from "react";
-import { Image, Modal, StyleSheet, Text, View, Animated } from "react-native";
+import { Image, Modal, StyleSheet, Text, View } from "react-native";
 
 export const InterventionModel = (props) => {
   // const intervention = props.intervention

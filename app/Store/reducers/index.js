@@ -7,6 +7,8 @@ import StoreReducer from "./StoreReducer";
 import InterventionsReducer from "./InterventionsReducer";
 import CommandsReducer from "./CommandsReducer";
 import CartReducer from "./CartReducer";
+import SpFilterReducer from "./SpFilterReducer";
+import CurrentReducer from "./CurrentReducer";
 
 const rootReducer = combineReducers({
   init: InitReducer,
@@ -16,7 +18,9 @@ const rootReducer = combineReducers({
   store: StoreReducer,
   interventions: InterventionsReducer,
   commands: CommandsReducer,
-  cart: CartReducer
+  cart: CartReducer,
+  spFilter: SpFilterReducer,
+  current: CurrentReducer,
 });
 
 export default rootReducer;

@@ -82,7 +82,7 @@ export const removeProduct = (id, cart) => (dispatch) => {
 export const addCommand = (data) => (dispatch) => {
   setCommand(data)
     .then((res) => {
-      console.log(res)
+      console.log(res.data);
       // dispatch({
       //   type: SET_COMMAND,
       //   data: [],
