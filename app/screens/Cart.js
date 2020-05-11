@@ -67,7 +67,7 @@ const Cart = ({ route, navigation }) => {
       // wilaya: address.wilaya,
       // location: address.location,
       user_id: _id,
-      user_type: "ServiceProvider",
+      user_type: "Client",
       total_price: total,
       products: cart.map((product) => {
         return {

@@ -1,5 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BackImage } from "../components";
 import { Commands } from "../components/Commands";
@@ -7,6 +8,9 @@ import { Commands } from "../components/Commands";
 // const initialLayout = { width: Dimensions.get('window').width };
 
 const CommandsHistory = (props) => {
+
+  const data = useSelector((state) => state.history);
+
   return (
     <BackImage source={require("../../assets/bg/bgHome.png")}>
       <View style={styles.header}>
@@ -16,9 +20,9 @@ const CommandsHistory = (props) => {
       </View>
       <View style={styles.mainView}>
         <View style={styles.head}>
-          <Text style={styles.text}>MES ACHATS</Text>
+          <Text style={styles.text}>MES ACHATS ({data.commands.length}) </Text>
         </View>
-        <Commands />
+        <Commands data={data} />
       </View>
     </BackImage>
   );

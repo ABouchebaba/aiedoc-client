@@ -7,6 +7,7 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
+  Alert,
 } from "react-native";
 import { sendPin, getOptions } from "../Store/api";
 import { login } from "../Store/actions";
@@ -30,6 +31,7 @@ const AuthPhone = (props) => {
 
   const onPressSendVerificationCode = () => {
     const number = "+213" + phoneNumber.slice(1);
+    if(phoneNumber>9){
     sendPin(number, recaptchaVerifier)
       .then((res) => {
         setVerificationId(res);
@@ -38,8 +40,11 @@ const AuthPhone = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Invalid phone number");
-      });
+        alert("le numéro de téléphone est incorrect");
+      })}
+      else {
+        Alert.alert('Erreur', 'le numéro de téléphone doit comporter au moins 10 chiffres')
+      }
   };
   const loading = useSelector((state) => state.user.loading);
   const onPinError = () => {

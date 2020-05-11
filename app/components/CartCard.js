@@ -36,7 +36,7 @@ export const CartCard = (props) => {
   return (
     <View style={styles.card}>
       <View style={styles.upView}>
-        <Text style={styles.name}>{product.product_name}</Text>
+        <Text style={styles.name}>{product.product_name.replace(/(\r\n|\n|\r)/gm, "")}</Text>
         <Text style={styles.brand}>{product.brand}</Text>
         <Text style={styles.brand}>option: {product.option?product.option:'standard'}</Text>
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
@@ -100,19 +100,19 @@ const styles = StyleSheet.create({
   },
   name: {
     color: "#11A0C1",
-    fontSize: 20,
+    fontSize: 15,
   },
   brand: {
     color: "#11A0C1",
-    fontSize: 16,
+    fontSize: 13,
   },
   price: {
     color: "#D61F2C",
-    fontSize: 16,
+    fontSize: 13,
   },
   fullPrice: {
     color: "#D61F2C",
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
     textAlign: "right",
   },

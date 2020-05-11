@@ -15,7 +15,7 @@ import { getInterventions } from "../Store/actions";
 
 export const Interventions = (props) => {
   const dispatch = useDispatch();
-  const { interventions, loading } = useSelector((state) => state.history);
+  const { interventions, loading } = props.data
   const { _id } = useSelector((state) => state.user.user);
 
   useEffect(() => {
@@ -32,25 +32,6 @@ export const Interventions = (props) => {
   }, [refreshing, interventions]);
 
   // const interventions = props.interventions
-  const fakeInt = [
-    {
-      _id: "5e655fad2e011c00165eeb06",
-      totalPrice: 0,
-      intervention_id: "5e655fad2e011c00165eeb05",
-      date: "2020-03-08T21:12:13.409Z",
-      sp_name: "service provider",
-      rating: 5,
-    },
-    {
-      _id: "5e655fad2e011c00165eeb06",
-      totalPrice: 0,
-      intervention_id: "5e655fad2e011c00165eeb05",
-      date: "2020-03-08T21:12:13.409Z",
-      sp_name: "service provider",
-      rating: 3,
-    },
-  ];
-
   const [intervention, setIntervention] = useState({
     open: false,
     services: [],
@@ -75,7 +56,7 @@ export const Interventions = (props) => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
-      {fakeInt.map((inv, i) => (
+      {interventions.map((inv, i) => (
         <TouchableOpacity
           key={i}
           style={styles.card}
@@ -83,19 +64,19 @@ export const Interventions = (props) => {
         >
           <View style={styles.leftSide}>
             <Entypo name="calendar" size={20} color="gray">
-              <Text style={styles.text}> {inv.date.slice(0, 10)}</Text>
+              <Text style={styles.text}> {inv.createdAt.slice(0, 10)}</Text>
             </Entypo>
             <Entypo name="price-tag" size={20} color="#FFD700">
               <Text style={styles.text}> {inv.totalPrice} DA</Text>
             </Entypo>
             <FontAwesome name="user-md" size={20} color="green">
-              <Text style={styles.text}> {inv.sp_name}</Text>
+              <Text style={styles.text}> {inv.services.length} serivce(s)</Text>
             </FontAwesome>
           </View>
           <View style={styles.rightSide}>
-            <Text style={styles.text}>Rating</Text>
+            <Text style={{...styles.text,fontSize:15}}>Rating</Text>
             <View style={styles.ratingView}>
-              {[...Array(inv.rating)].map((x, i) => (
+              {[...Array(inv.client_rating)].map((x, i) => (
                 <Entypo key={i} name="star" size={30} color="#FFD700"></Entypo>
               ))}
             </View>

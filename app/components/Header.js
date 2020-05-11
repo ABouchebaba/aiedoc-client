@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -17,7 +17,7 @@ export const Header = (props) => {
           source={require("../../assets/boutique.png")}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => alert("Hi")}>
+      <TouchableOpacity onPress={() => Alert.alert("Urgence","disponible prochainement")}>
         <Image
           style={styles.tinyLogo}
           source={require("../../assets/emergency.png")}

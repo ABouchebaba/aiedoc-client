@@ -1,22 +1,13 @@
-import { AntDesign, Entypo, FontAwesome, Feather } from "@expo/vector-icons";
+import { AntDesign, Entypo, Feather, FontAwesome } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  RefreshControl
-} from "react-native";
+import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommands } from "../Store/actions";
 import { CommandModel } from "./CommandModel";
-import { useFocusEffect } from "@react-navigation/native";
 
-export const Commands = () => {
+export const Commands = (props) => {
   const dispatch = useDispatch();
-  const { commands, loading } = useSelector((state) => state.history);
+  const { commands, loading } = props.data;
   const { _id } = useSelector((state) => state.user.user);
 
   useEffect(() => {
@@ -27,10 +18,10 @@ export const Commands = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
-      setRefreshing(true);
-      dispatch(getCommands(_id))
-      setRefreshing(false);
-  }, [refreshing,command]);
+    setRefreshing(true);
+    dispatch(getCommands(_id));
+    setRefreshing(false);
+  }, [refreshing, command]);
 
   // const interventions = props.interventions
   const [command, setCommand] = useState({
@@ -51,13 +42,11 @@ export const Commands = () => {
       <ActivityIndicator size="large" color="#11A0C1" />
     </View>
   ) : (
-    <ScrollView 
-    style={styles.scrollView}
-    refreshControl={
-      <RefreshControl 
-      refreshing={refreshing} onRefresh={onRefresh}
-      />
-    }
+    <ScrollView
+      style={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
     >
       {commands.map((cmd, i) => (
         <TouchableOpacity
@@ -74,7 +63,7 @@ export const Commands = () => {
             </Entypo>
             <AntDesign name="CodeSandbox" size={20} color="green">
               {cmd.products.length > 1 ? (
-                <Text style={styles.text}> {cmd.products.length}produits</Text>
+                <Text style={styles.text}> {cmd.products.length} produits</Text>
               ) : (
                 <Text style={styles.text}> {cmd.products.length} produit</Text>
               )}

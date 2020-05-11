@@ -2,10 +2,14 @@ import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { BackImage, Interventions } from "../components";
+import { useDispatch, useSelector } from "react-redux";
 
 // const initialLayout = { width: Dimensions.get('window').width };
 
 const History = (props) => {
+
+  const data = useSelector((state) => state.history);
+
   return (
     <BackImage source={require("../../assets/bg/bgHome.png")}>
       <View style={styles.header}>
@@ -15,9 +19,9 @@ const History = (props) => {
       </View>
       <View style={styles.mainView}>
         <View style={styles.head}>
-          <Text style={styles.text}>MES PRESTATIONS</Text>
+          <Text style={styles.text}>MES PRESTATIONS ({data.interventions.length}) </Text>
         </View>
-        <Interventions />
+        <Interventions data={data} />
       </View>
     </BackImage>
   );

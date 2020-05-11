@@ -1,27 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BackImage,
-  GenderFilter,
-  Header,
-  LoadingModal,
-  Map,
-  Markers,
-  ServiceFilter,
-  SpModal,
-} from "../components";
+import { BackImage, GenderFilter, Header, LoadingModal, Map, Markers, ServiceFilter, SpModal } from "../components";
 import { AppStateEvents, Socket } from "../helpers";
-import {
-  getAvailableSps,
-  getLocation,
-  getServices,
-  resetCurrentIntervention,
-  setCurrentIntervention,
-  setCurrentSp,
-  unsetCurrent,
-} from "../Store/actions";
+import { getAvailableSps, getLocation, getServices, resetCurrentIntervention, setCurrentIntervention, setCurrentSp, unsetCurrent } from "../Store/actions";
 import { available_sps } from "../Store/selectors";
 
 const Home = (props) => {
@@ -86,7 +69,7 @@ const Home = (props) => {
       AppStateEvents.removeNamedEvent("resync");
       socket.destroy();
       dispatch(unsetCurrent());
-      alert("canceled");
+      Alert.alert("Annuler","vous avez annulé le demande");
     });
     socket.emit("cancel", intervention._id);
   };
