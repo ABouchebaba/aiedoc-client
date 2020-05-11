@@ -15,8 +15,6 @@ const rootReducer = combineReducers({
   sps: SpsReducer,
   services: ServiceReducer,
   store: StoreReducer,
-  interventions: InterventionsReducer,
-  commands: CommandsReducer,
   spFilter: SpFilterReducer,
   current: CurrentReducer,
   history: HistoryReducer,
