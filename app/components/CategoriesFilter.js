@@ -30,7 +30,7 @@ export const CategoriesFilter = (props) => {
   // console.log(categories)
   return (
     <View style={styles.container}>
-      <View style={{ width: "60%" }}>
+      <View style={{ width: "75%" }}>
         <RNPickerSelect
           placeholder={{ label: "Catégorie...", value: "", color: "blue" }}
           value={category}
@@ -39,7 +39,7 @@ export const CategoriesFilter = (props) => {
             ...pickerSelectStyles,
             iconContainer: {
               top: "30%",
-              left: "80%",
+              left: "90%",
             },
           }}
           onValueChange={(value) => filter(value)}
@@ -147,7 +147,7 @@ const pickerSelectStyles = StyleSheet.create({
   inputAndroid: {
     backgroundColor: "white",
     fontSize: 18,
-    width: "100%",
+    // width: "100%",
     paddingHorizontal: 10,
     paddingVertical: 8,
     marginVertical: 10,
@@ -155,6 +155,6 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: "purple",
     borderRadius: 20,
     color: "#0F95B9",
-    paddingRight: 100, // to ensure the text is never behind the icon
+    paddingRight: 30, // to ensure the text is never behind the icon
   },
 });

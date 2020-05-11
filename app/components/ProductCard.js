@@ -1,17 +1,20 @@
 import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { BACKEND_URL } from "react-native-dotenv";
 
 export const ProductCard = (props) => {
   const product = props.product
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.6} onPress={() => props.navigation.navigate("ProductProfile", {product})}>
       <View style={styles.imageSide}>
-        <Image source={require("../../assets/product.jpg")} style={styles.image} />
+        <Image source={{
+          uri: BACKEND_URL+ '/'+ product.images[0],
+        }} style={styles.image} />
       </View>
       <View style={styles.leftSide}>
-        <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.brand}>Marque: {product.brand}</Text>
+        <Text style={styles.name}>{product.name.length > 35? product.name.slice(0,35).replace(/(\r\n|\n|\r)/gm, "")+'...':product.name.replace(/(\r\n|\n|\r)/gm, "")}</Text>
+        <Text style={styles.brand}>Marque: {product.brand.replace(/(\r\n|\n|\r)/gm, "")}</Text>
         <View style={styles.ratingView}>
           {[...Array(5)].map((x, i) => (
             (product.rating > i )?<Entypo key={i} name="star" size={15} color="#D61F2C"/>:
@@ -45,11 +48,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    marginTop: 10,
-    width: "100%",
-    height: "100%",
-    resizeMode: "contain",
-    borderWidth:1,
+    // marginTop: 10,
+    // width: "100%",
+    // height: "100%",
+    // resizeMode: "contain",
+    // borderWidth:1,
+    width: 100,
+    height: 100,
   },
   leftSide: {
     paddingHorizontal: 5,
@@ -64,21 +69,21 @@ const styles = StyleSheet.create({
   },
   name: {
     color: "#11A0C1",
-    fontSize: 16,
+    fontSize: 13,
   },
   brand: {
     color: "#11A0C1",
-    fontSize: 14,
+    fontSize: 11,
     fontStyle: "italic",
   },
   price: {
     color: "#D61F2C",
-    fontSize: 18,
+    fontSize: 15,
     fontWeight:"bold"
   },
   priceOld:{
     color: "gray",
-    fontSize: 15,
+    fontSize: 13,
     fontWeight:"bold",
     // fontStyle: "normal",
     textDecorationLine:"line-through",
@@ -87,7 +92,7 @@ const styles = StyleSheet.create({
   },
   priceDiscount:{
     color: "#D61F2C",
-    fontSize: 18,
+    fontSize: 15,
     fontWeight:"bold",
     fontStyle: "normal",
     textDecorationLine:"underline",

@@ -3,17 +3,9 @@ import React from "react";
 import { Image, Modal, StyleSheet, Text, View, ScrollView } from "react-native";
 
 export const InterventionModel = (props) => {
-  // const services = props.services
-  const services = [
-    {
-      service: 'injection',
-      prix: 200,
-    },
-    {
-      service: 'massage',
-      prix: 300,
-    }
-  ];
+  const services = props.services
+  console.log(services)
+
   return (
     <Modal
       animationType="slide"
@@ -24,7 +16,7 @@ export const InterventionModel = (props) => {
       <View style={styles.modelCard}>
         <View style={styles.modelInfo}>
           <Text style={styles.modelText}>
-            Liste des produits ({services.length})
+            Liste des services ({services.length})
           </Text>
           <ScrollView
             style={styles.list}
@@ -37,7 +29,7 @@ export const InterventionModel = (props) => {
             {services.map((srv, index) => (
               <View key={index} style={styles.prd}>
                 <Text style={styles.prdText}>{srv.service}</Text>
-                <Text style={styles.total}>{srv.prix}</Text>
+                <Text style={styles.total}>2000 DA</Text>
               </View>
             ))}
             

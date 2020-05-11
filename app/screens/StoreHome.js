@@ -72,7 +72,7 @@ const StoreHome = (props) => {
         <View style={styles.search}>
           <View style={styles.inputView}>
             <TextInput
-              placeholder="Tensiomètre électronique"
+              placeholder="Omron"
               style={styles.TextInput}
               onChangeText={(e) => setSearchText(e)}
             />

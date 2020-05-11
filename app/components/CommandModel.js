@@ -24,7 +24,7 @@ export const CommandModel = (props) => {
             {props.products.map((prd, index) => (
               <View key={index} style={styles.prd}>
                 <Text style={styles.prdTitle} >Nom: {prd.product_name}</Text>
-                <Text style={styles.prdText} >Option: {prd.option}</Text>
+                <Text style={styles.prdText} >Option: {prd.option.length==0? 'Standard':prd.option}</Text>
                 <Text style={styles.prdText} >Prix: 100</Text>
                 <Text style={styles.prdText} >Quantité: {prd.qty}</Text>
                 <Text style={styles.total} >TOTAL:{prd.qty*100}</Text>

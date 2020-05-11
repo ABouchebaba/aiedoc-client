@@ -1,18 +1,9 @@
-import React, { useEffect, useState,useRef } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Header,
-  Markers,
-  Map,
-  BackImage,
-  SexFilter,
-  ServiceFilter,
-} from "../components";
-import { getLocation, getAvailableSps, getServices } from "../Store/actions";
 import { Ionicons } from "@expo/vector-icons";
-
-
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { BackImage, Header, Map, Markers, ServiceFilter, SexFilter } from "../components";
+import { getAvailableSps, getLocation, getServices } from "../Store/actions";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -43,6 +34,7 @@ const Home = (props) => {
   } */
 
   useEffect(() => {
+    props.navigation.closeDrawer()
     dispatch(getLocation());
     dispatch(getAvailableSps());
     dispatch(getServices());
@@ -60,7 +52,6 @@ const Home = (props) => {
       }
       return false;
     });
-    
 
   return (
     <BackImage source={require("../../assets/bg/bgHome.png")}>
@@ -70,10 +61,7 @@ const Home = (props) => {
         selected={filters.sex}
         style={styles.sexFilter}
       />
-      <Map
-        location={location}
-        onPress={() => setvalidateEnabled(false)}
-      >
+      <Map location={location} onPress={() => setvalidateEnabled(false)}>
         <Markers
           sps={filtered}
           location={location}

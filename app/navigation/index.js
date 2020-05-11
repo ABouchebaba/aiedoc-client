@@ -1,9 +1,9 @@
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import HomeDrawer from "./HomeDrawer";
-import AuthStack from "./AuthStack";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { setToken } from "../Store/api";
+import AuthStack from "./AuthStack";
+import HomeDrawer from "./HomeDrawer";
 
 const Navigator = () => {
   const { user, token } = useSelector((state) => state.user);

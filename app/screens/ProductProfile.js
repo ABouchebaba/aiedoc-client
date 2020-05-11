@@ -1,9 +1,15 @@
 import { Entypo } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import DropdownAlert from "react-native-dropdownalert";
-import Gallery from "react-native-image-gallery";
 import GallerySwiper from "react-native-gallery-swiper";
+import { BACKEND_URL } from "react-native-dotenv";
 
 import RNPickerSelect from "react-native-picker-select";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,20 +52,27 @@ const ProductProfile = ({ route, navigation }) => {
         <View style={styles.search}>
           <GallerySwiper
             style={{ flex: 1, paddingVertical: 10, backgroundColor: "white" }}
-            images={[
-              {
-                source: require("../../assets/product.jpg"),
-                dimensions: { width: 300, height: 300 },
-              },
-              {
-                source: require("../../assets/product.jpg"),
-                dimensions: { width: 300, height: 300 },
-              },
-              {
-                source: require("../../assets/product.jpg"),
-                dimensions: { width: 300, height: 300 },
-              },
-            ]}
+            images={
+              product.images.map(image => ({
+                uri: BACKEND_URL + "/" + image,
+                dimensions: { width: 1000, height: 1000 }
+              }))
+            }
+            //   [
+            //     {
+            //       source: require("../../assets/product.jpg"),
+            //       dimensions: { width: 300, height: 300 },
+            //     },
+            //     {
+            //       source: require("../../assets/product.jpg"),
+            //       dimensions: { width: 300, height: 300 },
+            //     },
+            //     {
+            //       source: require("../../assets/product.jpg"),
+            //       dimensions: { width: 300, height: 300 },
+            //     },
+            // ]
+
             initialNumToRender={2}
             // Turning this off will make it feel faster
             // and prevent the scroller to slow down
@@ -67,8 +80,12 @@ const ProductProfile = ({ route, navigation }) => {
             sensitiveScroll={false}
           />
         </View>
-        <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.brand}>{product.brand.toUpperCase()}</Text>
+        <Text style={styles.name}>
+          {product.name.replace(/(\r\n|\n|\r)/gm, "")}
+        </Text>
+        <Text style={styles.brand}>
+          {product.brand.toUpperCase().replace(/(\r\n|\n|\r)/gm, "")}
+        </Text>
         {product.rating > 0 && (
           <View style={styles.ratingView}>
             {[...Array(5)].map((x, i) =>
@@ -88,11 +105,7 @@ const ProductProfile = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.buyButton}
             onPress={_addToCart}
-            disabled={
-              option === ""
-                ? product.options.length !== 0
-                : false
-            }
+            disabled={option === "" ? product.options.length !== 0 : false}
           >
             <Text style={styles.buyText}>Acheter</Text>
           </TouchableOpacity>
