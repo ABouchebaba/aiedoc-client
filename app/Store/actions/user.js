@@ -18,6 +18,7 @@ export const login = (info, callbacks) => (dispatch) => {
         .then((res) => {
           // user already registred
           // so user goes home
+          console.log("logging in");
           dispatch({
             type: SET_USER,
             data: res.data,
@@ -26,6 +27,7 @@ export const login = (info, callbacks) => (dispatch) => {
         })
         // user not registred
         .catch((err) => {
+          console.log("loggin error: " + err.message);
           dispatch({
             type: UNSET_USER,
           });
@@ -34,6 +36,7 @@ export const login = (info, callbacks) => (dispatch) => {
     })
     // user typed wrong pin code
     .catch((err) => {
+      console.log("wrong pin");
       dispatch({
         type: UNSET_USER,
       });

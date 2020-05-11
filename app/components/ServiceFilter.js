@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Text,
   View,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   ScrollView,
   Image,
@@ -11,9 +10,13 @@ import { Checkbox } from "./Checkbox";
 import Animated from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
 import { timing } from "../helpers";
+import { setServiceFilter } from "../Store/actions";
 
-export const ServiceFilter = ({ style, setFilter, selected }) => {
+export const ServiceFilter = ({ style }) => {
+  const dispatch = useDispatch();
   const { services, loading, error } = useSelector((state) => state.services);
+  const selected = useSelector((state) => state.spFilter.services);
+
   const [open, setopen] = useState(false);
   const [height] = useState(new Animated.Value(0));
   const [opacity] = useState(new Animated.Value(0));
@@ -53,7 +56,7 @@ export const ServiceFilter = ({ style, setFilter, selected }) => {
                   key={s._id}
                   title={s.name}
                   selected={selected[s.name]}
-                  onPress={() => setFilter("service", s.name)}
+                  onPress={() => dispatch(setServiceFilter(s.name))}
                 />
               ))
             )}

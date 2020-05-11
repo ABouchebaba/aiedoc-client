@@ -23,16 +23,15 @@ export const InterventionModel = (props) => {
             contentContainerStyle={styles.listStyle}
           >
             <View style={styles.prd}>
-                <Text style={styles.prdTitle}>Service: </Text>
-                <Text style={styles.prdTitle}>Prix: </Text>
-              </View>
+              <Text style={styles.prdTitle}>Service: </Text>
+              <Text style={styles.prdTitle}>Prix: </Text>
+            </View>
             {services.map((srv, index) => (
               <View key={index} style={styles.prd}>
                 <Text style={styles.prdText}>{srv.service}</Text>
                 <Text style={styles.total}>2000 DA</Text>
               </View>
             ))}
-            
           </ScrollView>
         </View>
         <Entypo
@@ -110,14 +109,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderBottomWidth: 1,
-    justifyContent:'space-around',
-    flexDirection:'row'
+    justifyContent: "space-around",
+    flexDirection: "row",
   },
   prdText: {
-    width:'80%',
+    width: "80%",
     color: "#11A0C1",
     fontSize: 16,
-    textAlign:'left'
+    textAlign: "left",
   },
   total: {
     textAlign: "right",

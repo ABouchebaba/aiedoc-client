@@ -1,37 +1,53 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { BackImage, Header, Map, Markers, ServiceFilter, SexFilter } from "../components";
-import { getAvailableSps, getLocation, getServices } from "../Store/actions";
+import {
+  BackImage,
+  GenderFilter,
+  Header,
+  LoadingModal,
+  Map,
+  Markers,
+  ServiceFilter,
+  SpModal,
+} from "../components";
+import { AppStateEvents, Socket } from "../helpers";
+import {
+  getAvailableSps,
+  getLocation,
+  getServices,
+  resetCurrentIntervention,
+  setCurrentIntervention,
+  setCurrentSp,
+  unsetCurrent,
+} from "../Store/actions";
+import { available_sps } from "../Store/selectors";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const { location } = useSelector((state) => state.user);
-  const { sps, loading, error } = useSelector((state) => state.sps);
-  const [validateEnabled, setvalidateEnabled] = useState(false);
-  const [filters, setFilters] = useState({ sex: {}, service: {} });
+  const sps = useSelector(available_sps);
+  const { location, user } = useSelector((state) => state.user);
+  const { intervention, sp, loading } = useSelector((state) => state.current);
 
-  const setFilter = (filter, value) => {
-    if (value === false) {
-      filters[filter] = {};
-    } else {
-      if (filters[filter][value]) {
-        delete filters[filter][value];
-      } else {
-        filters[filter][value] = true;
-      }
-    }
+  const modalShown = intervention.state === "pending";
 
-    setFilters({ ...filters });
-  };
-
-  /* function fitToMarkersToMap() {
-    // mapRef.current.fitToSuppliedMarkers(["user"], {
-    //   edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-    // });
-    
-  } */
+  // Socket is a singleton class, only one socket is needed at a time
+  const socket = Socket.getInstance();
+  if (intervention && !socket.isInitialized()) {
+    // Starting app after initing an intervention & closed app
+    console.log("home init + join");
+    dispatch(resetCurrentIntervention(intervention._id));
+    socket.on("refused", (int_id) => {
+      AppStateEvents.removeNamedEvent("resync");
+      socket.destroy();
+      dispatch(unsetCurrent());
+      alert("Intervention refused by sp");
+    });
+    socket.on("accepted", (intervention) => {
+      dispatch(setCurrentIntervention(intervention));
+    });
+  }
 
   useEffect(() => {
     props.navigation.closeDrawer()
@@ -40,43 +56,62 @@ const Home = (props) => {
     dispatch(getServices());
   }, []);
 
-  // empty filters(sex/service) are not taken into consideration
-  let filtered = sps;
-  if (Object.keys(filters.sex).length > 0)
-    filtered = filtered.filter((sp) => filters.sex[sp.sex]);
-
-  if (Object.keys(filters.service).length > 0)
-    filtered = filtered.filter((sp) => {
-      for (let i = 0; i < sp.services.length; i++) {
-        if (filters.service[sp.services[i]]) return true;
-      }
-      return false;
+  const onValidate = () => {
+    const int = {
+      client_id: user._id,
+      sp_id: sp._id,
+      services: ["Injection"],
+    };
+    // initialise connexion to server
+    socket.init();
+    // after emitting "init", server responds with "wait"
+    socket.on("wait", (intervention) => {
+      // Show sp modal + waiting message
+      dispatch(setCurrentIntervention(intervention));
     });
+    socket.emit("init", int);
+
+    socket.on("refused", (int_id) => {
+      AppStateEvents.removeNamedEvent("resync");
+      socket.destroy();
+      dispatch(unsetCurrent());
+      alert("Intervention refused by sp");
+    });
+    socket.on("accepted", (intervention) => {
+      dispatch(setCurrentIntervention(intervention));
+    });
+  };
+
+  const cancel = () => {
+    socket.on("canceled", (intervention) => {
+      AppStateEvents.removeNamedEvent("resync");
+      socket.destroy();
+      dispatch(unsetCurrent());
+      alert("canceled");
+    });
+    socket.emit("cancel", intervention._id);
+  };
+
+  const selectSp = (sp) => dispatch(setCurrentSp(sp));
 
   return (
     <BackImage source={require("../../assets/bg/bgHome.png")}>
+      <LoadingModal showModal={loading} text="synchronisation" />
       <Header />
-      <SexFilter
-        setFilter={setFilter}
-        selected={filters.sex}
-        style={styles.sexFilter}
-      />
-      <Map location={location} onPress={() => setvalidateEnabled(false)}>
-        <Markers
-          sps={filtered}
-          location={location}
-          setvalidateEnabled={setvalidateEnabled}
-        />
+      <SpModal showModal={modalShown} onClose={cancel} sp={sp} />
+      <GenderFilter style={styles.genderFilter} />
+      <Map location={location} onPress={() => selectSp(false)}>
+        <Markers sps={sps} location={location} setSelectedSp={selectSp} />
       </Map>
       <View style={styles.serviceFilter}>
         <TouchableOpacity
           style={styles.validate}
-          onPress={() => alert("lol")}
-          disabled={!validateEnabled}
+          onPress={onValidate}
+          disabled={!sp}
         >
           <Ionicons name="md-checkmark" color="white" size={40} />
         </TouchableOpacity>
-        <ServiceFilter setFilter={setFilter} selected={filters.service} />
+        <ServiceFilter />
       </View>
     </BackImage>
   );
@@ -97,7 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 1,
   },
-  sexFilter: {
+  genderFilter: {
     position: "absolute",
     top: 120,
     zIndex: 1,

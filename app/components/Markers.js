@@ -4,7 +4,7 @@ import { Marker, Callout } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { SpInfo } from "./SpInfo";
 
-export const Markers = ({ location, sps, setvalidateEnabled }) => {
+export const Markers = ({ location, sps, setSelectedSp }) => {
   const dispatch = useDispatch();
 
   const malePin = require("../../assets/malePin.png");
@@ -18,7 +18,7 @@ export const Markers = ({ location, sps, setvalidateEnabled }) => {
   return (
     <React.Fragment>
       <Marker.Animated
-        onPress={() => setvalidateEnabled(false)}
+        onPress={() => setSelectedSp(false)}
         key={"user"}
         title="User"
         identifier={"markers"}
@@ -29,7 +29,7 @@ export const Markers = ({ location, sps, setvalidateEnabled }) => {
         const pin = sp.sex === "male" ? malePin : femalePin;
         return (
           <Marker.Animated
-            onPress={() => setvalidateEnabled(true)}
+            onPress={() => setSelectedSp(sp)}
             key={sp._id}
             title={sp.sex}
             identifier={"markers"}

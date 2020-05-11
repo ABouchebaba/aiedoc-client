@@ -1,5 +1,9 @@
-import {SET_PRODUCT,CART_LOADING, ERROR_CART} from "../../constants/ActionTypes";
-import {setCommand} from "../api";
+import {
+  SET_PRODUCT,
+  CART_LOADING,
+  ERROR_CART,
+} from "../../constants/ActionTypes";
+import { setCommand } from "../api";
 
 import _ from "lodash";
 
@@ -12,7 +16,10 @@ export const addToCart = (product, cart) => (dispatch) => {
       data: cart,
     });
   } else {
-    let prod = _.find(cart, {product_id: product.product_id, option: product.option  });
+    let prod = _.find(cart, {
+      product_id: product.product_id,
+      option: product.option,
+    });
     if (_.isUndefined(prod)) {
       cart.push(product);
       console.log("add new product: ", product.name);
@@ -21,12 +28,12 @@ export const addToCart = (product, cart) => (dispatch) => {
         data: cart,
       });
     } else {
-      return dispatch(addQuantity(product.product_id,product.option, cart));
+      return dispatch(addQuantity(product.product_id, product.option, cart));
     }
   }
 };
 
-export const addQuantity = (id,option, cart) => (dispatch) => {
+export const addQuantity = (id, option, cart) => (dispatch) => {
   console.log("add quantity for: ", id, option);
   let newCart = cart.map((product) => {
     // console.log(product)
@@ -73,7 +80,7 @@ export const removeProduct = (id, option, cart) => (dispatch) => {
 };
 
 export const addCommand = (data, doneModal) => (dispatch) => {
-  dispatch({type: CART_LOADING })
+  dispatch({ type: CART_LOADING });
   setCommand(data)
     .then((res) => {
       // console.log(res)
@@ -81,7 +88,7 @@ export const addCommand = (data, doneModal) => (dispatch) => {
         type: SET_PRODUCT,
         data: [],
       });
-      doneModal()
+      doneModal();
     })
     .catch((err) => {
       alert("Veuillez vérifier votre connexion internet");

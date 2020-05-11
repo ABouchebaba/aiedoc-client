@@ -1,32 +1,28 @@
 import React from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { setGenderFilter } from "../Store/actions";
 
-export const SexFilter = ({ style, setFilter, selected }) => {
-  const maleStyle = selected["male"]
-    ? styles.selectedBtn
-    : styles.notSelectedBtn;
-  const femaleStyle = selected["female"]
-    ? styles.selectedBtn
-    : styles.notSelectedBtn;
+export const GenderFilter = ({ style }) => {
+  const dispatch = useDispatch();
+  const current = useSelector((state) => state.spFilter.gender);
 
-  const setSexFilter = (gender) => {
-    if (Object.keys(selected).length === 0) {
-      setFilter("sex", gender);
-    } else {
-      if (selected[gender]) {
-        setFilter("sex", false);
-      } else {
-        setFilter("sex", false);
-        setFilter("sex", gender);
-      }
-    }
+  const maleStyle =
+    current === "male" ? styles.selectedBtn : styles.notSelectedBtn;
+  const femaleStyle =
+    current === "female" ? styles.selectedBtn : styles.notSelectedBtn;
+
+  const setFilter = (gender) => {
+    if (current === false) return dispatch(setGenderFilter(gender));
+    if (current !== gender) return dispatch(setGenderFilter(gender));
+    return dispatch(setGenderFilter(false));
   };
 
   return (
     <View style={style}>
       <TouchableOpacity
         style={[maleStyle, styles.leftBtn]}
-        onPress={() => setSexFilter("male")}
+        onPress={() => setFilter("male")}
       >
         <Image
           style={styles.pin}
@@ -35,7 +31,7 @@ export const SexFilter = ({ style, setFilter, selected }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[femaleStyle, styles.rightBtn]}
-        onPress={() => setSexFilter("female")}
+        onPress={() => setFilter("female")}
       >
         <Image
           style={styles.pin}

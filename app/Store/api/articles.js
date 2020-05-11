@@ -5,7 +5,7 @@ export const loadArticles = async () => {
     cache: "no-cache",
     keepalive: false,
     headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(res => res.json());
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json());
 };
