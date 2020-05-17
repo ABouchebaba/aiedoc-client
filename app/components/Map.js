@@ -9,6 +9,17 @@ const LATITUDE_DELTA = 0.50922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export const Map = (props) => {
+  const mapRef = useRef(null);
+
+  // const fit = () => {
+  //   setTimeout(() => {
+  //     mapRef.current.fitToSuppliedMarkers(["markers"], {
+  //       edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+  //       animated: true,
+  //     });
+  //   }, 1000);
+  // };
+
   // const mapRef = useRef(null);
   // setTimeout(()=>{
   //   mapRef.current.fitToSuppliedMarkers(["markers"], {
@@ -31,7 +42,7 @@ export const Map = (props) => {
         showsTraffic={true}
         loadingEnabled={true}
         style={styles.mapStyle}
-        onMapReady={fit}
+        // onMapReady={fit}
       >
         {props.children}
       </MapView>
