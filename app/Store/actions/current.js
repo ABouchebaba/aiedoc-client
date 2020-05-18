@@ -6,6 +6,7 @@ import {
   SET_CURRENT_SP,
 } from "../../constants/ActionTypes";
 import { Socket } from "../../helpers";
+import { getInterventionById } from "../actions";
 
 export const unsetCurrent = () => (dispatch) => {
   dispatch({
@@ -41,20 +42,16 @@ export const loadCurrentIntervention = () => (dispatch) => {
 
 export const resetCurrentIntervention = (int_id) => (dispatch) => {
   dispatch(loadCurrentIntervention());
+  // loading dismissed in resync event listener
 
   const socket = Socket.getInstance();
-  // Cleaning socket disconnect mess
-  // Overkill ...
-  if (socket.isInitialized()) socket.destroy();
-  socket.init();
-  socket.emit("join", int_id);
-
-  // Socket should be initialized
-  // expecting to receive intervention
-  // from server as resync response
-  socket.on("resync", (intervention) => {
-    dispatch(setCurrentIntervention(intervention));
-  });
-  // triggering resync
-  socket.emit("resync", int_id);
+  socket.sync();
+  getInterventionById(int_id)
+    .then((res) => {
+      console.log("Got intervention :  ", res.data._id);
+      dispatch(setCurrentIntervention(res.data));
+    })
+    .catch((err) => {
+      console.log("Error getting intervention by id");
+    });
 };

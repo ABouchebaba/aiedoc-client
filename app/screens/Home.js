@@ -2,10 +2,26 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { BackImage, GenderFilter, Header, LoadingModal, Map, Markers, ServiceFilter, SpModal } from "../components";
-import { AppStateEvents, Socket } from "../helpers";
-import { getAvailableSps, getLocation, getServices, resetCurrentIntervention, setCurrentIntervention, setCurrentSp, unsetCurrent } from "../Store/actions";
+import {
+  BackImage,
+  GenderFilter,
+  Header,
+  LoadingModal,
+  Map,
+  Markers,
+  ServiceFilter,
+  SpModal,
+} from "../components";
+import { Socket } from "../helpers";
+import {
+  getAvailableSps,
+  getLocation,
+  getServices,
+  setCurrentSp,
+} from "../Store/actions";
 import { available_sps } from "../Store/selectors";
+import { initSocket, syncSocket } from "../Store/api";
+import { BACKEND_URL } from "react-native-dotenv";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -17,25 +33,17 @@ const Home = (props) => {
 
   // Socket is a singleton class, only one socket is needed at a time
   const socket = Socket.getInstance();
-  if (intervention && !socket.isInitialized()) {
-    // Starting app after initing an intervention & closed app
-    console.log("home init + join");
-    dispatch(resetCurrentIntervention(intervention._id));
-    socket.on("refused", (int_id) => {
-      AppStateEvents.removeNamedEvent("resync");
-      socket.destroy();
-      dispatch(unsetCurrent());
-      alert("Intervention refused by sp");
-    });
-    socket.on("accepted", (intervention) => {
-      dispatch(setCurrentIntervention(intervention));
-    });
-  }
 
   useEffect(() => {
     dispatch(getLocation());
     dispatch(getAvailableSps());
     dispatch(getServices());
+  }, []);
+
+  useEffect(() => {
+    if (intervention && !socket.isInitialized()) {
+      socket.init(BACKEND_URL, syncSocket(dispatch, intervention._id));
+    }
   }, []);
 
   const onValidate = () => {
@@ -44,33 +52,11 @@ const Home = (props) => {
       sp_id: sp._id,
       services: ["Injection"],
     };
-    // initialise connexion to server
-    socket.init();
-    // after emitting "init", server responds with "wait"
-    socket.on("wait", (intervention) => {
-      // Show sp modal + waiting message
-      dispatch(setCurrentIntervention(intervention));
-    });
-    socket.emit("init", int);
 
-    socket.on("refused", (int_id) => {
-      AppStateEvents.removeNamedEvent("resync");
-      socket.destroy();
-      dispatch(unsetCurrent());
-      alert("Intervention refused by sp");
-    });
-    socket.on("accepted", (intervention) => {
-      dispatch(setCurrentIntervention(intervention));
-    });
+    socket.init(BACKEND_URL, initSocket(dispatch, int));
   };
 
   const cancel = () => {
-    socket.on("canceled", (intervention) => {
-      AppStateEvents.removeNamedEvent("resync");
-      socket.destroy();
-      dispatch(unsetCurrent());
-      Alert.alert("Annuler","vous avez annulé le demande");
-    });
     socket.emit("cancel", intervention._id);
   };
 

@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Socket, AppStateEvents } from "../helpers";
-import { unsetCurrent, resetCurrentIntervention } from "../Store/actions";
 import { LoadingModal, BackImage } from "../components";
 import { AntDesign } from "@expo/vector-icons";
+import { syncSocket } from "../Store/api";
+import { BACKEND_URL } from "react-native-dotenv";
 
 const Review = (props) => {
   const dispatch = useDispatch();
@@ -20,18 +21,12 @@ const Review = (props) => {
   let ref = useRef(null);
   const socket = Socket.getInstance();
 
-  if (!socket.isInitialized()) {
-    console.log("review init + join");
-    dispatch(resetCurrentIntervention(intervention._id));
-  }
-
-  socket.on("goHome", () => {
-    // alert("Intervention successfully finished");
-    console.log("lol " + socket.isInitialized());
-    AppStateEvents.removeNamedEvent("resync");
-    socket.destroy();
-    dispatch(unsetCurrent());
-  });
+  useEffect(() => {
+    if (!socket.isInitialized()) {
+      // open app after closing at this screen
+      socket.init(BACKEND_URL, syncSocket(dispatch, intervention._id));
+    }
+  }, []);
 
   const confirm = () => {
     socket.emit("clientReview", {

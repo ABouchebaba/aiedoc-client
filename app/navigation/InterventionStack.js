@@ -13,13 +13,13 @@ function InterventionStackScreen() {
   const dispatch = useDispatch();
   const intervention = useSelector((state) => state.current.intervention);
 
-  // add app state change listener to resync intervention state
-  AppStateEvents.addNamedEvent("resync", "change", (nextAppState) => {
-    if (nextAppState === "active") {
-      // trigger on foreground only
-      dispatch(resetCurrentIntervention(intervention._id));
-    }
-  });
+  // // add app state change listener to resync intervention state
+  // AppStateEvents.addNamedEvent("resync", "change", (nextAppState) => {
+  //   if (nextAppState === "active") {
+  //     // trigger on foreground only
+  // dispatch(resetCurrentIntervention(intervention._id));
+  //   }
+  // });
 
   let name = "Home";
   let screen = Home;

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { Socket, AppStateEvents } from "../helpers";
+import { Socket } from "../helpers";
 import { AntDesign } from "@expo/vector-icons";
-import {
-  unsetCurrent,
-  setCurrentIntervention,
-  resetCurrentIntervention,
-} from "../Store/actions";
 import { LoadingModal, BackImage } from "../components";
+import { syncSocket } from "../Store/api";
+import { BACKEND_URL } from "react-native-dotenv";
 
 const IntWait = (props) => {
   const dispatch = useDispatch();
@@ -16,22 +13,14 @@ const IntWait = (props) => {
 
   const socket = Socket.getInstance();
 
-  if (!socket.isInitialized()) {
-    console.log("wait resync");
-    dispatch(resetCurrentIntervention(intervention._id));
-  }
-
-  socket.on("finished", (intervention) => {
-    dispatch(setCurrentIntervention(intervention));
-  });
+  useEffect(() => {
+    if (!socket.isInitialized()) {
+      // open app after closing at this screen
+      socket.init(BACKEND_URL, syncSocket(dispatch, intervention._id));
+    }
+  }, []);
 
   const cancel = () => {
-    socket.on("canceled", (intervention) => {
-      alert("canceled");
-      AppStateEvents.removeNamedEvent("resync");
-      socket.destroy();
-      dispatch(unsetCurrent());
-    });
     socket.emit("cancel", intervention._id);
   };
 

@@ -8,6 +8,8 @@ import {
 } from "../Store/actions";
 import { Octicons } from "@expo/vector-icons";
 import { LoadingModal, BackImage } from "../components";
+import { syncSocket } from "../Store/api";
+import { BACKEND_URL } from "react-native-dotenv";
 
 const IntFinished = (props) => {
   const dispatch = useDispatch();
@@ -15,14 +17,12 @@ const IntFinished = (props) => {
 
   const socket = Socket.getInstance();
 
-  if (!socket.isInitialized()) {
-    console.log("finish resync");
-    dispatch(resetCurrentIntervention(intervention._id));
-  }
-
-  socket.on("validated", (intervention) =>
-    dispatch(setCurrentIntervention(intervention))
-  );
+  useEffect(() => {
+    if (!socket.isInitialized()) {
+      // open app after closing at this screen
+      socket.init(BACKEND_URL, syncSocket(dispatch, intervention._id));
+    }
+  }, []);
 
   return (
     <BackImage source={require("../../assets/bg/bg1.png")}>
