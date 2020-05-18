@@ -5,3 +5,4 @@ export * from "./services";
 export * from "./store";
 export * from "./history";
 export * from "./socket";
+export * from "./interventions";

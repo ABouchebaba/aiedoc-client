@@ -2,7 +2,7 @@ import {
   setCurrentIntervention,
   unsetCurrent,
   resetCurrentIntervention,
-} from "../actions";
+} from "../actions/current";
 import { AppStateEvents } from "../../helpers";
 
 export const initSocket = (dispatch, intervention) => {

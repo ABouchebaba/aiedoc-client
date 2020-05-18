@@ -7,4 +7,3 @@ export * from "./history";
 export * from "./cart";
 export * from "./spFilter";
 export * from "./current";
-export * from "./interventions";

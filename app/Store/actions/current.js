@@ -6,7 +6,7 @@ import {
   SET_CURRENT_SP,
 } from "../../constants/ActionTypes";
 import { Socket } from "../../helpers";
-import { getInterventionById } from "../actions";
+import { getInterventionById } from "../api/interventions";
 
 export const unsetCurrent = () => (dispatch) => {
   dispatch({
